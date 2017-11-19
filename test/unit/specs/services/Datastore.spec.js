@@ -1,0 +1,170 @@
+/*
+ * stepwatch.js - A simple multistep timer browser app
+ * Copyright (C) 2017 Robert Corrigan
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import DataStore from '@/stepwatch/services/datastore'
+import Run from '@/stepwatch/models/run'
+import Step from '@/stepwatch/models/step'
+import uuid4 from 'uuid/v4'
+
+describe('DataStore', function () {
+  describe('constructor', function () {
+    it('returns a new blank Datastore', function () {
+      var dataStore = new DataStore(sessionStorage)
+
+      expect(dataStore.runs).to.be.an.instanceof(Array)
+      expect(dataStore.storage).to.equal(sessionStorage)
+      expect(dataStore.runs.length).to.equal(0)
+    })
+  })
+
+  describe('createProgram', function () {
+    it('returns a newly initialized Run program with no id', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var run = dataStore.createProgram()
+
+      expect(run).to.be.an.instanceof(Run)
+      expect(run.status).to.equal('program')
+      expect(run.id).to.equal(null)
+    })
+
+    it('adds the newly initialized program to runs', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var run = dataStore.createProgram()
+
+      expect(dataStore.runs.length).to.equal(1)
+      expect(dataStore.runs[0]).to.equal(run)
+    })
+  })
+
+  describe('createRun', function () {
+    it('returns a newly initialized Run with no id', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var program = dataStore.createProgram()
+      var run = dataStore.createRun(program)
+
+      expect(run).to.be.an.instanceof(Run)
+      expect(run.status).to.equal('created')
+      expect(run.id).to.equal(null)
+    })
+
+    it('adds the newly initialized Run to runs', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var program = dataStore.createProgram()
+      var run = dataStore.createRun(program)
+
+      expect(dataStore.runs.length).to.equal(2)
+      expect(dataStore.runs[1]).to.equal(run)
+    })
+  })
+
+  describe('deleteRun', function () {
+    it('deletes the supplied run', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var program = dataStore.createProgram()
+      var run = dataStore.createRun(program)
+      var testName = 'Run 1'
+      run.name = testName
+      dataStore.createRun(program)
+
+      dataStore.deleteRun(run)
+
+      expect(dataStore.runs.length).to.equal(2)
+      expect(dataStore.runs.indexOf(run)).to.equal(-1)
+      expect(dataStore.runs.some(run => run.name === testName)).to.equal(false)
+    })
+  })
+
+  describe('load', function () {
+    var compareDb = []
+
+    beforeEach(function () {
+      var program = new Run()
+      program.steps = [ new Step({name: 'Step 1'}), new Step({name: 'Step 2'}) ]
+      program.id = uuid4()
+      var run = program.setup()
+      run.name = 'New Run'
+      run.status = 'canceled'
+      run.id = uuid4()
+
+      sessionStorage.clear()
+      compareDb = [program, run]
+      sessionStorage.setItem('runDb', JSON.stringify(compareDb))
+    })
+
+    it('does nothing if no storage defined', function () {
+      var dataStore = new DataStore()
+
+      dataStore.load()
+
+      expect(dataStore.runs).to.be.an.instanceof(Array)
+      expect(dataStore.runs.length).to.equal(0)
+    })
+
+    it('retrieves the stored runs', function () {
+      var dataStore = new DataStore(sessionStorage)
+
+      dataStore.load()
+
+      expect(dataStore.runs).to.be.an.instanceof(Array)
+      expect(dataStore.runs.length).to.equal(compareDb.length)
+
+      for (var i = 0; i < compareDb.length; i++) {
+        expect(dataStore.runs[i]).to.be.an.instanceof(Run)
+        expect(dataStore.runs[i].id).to.equal(compareDb[i].id)
+      }
+    })
+
+    afterEach(function () {
+      sessionStorage.clear()
+    })
+  })
+
+  describe('save', function () {
+    beforeEach(function () {
+      sessionStorage.clear()
+    })
+
+    it('does nothing if no storage defined', function () {
+      var dataStore = new DataStore()
+      var program = dataStore.createProgram()
+      dataStore.createRun(program)
+
+      dataStore.save()
+
+      expect(dataStore.runs.every(run => run.id === null)).to.equal(true)
+    })
+
+    it('assigns an id to all unsaved runs', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var program = dataStore.createProgram()
+      program.steps.push(new Step({
+        name: 'foo'
+      }))
+      dataStore.createRun(program)
+
+      dataStore.save()
+
+      expect(dataStore.runs.some(run => run.id === null)).to.equal(false)
+      expect(sessionStorage.length).to.equal(1)
+    })
+
+    afterEach(function () {
+      sessionStorage.clear()
+    })
+  })
+})
