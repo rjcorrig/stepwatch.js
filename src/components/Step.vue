@@ -4,7 +4,7 @@
         {{ step.name }}
     </div>
     <div class="sw-runstep-timer">
-        {{ step.runSeconds }}
+        {{ runSecondsClock }}
     </div>
     <button class="sw-runstep-toggle sw-button">Start</button>
   </li>
@@ -19,6 +19,12 @@ export default {
     step: {
       type: models.Step,
       required: true
+    }
+  },
+  computed: {
+    runSecondsClock () {
+      var start = (this.step.runSeconds >= 3600 ? 11 : 14)
+      return new Date(1000 * this.step.runSeconds).toISOString().slice(start, 19)
     }
   }
 }
