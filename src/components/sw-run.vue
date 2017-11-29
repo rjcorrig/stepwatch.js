@@ -4,7 +4,7 @@
         {{ run.name }}
     </h1>
     <ol class="sw-runstep-list" v-if="run.steps.length">
-      <Step v-for="step in run.steps" :step="step" :key="step.id" />
+      <sw-step v-for="step in run.steps" :step="step" :key="step.id" />
     </ol>
     <p v-else>
       No steps defined
@@ -14,10 +14,10 @@
 
 <script>
 import models from '@/stepwatch/models'
-import Step from './Step.vue'
+import swStep from './sw-step.vue'
 
 export default {
-  name: 'Run',
+  name: 'sw-run',
   data () {
     var run = new models.Run()
     var step1 = new models.Step({ name: 'Walk for 5 seconds', totalSeconds: 5 })
@@ -33,7 +33,7 @@ export default {
     }
   },
   components: {
-    Step
+    swStep
   }
 }
 </script>

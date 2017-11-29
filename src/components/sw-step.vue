@@ -14,7 +14,7 @@
 import models from '@/stepwatch/models'
 
 export default {
-  name: 'Step',
+  name: 'sw-step',
   props: {
     step: {
       type: models.Step,
