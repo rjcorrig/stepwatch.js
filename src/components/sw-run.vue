@@ -1,8 +1,6 @@
 <template>
   <div class="sw-page sw-runner">
-    <h1 class="sw-header">
-        {{ run.name }}
-    </h1>
+    <h1 class="sw-header">{{ run.name }}</h1>
     <ol class="sw-runstep-list" v-if="run.steps.length">
       <sw-step v-for="step in run.steps" :step="step" :key="step.id" />
     </ol>
