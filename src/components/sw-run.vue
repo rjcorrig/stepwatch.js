@@ -38,18 +38,9 @@ export default {
 
 <style>
 .sw-page {
-  /*opacity: 0;*/
   min-width: 300px;
   padding: 5px;
   margin: auto;
-/*
-  transition-property: opacity;
-  transition-duration: 400ms;
-*/
-}
-
-.sw-page.sw-active {
-  opacity: 1;
 }
 
 .sw-page > h1 {
