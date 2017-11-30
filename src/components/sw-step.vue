@@ -1,12 +1,14 @@
 <template>
-  <li class="sw-step sw-card">
-    <div class="sw-step-text">
-        {{ step.name }}
+  <li class="sw-step">
+    <div class="sw-card">
+      <div class="sw-step-text">
+          {{ step.name }}
+      </div>
+      <div class="sw-step-timer">
+          {{ runSecondsClock }}
+      </div>
+      <button class="sw-step-toggle sw-button">Start</button>
     </div>
-    <div class="sw-step-timer">
-        {{ runSecondsClock }}
-    </div>
-    <button class="sw-step-toggle sw-button">Start</button>
   </li>
 </template>
 
@@ -44,7 +46,7 @@ export default {
 }
 
 .sw-card {
-  padding: 5px 5px 10px 5px;
+  padding: 10px 5px 10px 5px;
   text-align: center;
   width: 300px;
   margin: 10px auto;
