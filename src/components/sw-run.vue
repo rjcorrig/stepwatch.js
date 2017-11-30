@@ -37,27 +37,4 @@ export default {
 </script>
 
 <style scoped>
-.sw-page {
-  min-width: 300px;
-  padding: 5px;
-  margin: auto;
-}
-
-.sw-page > h1 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.sw-page div {
-  text-align: center;
-  margin: 5px;
-}
-
-ol.sw-card-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
 </style>

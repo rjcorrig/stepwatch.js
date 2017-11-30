@@ -1,3 +1,20 @@
+.sw-page {
+  min-width: 300px;
+  padding: 5px;
+  margin: auto;
+}
+
+.sw-page > h1 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+ol.sw-card-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 
 .sw-card {
   padding: 10px 5px 10px 5px;
