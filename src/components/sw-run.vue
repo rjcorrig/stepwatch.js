@@ -1,7 +1,7 @@
 <template>
-  <div class="sw-page sw-runner">
+  <div class="sw-page sw-run">
     <h1 class="sw-header">{{ run.name }}</h1>
-    <ol class="sw-runstep-list" v-if="run.steps.length">
+    <ol class="sw-card-list" v-if="run.steps.length">
       <sw-step v-for="step in run.steps" :step="step" :key="step.id" />
     </ol>
     <p v-else>
@@ -54,7 +54,7 @@ export default {
   margin: 5px;
 }
 
-ol.sw-runstep-list {
+ol.sw-card-list {
   list-style-type: none;
   padding: 0;
   margin: 0;

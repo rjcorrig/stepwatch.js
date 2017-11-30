@@ -1,12 +1,12 @@
 <template>
-  <li class="sw-runstep sw-card">
-    <div class="sw-runstep-text">
+  <li class="sw-step sw-card">
+    <div class="sw-step-text">
         {{ step.name }}
     </div>
-    <div class="sw-runstep-timer">
+    <div class="sw-step-timer">
         {{ runSecondsClock }}
     </div>
-    <button class="sw-runstep-toggle sw-button">Start</button>
+    <button class="sw-step-toggle sw-button">Start</button>
   </li>
 </template>
 
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style>
-.sw-runstep-timer {
+.sw-step-timer {
   margin: 30px auto;
   font-size: xx-large;
 }
