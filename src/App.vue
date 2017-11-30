@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   font-size: 14px;

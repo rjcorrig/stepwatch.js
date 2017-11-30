@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .sw-page {
   min-width: 300px;
   padding: 5px;
