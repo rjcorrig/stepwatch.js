@@ -37,19 +37,4 @@ export default {
   margin: 30px auto;
   font-size: xx-large;
 }
-
-.sw-button {
-  margin: auto;
-  font-size: xx-large;
-  height: 1.5em;
-  width: 6em;
-}
-
-.sw-card {
-  padding: 10px 5px 10px 5px;
-  text-align: center;
-  width: 300px;
-  margin: 10px auto;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
 </style>
