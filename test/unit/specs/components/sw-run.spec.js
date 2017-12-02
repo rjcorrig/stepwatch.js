@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import swRun from '@/components/sw-run'
 import models from '@/stepwatch/models'
+import services from '@/plugins/services'
+
+Vue.use(services)
 
 describe('sw-run.vue', () => {
   var run
