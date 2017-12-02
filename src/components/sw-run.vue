@@ -16,18 +16,10 @@ import swStep from './sw-step.vue'
 
 export default {
   name: 'sw-run',
-  data () {
-    var run = new models.Run()
-    var step1 = new models.Step({ name: 'Walk for 5 seconds', totalSeconds: 5 })
-    var step2 = new models.Step({ name: 'Run for 15 seconds', totalSeconds: 15 })
-    var step3 = new models.Step({ name: 'Walk for 5 seconds', totalSeconds: 5 })
-
-    run.steps = [ step1, step2, step3 ]
-    run.steps.forEach(function (step, i) {
-      step.id = i
-    })
-    return {
-      run: run
+  props: {
+    run: {
+      type: models.Run,
+      required: true
     }
   },
   components: {
