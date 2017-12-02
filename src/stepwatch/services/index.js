@@ -18,8 +18,12 @@
 
 import DataStore from './datastore'
 
-var datastore = new DataStore()
+var dataStore
 
-export default {
-  DataStore: datastore
+export default function (options) {
+  dataStore = dataStore || new DataStore(options.storage)
+
+  return {
+    dataStore: dataStore
+  }
 }

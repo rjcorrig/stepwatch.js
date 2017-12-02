@@ -1,5 +1,5 @@
 <template>
-  <div class="sw-page sw-run">
+  <div v-if="run" class="sw-page sw-run">
     <h1 class="sw-header">{{ run.name }}</h1>
     <ol class="sw-card-list" v-if="run.steps.length">
       <sw-step v-for="step in run.steps" :step="step" :key="step.id" />
@@ -8,18 +8,21 @@
       No steps defined
     </p>
   </div>
+  <div v-else class="sw-page sw-run">
+    <h1 class="sw-header">Run not found</h1>
+  </div>
 </template>
 
 <script>
-import models from '@/stepwatch/models'
 import swStep from './sw-step.vue'
 
 export default {
   name: 'sw-run',
-  props: {
-    run: {
-      type: models.Run,
-      required: true
+  props: [ 'id' ],
+  data () {
+    console.log(this.$services)
+    return {
+      run: this.$services.dataStore.getRun(this.id)
     }
   },
   components: {
