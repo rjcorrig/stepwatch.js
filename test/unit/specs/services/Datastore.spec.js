@@ -72,6 +72,58 @@ describe('DataStore', function () {
     })
   })
 
+  describe('getRuns', function () {
+    var dataStore
+    before(function () {
+      dataStore = new DataStore(sessionStorage)
+      var program = dataStore.createProgram()
+      dataStore.createRun(program)
+    })
+
+    it('should return all runs if no filter passed', function () {
+      var runs = dataStore.getRuns()
+      expect(runs).to.be.instanceof(Array)
+      expect(runs.length).to.equal(2)
+    })
+
+    it('should return matching runs if a filter function was passed', function () {
+      var runs = dataStore.getRuns(function (run) {
+        return run.status === 'program'
+      })
+      expect(runs).to.be.instanceof(Array)
+      expect(runs.length).to.equal(1)
+    })
+
+    it('should return an empty array if no runs were matched', function () {
+      var runs = dataStore.getRuns(function (run) {
+        return run.status === 'nonesuch'
+      })
+      expect(runs).to.be.instanceof(Array)
+      expect(runs.length).to.equal(0)
+    })
+  })
+
+  describe('getRun', function () {
+    var dataStore, program
+    before(function () {
+      dataStore = new DataStore(sessionStorage)
+      program = dataStore.createProgram()
+      program.id = uuid4()
+      dataStore.createRun(program)
+    })
+
+    it('should retrieve a run if an id is matched', function () {
+      var run = dataStore.getRun(program.id)
+      expect(run).to.be.instanceof(Run)
+      expect(run.id).to.equal(program.id)
+    })
+
+    it('should return null if no id is matched', function () {
+      var run = dataStore.getRun('nosuchid')
+      expect(run).to.equal(undefined)
+    })
+  })
+
   describe('deleteRun', function () {
     it('deletes the supplied run', function () {
       var dataStore = new DataStore(sessionStorage)
