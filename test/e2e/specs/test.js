@@ -9,10 +9,10 @@ module.exports = {
     const devServer = browser.globals.devServerURL
 
     browser
-      .url(devServer)
+      .url(devServer + '/#/run/foo')
       .waitForElementVisible('#app', 5000)
       .assert.elementPresent('.sw-run')
-      .assert.containsText('h1', 'New Program')
+      .assert.containsText('h1', 'Run not found')
       .end()
   }
 }
