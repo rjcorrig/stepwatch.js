@@ -11,7 +11,7 @@ module.exports = {
     browser
       .url(devServer)
       .waitForElementVisible('#app', 5000)
-      .assert.elementPresent('.sw-runner')
+      .assert.elementPresent('.sw-run')
       .assert.containsText('h1', 'New Program')
       .end()
   }
