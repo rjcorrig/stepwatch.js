@@ -36,6 +36,22 @@ DataStore.prototype.createRun = function (run) {
   return newRun
 }
 
+DataStore.prototype.getRuns = function (filter) {
+  var filterFunc = filter || function (run) {
+    return true
+  }
+
+  return this.runs.filter(filterFunc)
+}
+
+DataStore.prototype.getRun = function (id) {
+  var runs = this.getRuns(function (run) {
+    return run.id === id
+  })
+
+  return runs[0]
+}
+
 DataStore.prototype.deleteRun = function (run) {
   var idx = this.runs.indexOf(run)
 
