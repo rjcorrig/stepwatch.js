@@ -4,13 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import services from '@/plugins/services'
+import DataStore from '@/stepwatch/services/datastore'
 
 import './assets/css/global.css'
 
 Vue.config.productionTip = false
 
 Vue.use(services, {
-  storage: localStorage
+  dataStore: new DataStore(localStorage)
 })
 
 /* eslint-disable no-new */
