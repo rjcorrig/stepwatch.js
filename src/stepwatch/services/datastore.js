@@ -17,7 +17,9 @@
 */
 
 import Run from '@/stepwatch/models/run'
+import Step from '@/stepwatch/models/step'
 import uuid4 from 'uuid/v4'
+import assert from 'assert'
 
 export default function DataStore (storage) {
   this.runs = []
@@ -79,5 +81,25 @@ DataStore.prototype.save = function () {
     }
 
     this.storage.setItem('runDb', JSON.stringify(this.runs))
+  }
+
+  DataStore.prototype.seed = function (runs) {
+    try {
+      assert(runs instanceof Array)
+      for (var run of runs) {
+        assert(run instanceof Run)
+        for (var step of run.steps) {
+          assert(step instanceof Step)
+        }
+      }
+    } catch (e) {
+      if (e.name === 'AssertionError') {
+        throw new Error('Invalid data passed to DataStore.seed')
+      } else {
+        throw e
+      }
+    }
+
+    this.runs = runs
   }
 }

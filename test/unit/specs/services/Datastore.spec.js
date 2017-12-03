@@ -219,4 +219,66 @@ describe('DataStore', function () {
       sessionStorage.clear()
     })
   })
+
+  describe('seed', function () {
+    beforeEach(function () {
+      sessionStorage.clear()
+    })
+
+    it('initializes the data from a Run array', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var runs = [
+        new Run({
+          id: 'foo',
+          name: 'a name',
+          steps: [
+            new Step({
+              name: 'step name'
+            })
+          ]
+        }),
+        new Run({
+          id: 'bar',
+          name: 'another name',
+          steps: [
+            new Step({
+              name: 'another step name'
+            })
+          ]
+        })
+      ]
+
+      dataStore.seed(runs)
+
+      expect(dataStore.runs).to.be.instanceof(Array)
+      expect(dataStore.runs.length).to.equal(runs.length)
+      expect(dataStore.runs[0]).to.be.instanceof(Run)
+    })
+
+    it('throws an error if a Run array is not passed', function () {
+      var dataStore = new DataStore(sessionStorage)
+      var runs = [
+        {
+          id: 'foo',
+          name: 'a name',
+          steps: [
+            {
+              name: 'step name'
+            }
+          ]
+        },
+        {
+          id: 'bar',
+          name: 'another name',
+          steps: [
+            {
+              name: 'another step name'
+            }
+          ]
+        }
+      ]
+
+      expect(DataStore.prototype.seed.bind(dataStore, runs)).to.throw(/Invalid data/)
+    })
+  })
 })
