@@ -21,8 +21,7 @@ import DataStore from './datastore'
 var dataStore
 
 export default function (options) {
-  var storageOption = options && options.storage
-  dataStore = dataStore || new DataStore(storageOption)
+  dataStore = dataStore || options.dataStore || new DataStore()
 
   return {
     dataStore: dataStore

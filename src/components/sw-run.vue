@@ -20,7 +20,6 @@ export default {
   name: 'sw-run',
   props: [ 'id' ],
   data () {
-    console.log(this.$services)
     return {
       run: this.$services.dataStore.getRun(this.id)
     }

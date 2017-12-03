@@ -1,10 +1,14 @@
 import servicesFn from '@/stepwatch/services'
 
+var services
+
 export default {
+  services: services,
   install: function (Vue, options) {
-    var _services = servicesFn(options)
+    services = servicesFn(options)
+    console.log('service plugin install: ' + services)
     Object.defineProperty(Vue.prototype, '$services', {
-      get () { return _services }
+      get () { return services }
     })
   }
 }
