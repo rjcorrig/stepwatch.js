@@ -19,6 +19,11 @@ import swStep from './sw-step.vue'
 export default {
   name: 'sw-run',
   props: [ 'id' ],
+  watch: {
+    '$route' (to, from) {
+      this.run = this.$services.dataStore.getRun(to.params.id)
+    }
+  },
   data () {
     return {
       run: this.$services.dataStore.getRun(this.id)
