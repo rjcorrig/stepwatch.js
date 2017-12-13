@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import swRun from '@/components/sw-run'
+import swRunList from '@/components/sw-run-list'
 import swHome from '@/components/sw-home'
 
 Vue.use(Router)
@@ -11,6 +12,12 @@ export default new Router({
       path: '/',
       name: 'sw-home',
       component: swHome
+    },
+    {
+      path: '/runs/:type',
+      name: 'sw-run-list',
+      component: swRunList,
+      props: true
     },
     {
       path: '/run/:id',
