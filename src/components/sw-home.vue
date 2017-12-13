@@ -10,7 +10,8 @@
           <div class="sw-category-count">
             {{ programCount }}
           </div>
-          <button class="sw-button">{{ whereNext }}</button>
+          <button v-if="programCount === 0" v-on:click="createProgram()" class="sw-button">Create New</button>          
+          <button v-else v-on:click="listPrograms()" class="sw-button">Go to List</button>          
         </div>
       </li>
     </ol>
@@ -37,6 +38,13 @@ export default {
       } else {
         return 'Go to List'
       }
+    }
+  },
+  methods: {
+    createProgram () {
+    },
+    listPrograms () {
+      this.$router.push('/runs/program')
     }
   }
 }
