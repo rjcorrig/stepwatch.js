@@ -28,7 +28,7 @@ export default {
   color: #00B7FF;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active {
   transition: opacity .4s;
 }
 
