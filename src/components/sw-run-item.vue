@@ -1,12 +1,8 @@
 <template>
   <li class="sw-run-item">
     <div class="sw-card">
-      <div class="sw-run-text">
-          {{ run.name }}
-      </div>
-      <div class="sw-run-timer">
-          {{ runSecondsClock }}
-      </div>
+      <div class="sw-run-text">{{ run.name }}</div>
+      <div class="sw-run-timer">{{ runSecondsClock }}</div>
       <button class="sw-button">Start</button>
     </div>
   </li>
