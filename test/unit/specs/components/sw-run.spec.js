@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import swRun from '@/components/sw-run'
-import models from '@/stepwatch/models'
+import seedData from '@/stepwatch/models/seedData'
 import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
 
@@ -15,17 +15,8 @@ describe('sw-run.vue', () => {
 
   before(() => {
     // Set up the test data
-    program = dataStore.createProgram()
-    program.name = 'Sprint'
-    program.id = 'foo'
-    var step1 = new models.Step({ name: 'Walk for 5 seconds', totalSeconds: 5 })
-    var step2 = new models.Step({ name: 'Run for 15 seconds', totalSeconds: 15 })
-    var step3 = new models.Step({ name: 'Walk for 5 seconds', totalSeconds: 5 })
-
-    program.steps = [ step1, step2, step3 ]
-    program.steps.forEach(function (step, i) {
-      step.id = i
-    })
+    dataStore.seed(seedData)
+    program = dataStore.getRun('foo')
   })
 
   it('should render run name in header if run found', () => {
