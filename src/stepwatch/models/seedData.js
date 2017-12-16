@@ -152,6 +152,35 @@ export default [
       })
     ]
   }),
+  // A running pie program, 10m in
+  new Run({
+    id: 'garply',
+    name: 'Make a pie',
+    status: 'created',
+    totalSeconds: 60 * 60,
+    runSeconds: 10 * 60,
+    currentStep: 0,
+    startTime: Date.now() - 10 * 1000 * 60,
+    endTime: null,
+    steps: [
+      new Step({
+        name: 'Bake at 350 for 40 minutes',
+        status: 'created',
+        totalSeconds: 60 * 40,
+        runSeconds: 10 * 60,
+        startTime: Date.now() - 10 * 1000 * 60,
+        endTime: null
+      }),
+      new Step({
+        name: 'Cool for 20 minutes',
+        status: 'created',
+        totalSeconds: 20 * 60,
+        runSeconds: 0,
+        startTime: null,
+        endTime: null
+      })
+    ]
+  }),
   // A canceled run of the pie program
   new Run({
     id: 'corge',
@@ -182,7 +211,6 @@ export default [
     ]
   }),
   // A completed sprint
-  // A paused run of the Sprint program, paused just now
   new Run({
     id: 'grault',
     name: 'Sprint',
@@ -216,6 +244,72 @@ export default [
         runSeconds: 5,
         startTime: Date.now() - (30 * 60 - 20) * 1000,
         endTime: Date.now() - (30 * 60 - 25) * 1000
+      })
+    ]
+  }),
+  // A completed run of the pie program
+  new Run({
+    id: 'fred',
+    name: 'Make a pie',
+    status: 'canceled',
+    totalSeconds: 60 * 60,
+    runSeconds: 60 * 60,
+    currentStep: 1,
+    startTime: Date.now() - 3600 * 1000,
+    endTime: Date.now(),
+    steps: [
+      new Step({
+        name: 'Bake at 350 for 40 minutes',
+        status: 'complete',
+        totalSeconds: 60 * 40,
+        runSeconds: 60 * 40,
+        startTime: Date.now() - 3600 * 1000,
+        endTime: Date.now() - 20 * 60 * 1000
+      }),
+      new Step({
+        name: 'Cool for 20 minutes',
+        status: 'complete',
+        totalSeconds: 20 * 60,
+        runSeconds: 20 * 60,
+        startTime: Date.now() - 20 * 60 * 1000,
+        endTime: Date.now()
+      })
+    ]
+  }),
+  // A canceled sprint
+  new Run({
+    id: 'waldo',
+    name: 'Sprint',
+    status: 'canceled',
+    totalSeconds: 5 + 15 + 5,
+    runSeconds: 1,
+    currentStep: 0,
+    startTime: Date.now() - 1000,
+    endTime: Date.now(),
+    steps: [
+      new Step({
+        name: 'Walk for 5 seconds',
+        status: 'canceled',
+        totalSeconds: 5,
+        runSeconds: 1,
+        startTime: Date.now() - 1000,
+        endTime: Date.now()
+      }),
+      new Step({
+        name: 'Run for 15 seconds',
+        status: 'canceled',
+        totalSeconds: 15,
+        runSeconds: 0,
+        startTime: null,
+        endTime: null
+      }),
+      new Step({
+        name: 'Walk for 5 seconds',
+        status: 'complete',
+        totalSeconds: 5,
+        runSeconds: 0,
+        startTime: null,
+        endTime: null
       })
     ]
   })
