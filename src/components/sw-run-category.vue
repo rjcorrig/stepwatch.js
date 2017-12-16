@@ -1,12 +1,8 @@
 <template>
   <li>
     <div class="sw-card sw-run-category">
-      <div class="sw-run-category-text">
-        {{ title }}
-      </div>
-      <div class="sw-run-category-count">
-        {{ runs.length }}
-      </div>
+      <div class="sw-run-category-text">{{ title }}</div>
+      <div class="sw-run-category-count">{{ runs.length }}</div>
       <button v-if="runs.length > 0" v-on:click="listRuns()" class="sw-button">Go to List</button>
     </div>
   </li>
