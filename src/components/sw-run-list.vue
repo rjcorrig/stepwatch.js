@@ -4,10 +4,7 @@
     <ol class="sw-card-list" v-if="runs.length">
       <sw-run-item v-for="run in runs" :run="run" :key="run.id" />
     </ol>
-    <p v-else>
-      No runs of type {{ type }} found
-    </p>
-    <button class="sw-button">Create New</button>
+    <button v-if="type === 'program'" class="sw-button">Create New</button>
   </div>
 </template>
 
@@ -19,17 +16,31 @@ export default {
   props: [ 'type' ],
   data () {
     var runs, title
-    if (this.type === 'program') {
-      title = 'Programs Defined'
-      runs = this.$services.dataStore.getRuns(
-        r => r.status === 'program'
-      )
-    } else {
-      title = 'Run History'
-      runs = this.$services.dataStore.getRuns(
-        r => r.status !== 'program'
-      )
+
+    switch (this.type) {
+      case 'program': {
+        title = 'Programs Defined'
+        runs = this.$services.dataStore.getRuns(
+          r => r.status === 'program'
+        )
+        break
+      }
+      case 'running': {
+        title = 'Runs in progress'
+        runs = this.$services.dataStore.getRuns(
+          r => ['paused', 'running', 'created'].indexOf(r.status) >= 0
+        )
+        break
+      }
+      case 'history': {
+        title = 'Run history'
+        runs = this.$services.dataStore.getRuns(
+          r => ['canceled', 'complete'].indexOf(r.status) >= 0
+        )
+        break
+      }
     }
+
     return {
       runs: runs,
       title: title

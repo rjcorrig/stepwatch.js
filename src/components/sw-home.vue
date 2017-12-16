@@ -14,6 +14,28 @@
           <button v-else v-on:click="listPrograms()" class="sw-button">Go to List</button>          
         </div>
       </li>
+      <li>
+        <div class="sw-card">
+          <div class="sw-category-text">
+            Runs in progress
+          </div>
+          <div class="sw-category-count">
+            {{ runningCount }}
+          </div>
+          <button v-if="runningCount > 0" v-on:click="listRunning()" class="sw-button">Go to List</button>          
+        </div>
+      </li>
+      <li>
+        <div class="sw-card">
+          <div class="sw-category-text">
+            Run history
+          </div>
+          <div class="sw-category-count">
+            {{ historyCount }}
+          </div>
+          <button v-if="historyCount > 0" v-on:click="listHistory()" class="sw-button">Go to List</button>          
+        </div>
+      </li>
     </ol>
   </div>
 </template>
@@ -23,21 +45,24 @@ export default {
   name: 'sw-home',
   data () {
     return {
-      runs: this.$services.dataStore.getRuns(
-        r => r.status === 'program'
-      )
+      runs: this.$services.dataStore.getRuns()
     }
   },
   computed: {
     programCount () {
-      return this.runs.length
+      return this.runs.filter(
+        r => r.status === 'program'
+      ).length
     },
-    whereNext () {
-      if (this.programCount === 0) {
-        return 'Create New'
-      } else {
-        return 'Go to List'
-      }
+    runningCount () {
+      return this.runs.filter(
+        r => ['paused', 'running', 'created'].indexOf(r.status) >= 0
+      ).length
+    },
+    historyCount () {
+      return this.runs.filter(
+        r => ['canceled', 'complete'].indexOf(r.status) >= 0
+      ).length
     }
   },
   methods: {
@@ -45,6 +70,12 @@ export default {
     },
     listPrograms () {
       this.$router.push('/runs/program')
+    },
+    listRunning () {
+      this.$router.push('/runs/running')
+    },
+    listHistory () {
+      this.$router.push('/runs/history')
     }
   }
 }
