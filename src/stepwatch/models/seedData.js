@@ -156,7 +156,7 @@ export default [
   new Run({
     id: 'garply',
     name: 'Make a pie',
-    status: 'created',
+    status: 'running',
     totalSeconds: 60 * 60,
     runSeconds: 10 * 60,
     currentStep: 0,
@@ -165,7 +165,7 @@ export default [
     steps: [
       new Step({
         name: 'Bake at 350 for 40 minutes',
-        status: 'created',
+        status: 'running',
         totalSeconds: 60 * 40,
         runSeconds: 10 * 60,
         startTime: Date.now() - 10 * 1000 * 60,
