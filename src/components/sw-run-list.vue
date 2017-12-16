@@ -13,7 +13,19 @@ import swRunItem from './sw-run-item.vue'
 
 export default {
   name: 'sw-run-list',
-  props: [ 'type', 'title' ],
+  props: {
+    type: {
+      type: String
+    },
+    title: {
+      type: String,
+      default: 'All runs and programs'
+    },
+    filter: {
+      type: Function,
+      default: r => true
+    }
+  },
   data () {
     var runs
 

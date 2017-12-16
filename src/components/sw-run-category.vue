@@ -15,9 +15,19 @@
 <script>
 export default {
   name: 'sw-run-category',
-  props: [
-    'title', 'type', 'filter'
-  ],
+  props: {
+    type: {
+      type: String
+    },
+    title: {
+      type: String,
+      default: 'All runs and programs'
+    },
+    filter: {
+      type: Function,
+      default: r => true
+    }
+  },
   data () {
     return {
       runs: this.$services.dataStore.getRuns(this.filter)
