@@ -14,7 +14,7 @@ export default new Router({
       component: swHome
     },
     {
-      path: '/runs/:type',
+      path: '/runs',
       name: 'sw-run-list',
       component: swRunList,
       props: true

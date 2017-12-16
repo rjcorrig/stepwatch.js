@@ -13,27 +13,24 @@ import swRunItem from './sw-run-item.vue'
 
 export default {
   name: 'sw-run-list',
-  props: [ 'type' ],
+  props: [ 'type', 'title' ],
   data () {
-    var runs, title
+    var runs
 
     switch (this.type) {
       case 'program': {
-        title = 'Programs Defined'
         runs = this.$services.dataStore.getRuns(
           r => r.status === 'program'
         )
         break
       }
       case 'running': {
-        title = 'Runs in progress'
         runs = this.$services.dataStore.getRuns(
           r => ['paused', 'running', 'created'].indexOf(r.status) >= 0
         )
         break
       }
       case 'history': {
-        title = 'Run history'
         runs = this.$services.dataStore.getRuns(
           r => ['canceled', 'complete'].indexOf(r.status) >= 0
         )
@@ -42,8 +39,7 @@ export default {
     }
 
     return {
-      runs: runs,
-      title: title
+      runs: runs
     }
   },
   components: {
