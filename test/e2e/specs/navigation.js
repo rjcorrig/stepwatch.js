@@ -17,6 +17,9 @@ module.exports = {
       .back()
       .waitForElementVisible('.sw-home', 5000)
       .assert.containsText('h1', 'Welcome')
+      .forward()
+      .waitForElementVisible('.sw-run-list', 5000)
+      .assert.containsText('h1', 'Programs')
       .end()
   }
 }
