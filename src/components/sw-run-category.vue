@@ -32,12 +32,7 @@ export default {
   methods: {
     listRuns () {
       this.$router.push({
-        name: 'sw-run-list',
-        params: {
-          type: this.type,
-          title: this.title,
-          filter: this.filter
-        }
+        path: '/runs/' + this.type
       })
     }
   }
