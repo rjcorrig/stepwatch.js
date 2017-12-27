@@ -1,9 +1,15 @@
 <template>
   <li class="sw-run-item">
-    <div class="sw-card">
+    <div class="sw-card" v-on:click="viewDetails()" >
       <div class="sw-run-text">{{ run.name }}</div>
-      <div class="sw-run-timer">{{ runSecondsClock }}</div>
-      <button v-on:click="viewDetails()" class="sw-button">Details</button>
+      <div class="sw-run-counters">
+        <div class="sw-run-steps-counter">{{ stepsCompleted }} / {{ run.steps.length }}</div>
+        <div class="sw-run-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
+        <div class="sw-run-progress">
+          <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>
+        </div>
+      </div>
+      <div class="sw-run-actions"></div>
     </div>
   </li>
 </template>
@@ -20,13 +26,19 @@ export default {
     }
   },
   computed: {
+    stepsCompleted () {
+      return this.run.currentStep || 0
+    },
+    percentComplete () {
+      return 100 * (this.run.runSeconds / this.run.totalSeconds)
+    },
     runSecondsClock () {
-      var total = 0
-      for (var step of this.run.steps) {
-        total += step.runSeconds
-      }
-      var start = (total >= 3600 ? 11 : 14)
-      return new Date(1000 * total).toISOString().slice(start, 19)
+      var start = this.run.runSeconds >= 3600 ? 11 : 14
+      return new Date(1000 * this.run.runSeconds).toISOString().slice(start, 19)
+    },
+    totalSecondsClock () {
+      var start = this.run.totalSeconds >= 3600 ? 11 : 14
+      return new Date(1000 * this.run.totalSeconds).toISOString().slice(start, 19)
     }
   },
   methods: {
@@ -43,8 +55,19 @@ export default {
 </script>
 
 <style scoped>
+.sw-run-counters {
+  margin: 10px auto;
+}
+.sw-run-steps-counter {
+  float: left;
+}
 .sw-run-timer {
-  margin: 30px auto;
-  font-size: xx-large;
+  float: right;
+}
+.sw-run-progress {
+  clear: both;
+}
+progress {
+  width: 100%;
 }
 </style>
