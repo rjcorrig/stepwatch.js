@@ -1,9 +1,8 @@
 <template>
   <li>
-    <div class="sw-card sw-run-category">
+    <div class="sw-card sw-run-category" v-on:click="listRuns()">
       <div class="sw-run-category-text">{{ title }}</div>
       <div class="sw-run-category-count">{{ runs.length }}</div>
-      <button v-if="runs.length > 0" v-on:click="listRuns()" class="sw-button">Go to List</button>
     </div>
   </li>
 </template>
@@ -41,7 +40,7 @@ export default {
 
 <style scoped>
 .sw-run-category-count {
-  margin: 30px auto;
+  margin: 10px auto;
   font-size: xx-large;
 }
 </style>
