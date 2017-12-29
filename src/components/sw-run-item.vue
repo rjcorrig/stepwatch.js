@@ -2,7 +2,8 @@
   <li class="sw-run-item">
     <div class="sw-card" v-on:click="viewDetails()" >
       <div>
-      <div class="sw-run-text">{{ run.name }}</div><i class="material-icons" :title="run.status">{{ statusIcon }}</i>
+        <div class="sw-run-text">{{ run.name }}</div>
+        <i class="material-icons" :title="run.status">{{ statusIcon }}</i>
       </div>
       <div class="sw-run-counters">
         <div class="sw-run-progress">
