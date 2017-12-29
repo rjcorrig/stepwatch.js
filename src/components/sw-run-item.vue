@@ -1,10 +1,10 @@
 <template>
   <li class="sw-run-item">
     <div class="sw-card" v-on:click="viewDetails()" >
-      <div>
+      <h2>
         <div class="sw-card-title">{{ run.name }}</div>
         <i class="material-icons" :title="run.status">{{ statusIcon }}</i>
-      </div>
+      </h2>
       <div class="sw-counters">
         <div class="sw-progress">
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>

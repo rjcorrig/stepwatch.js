@@ -1,10 +1,10 @@
 <template>
   <li class="sw-step">
     <div class="sw-card">
-      <div>
+      <h2>
         <div class="sw-card-title">{{ step.name }}</div>
         <i class="material-icons" :title="step.status">{{ statusIcon }}</i>
-      </div>
+      </h2>
       <div class="sw-counters">
         <div class="sw-progress">
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>

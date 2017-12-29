@@ -1,7 +1,9 @@
 <template>
   <li>
     <div class="sw-card sw-run-category" v-on:click="listRuns()">
-      <div class="sw-run-category-text">{{ title }}</div>
+      <h2>
+        <div class="sw-run-category-text">{{ title }}</div>
+      </h2>
       <div class="sw-run-category-count">{{ runs.length }}</div>
     </div>
   </li>

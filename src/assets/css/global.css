@@ -10,6 +10,11 @@
   margin-bottom: 10px;
 }
 
+.sw-card > h2 {
+  text-align: center;
+  margin-top: auto;  
+}
+
 ol.sw-card-list {
   list-style-type: none;
   padding: 0;
