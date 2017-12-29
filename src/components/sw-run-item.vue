@@ -10,13 +10,13 @@
         <div class="sw-run-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
       </div>
       <div class="sw-run-actions">
-        <button class="sw-action-button" title="Copy">A</button>
-        <button class="sw-action-button" title="Edit">A</button>
-        <button class="sw-action-button" title="Delete">A</button>
-        <button class="sw-action-button" title="Cancel">A</button>
-        <button class="sw-action-button" title="Pause">A</button>
-        <button class="sw-action-button" title="Start">A</button>
-        <button class="sw-action-button" title="Create">A</button>
+        <button class="sw-action-button" title="Copy"><i class="material-icons">content_copy</i></button>
+        <button class="sw-action-button" title="Edit"><i class="material-icons">create</i></button>
+        <button class="sw-action-button" title="Delete"><i class="material-icons">delete</i></button>
+        <button class="sw-action-button" title="Cancel"><i class="material-icons">cancel</i></button>
+        <button class="sw-action-button" title="Pause"><i class="material-icons">pause</i></button>
+        <button class="sw-action-button" title="Start"><i class="material-icons">play_arrow</i></button>
+        <button class="sw-action-button" title="Create"><i class="material-icons">star</i></button>
       </div>
     </div>
   </li>
