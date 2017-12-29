@@ -2,16 +2,16 @@
   <li class="sw-step">
     <div class="sw-card">
       <div>
-        <div class="sw-step-text">{{ step.name }}</div>
+        <div class="sw-card-title">{{ step.name }}</div>
         <i class="material-icons" :title="step.status">{{ statusIcon }}</i>
       </div>
-      <div class="sw-step-counters">
-        <div class="sw-step-progress">
+      <div class="sw-counters">
+        <div class="sw-progress">
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>
         </div>
-        <div class="sw-step-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
+        <div class="sw-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
       </div>
-      <div class="sw-step-actions">
+      <div class="sw-actions">
         <button v-if="canCopy" class="sw-action-button" title="Copy"><i class="material-icons">content_copy</i></button>
         <button v-if="canEdit" class="sw-action-button" title="Edit"><i class="material-icons">create</i></button>
         <button v-if="canDelete" class="sw-action-button" title="Delete"><i class="material-icons">delete</i></button>
@@ -83,32 +83,4 @@ export default {
 </script>
 
 <style scoped>
-.sw-step-text {
-  display: inline-block;
-  vertical-align: middle;
-}
-.sw-step-text+i.material-icons {
-  margin-left: 5px;
-  vertical-align: middle;
-}
-.sw-step-counters {
-  margin: 10px auto;
-}
-.sw-step-timer {
-  float: right;
-}
-progress {
-  width: 100%;
-}
-.sw-step-actions {
-  clear: both;
-  text-align: right;
-  margin-bottom: -10px;
-}
-.sw-action-button {
-  margin: 0;
-  border: 0;
-  background-color: white;
-  font-size: xx-large;
-}
 </style>

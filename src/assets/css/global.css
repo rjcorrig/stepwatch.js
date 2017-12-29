@@ -30,3 +30,37 @@ ol.sw-card-list {
   height: 1.5em;
   width: 6em;
 }
+
+.sw-card-title {
+  display: inline-block;
+  vertical-align: middle;
+}
+.sw-card-title+i.material-icons {
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.sw-counters {
+  margin: 10px auto;
+}
+
+.sw-timer {
+  float: right;
+}
+
+.sw-progress progress {
+  width: 100%;
+}
+
+.sw-actions {
+  clear: both;
+  text-align: right;
+  margin-bottom: -10px;
+}
+
+.sw-action-button {
+  margin: 0;
+  border: 0;
+  background-color: white;
+  font-size: xx-large;
+}
