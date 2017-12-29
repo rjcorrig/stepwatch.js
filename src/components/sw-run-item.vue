@@ -3,13 +3,21 @@
     <div class="sw-card" v-on:click="viewDetails()" >
       <div class="sw-run-text">{{ run.name }}</div>
       <div class="sw-run-counters">
-        <div class="sw-run-steps-counter">{{ stepsCompleted }} / {{ run.steps.length }}</div>
-        <div class="sw-run-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
         <div class="sw-run-progress">
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>
         </div>
+        <div class="sw-run-steps-counter">{{ stepsCompleted }} / {{ run.steps.length }}</div>
+        <div class="sw-run-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
       </div>
-      <div class="sw-run-actions"></div>
+      <div class="sw-run-actions">
+        <button class="sw-action-button" title="Copy">A</button>
+        <button class="sw-action-button" title="Edit">A</button>
+        <button class="sw-action-button" title="Delete">A</button>
+        <button class="sw-action-button" title="Cancel">A</button>
+        <button class="sw-action-button" title="Pause">A</button>
+        <button class="sw-action-button" title="Start">A</button>
+        <button class="sw-action-button" title="Create">A</button>
+      </div>
     </div>
   </li>
 </template>
@@ -64,10 +72,18 @@ export default {
 .sw-run-timer {
   float: right;
 }
-.sw-run-progress {
+.sw-run-actions {
   clear: both;
+  text-align: right;
+  margin-bottom: -10px;
 }
 progress {
   width: 100%;
+}
+.sw-action-button {
+  margin: 0;
+  border: 0;
+  background-color: white;
+  font-size: xx-large;
 }
 </style>
