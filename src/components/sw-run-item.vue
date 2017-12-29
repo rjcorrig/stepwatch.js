@@ -1,7 +1,9 @@
 <template>
   <li class="sw-run-item">
     <div class="sw-card" v-on:click="viewDetails()" >
-      <div class="sw-run-text">{{ run.name }} <i class="material-icons">{{ statusIcon }}</i></div>
+      <div>
+      <div class="sw-run-text">{{ run.name }}</div><i class="material-icons" :title="run.status">{{ statusIcon }}</i>
+      </div>
       <div class="sw-run-counters">
         <div class="sw-run-progress">
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>
@@ -95,7 +97,12 @@ export default {
 </script>
 
 <style scoped>
-.sw-run-text > i.material-icons {
+.sw-run-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+.sw-run-text+i.material-icons {
+  margin-left: 5px;
   vertical-align: middle;
 }
 .sw-run-counters {
