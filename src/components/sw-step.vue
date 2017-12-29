@@ -33,6 +33,10 @@ export default {
     step: {
       type: models.Step,
       required: true
+    },
+    isCurrentStep: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -67,13 +71,13 @@ export default {
       return false
     },
     canCancel () {
-      return ['paused', 'running'].indexOf(this.step.status) >= 0
+      return this.isCurrentStep && ['paused', 'running'].indexOf(this.step.status) >= 0
     },
     canPause () {
-      return this.step.status === 'running'
+      return this.isCurrentStep && this.step.status === 'running'
     },
     canStart () {
-      return ['paused', 'created'].indexOf(this.step.status) >= 0
+      return this.isCurrentStep && ['paused', 'created'].indexOf(this.step.status) >= 0
     },
     canCreate () {
       return false
