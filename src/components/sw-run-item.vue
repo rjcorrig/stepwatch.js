@@ -13,13 +13,25 @@
         <div class="sw-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
       </div>
       <div class="sw-actions">
-        <button v-if="canCopy" class="sw-action-button" title="Copy"><i class="material-icons">content_copy</i></button>
-        <button v-if="canEdit" class="sw-action-button" title="Edit"><i class="material-icons">create</i></button>
-        <button v-if="canDelete" class="sw-action-button" title="Delete"><i class="material-icons">delete</i></button>
-        <button v-if="canCancel" class="sw-action-button" title="Cancel"><i class="material-icons">cancel</i></button>
-        <button v-if="canPause" class="sw-action-button" title="Pause"><i class="material-icons">pause</i></button>
-        <button v-if="canStart" class="sw-action-button" title="Start"><i class="material-icons">play_arrow</i></button>
-        <button v-if="canCreate" class="sw-action-button">
+        <button v-if="canCopy" v-on:click="copy" class="sw-action-button" title="Copy">
+          <i class="material-icons">content_copy</i>
+        </button>
+        <button v-if="canEdit" v-on:click="edit" class="sw-action-button" title="Edit">
+          <i class="material-icons">create</i>
+        </button>
+        <button v-if="canRemove" v-on:click="remove" class="sw-action-button" title="Delete">
+          <i class="material-icons">delete</i>
+        </button>
+        <button v-if="canCancel" v-on:click="cancel" class="sw-action-button" title="Cancel">
+          <i class="material-icons">cancel</i>
+        </button>
+        <button v-if="canPause" v-on:click="pause" class="sw-action-button" title="Pause">
+          <i class="material-icons">pause</i>
+        </button>
+        <button v-if="canStart" v-on:click="start" class="sw-action-button" title="Start">
+          <i class="material-icons">play_arrow</i>
+        </button>
+        <button v-if="canCreate" v-on:click="create" class="sw-action-button">
           <i v-if="run.status === 'program'" title="New Run" class="material-icons">open_in_new</i>
           <i v-else title="Relaunch" class="material-icons">redo</i>
         </button>
@@ -70,7 +82,7 @@ export default {
     canEdit () {
       return ['program', 'created'].indexOf(this.run.status) >= 0
     },
-    canDelete () {
+    canRemove () {
       return ['program', 'created', 'complete', 'canceled'].indexOf(this.run.status) >= 0
     },
     canCancel () {
@@ -94,6 +106,27 @@ export default {
           id: this.run.id
         }
       })
+    },
+    copy () {
+      console.log('swRunItem#copy')
+    },
+    edit () {
+      console.log('swRunItem#edit')
+    },
+    remove () {
+      console.log('swRunItem#remove')
+    },
+    cancel () {
+      console.log('swRunItem#cancel')
+    },
+    pause () {
+      console.log('swRunItem#pause')
+    },
+    start () {
+      console.log('swRunItem#start')
+    },
+    create () {
+      console.log('swRunItem#create')
     }
   }
 }
