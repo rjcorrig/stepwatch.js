@@ -1,10 +1,14 @@
 <template>
   <div class="sw-page sw-run-list">
-    <h1 class="sw-header">{{ title }}</h1>
+    <h1 class="sw-header">
+      <div class="sw-page-title">{{ title }}</div>
+      <button v-if="type === 'program'" class="sw-action-button">
+        <i title="New" class="material-icons">add_circle_outline</i>
+      </button>
+    </h1>
     <ol class="sw-card-list" v-if="runs.length">
       <sw-run-item v-for="run in runs" :run="run" :key="run.id" />
     </ol>
-    <button v-if="type === 'program'" class="sw-button">Create New</button>
   </div>
 </template>
 
