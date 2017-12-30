@@ -11,38 +11,19 @@ Vue.use(servicePlugin, {
 })
 
 describe('sw-run-item.vue', () => {
-  var shortRun, longRun
+  var run
   before(() => {
     // Set up the test data
     dataStore.seed(seedData)
-    shortRun = dataStore.getRun('garply')
-    longRun = dataStore.getRun('fred')
+    run = dataStore.getRun('garply')
   })
 
   it('should bind to the given run', () => {
     const Constructor = Vue.extend(swRunItem)
     const vm = new Constructor({
-      propsData: { run: shortRun }
+      propsData: { run }
     }).$mount()
     expect(vm.$el.querySelector('.sw-card-title').textContent)
-      .to.equal(shortRun.name)
-  })
-
-  it('displays mm:ss time for a short run', () => {
-    const Constructor = Vue.extend(swRunItem)
-    const vm = new Constructor({
-      propsData: { run: shortRun }
-    }).$mount()
-    expect(vm.$el.querySelector('.sw-timer-total').textContent)
-      .to.match(/[0-9][0-9]:[0-9][0-9]/)
-  })
-
-  it('displays hh:mm:ss time for a long run', () => {
-    const Constructor = Vue.extend(swRunItem)
-    const vm = new Constructor({
-      propsData: { run: longRun }
-    }).$mount()
-    expect(vm.$el.querySelector('.sw-timer-total').textContent)
-      .to.match(/[0-9][0-9]:[0-9][0-9]:[0-9][0-9]/)
+      .to.equal(run.name)
   })
 })

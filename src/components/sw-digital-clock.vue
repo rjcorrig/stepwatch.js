@@ -1,5 +1,5 @@
 <template>
-  <span>{{ clock }}</span>
+  <span class="sw-digital-clock">{{ clock }}</span>
 </template>
 
 <script>
