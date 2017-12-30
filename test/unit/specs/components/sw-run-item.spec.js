@@ -24,7 +24,7 @@ describe('sw-run-item.vue', () => {
     const vm = new Constructor({
       propsData: { run: shortRun }
     }).$mount()
-    expect(vm.$el.querySelector('.sw-run-text').textContent)
+    expect(vm.$el.querySelector('.sw-card-title').textContent)
       .to.equal(shortRun.name)
   })
 
@@ -33,7 +33,7 @@ describe('sw-run-item.vue', () => {
     const vm = new Constructor({
       propsData: { run: shortRun }
     }).$mount()
-    expect(vm.$el.querySelector('.sw-run-timer').textContent)
+    expect(vm.$el.querySelector('.sw-timer-total').textContent)
       .to.match(/[0-9][0-9]:[0-9][0-9]/)
   })
 
@@ -42,7 +42,7 @@ describe('sw-run-item.vue', () => {
     const vm = new Constructor({
       propsData: { run: longRun }
     }).$mount()
-    expect(vm.$el.querySelector('.sw-run-timer').textContent)
+    expect(vm.$el.querySelector('.sw-timer-total').textContent)
       .to.match(/[0-9][0-9]:[0-9][0-9]:[0-9][0-9]/)
   })
 })

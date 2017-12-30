@@ -10,7 +10,9 @@
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>
         </div>
         <div class="sw-run-steps-counter">{{ stepsCompleted }} / {{ run.steps.length }}</div>
-        <div class="sw-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
+        <div class="sw-timer">
+          <span class="sw-timer-run">{{ runSecondsClock }}</span> / <span class="sw-timer-total">{{ totalSecondsClock }}</span>
+        </div>
       </div>
       <div class="sw-actions">
         <button v-if="canCopy" v-on:click.stop="copy" class="sw-action-button" title="Copy">

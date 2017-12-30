@@ -19,7 +19,7 @@ describe('sw-run-list.vue', () => {
   it('should list all runs if no props passed', () => {
     const Constructor = Vue.extend(swRunList)
     const vm = new Constructor().$mount()
-    expect(vm.$el.querySelector('.sw-run-list > h1').textContent)
+    expect(vm.$el.querySelector('.sw-page-title').textContent)
       .to.equal('All runs and programs')
     expect(vm.$el.querySelectorAll('li.sw-run-item').length)
     .to.equal(dataStore.getRuns().length)
@@ -32,7 +32,7 @@ describe('sw-run-list.vue', () => {
       filter: r => r.name.indexOf('pie') >= 0
     }
     const vm = new Constructor({ propsData }).$mount()
-    expect(vm.$el.querySelector('.sw-run-list > h1').textContent)
+    expect(vm.$el.querySelector('.sw-page-title').textContent)
       .to.equal(propsData.title)
     expect(vm.$el.querySelectorAll('li.sw-run-item').length)
       .to.equal(dataStore.getRuns(propsData.filter).length)
@@ -44,7 +44,7 @@ describe('sw-run-list.vue', () => {
       type: 'program'
     }
     const vm = new Constructor({ propsData }).$mount()
-    expect(vm.$el.querySelector('.sw-run-list > button'))
+    expect(vm.$el.querySelector('.sw-header > .sw-action-button'))
       .to.not.equal(null)
   })
 
@@ -54,7 +54,7 @@ describe('sw-run-list.vue', () => {
       type: 'pies'
     }
     const vm = new Constructor({ propsData }).$mount()
-    expect(vm.$el.querySelector('.sw-run-list > button'))
+    expect(vm.$el.querySelector('.sw-header > .sw-action-button'))
       .to.equal(null)
   })
 })
