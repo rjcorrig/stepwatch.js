@@ -5,7 +5,11 @@
       <button v-if="type === 'program'" class="sw-action-button">
         <i title="New" class="material-icons">add_circle_outline</i>
       </button>
+<<<<<<< HEAD
     </h1>
+=======
+</h1>
+>>>>>>> c7ab7da40b6f8762a5cea95b037a64149d8017e7
     <ol class="sw-card-list" v-if="runs.length">
       <sw-run-item v-for="run in runs" :run="run" :key="run.id" />
     </ol>
