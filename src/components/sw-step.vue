@@ -12,9 +12,15 @@
         <div class="sw-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
       </div>
       <div class="sw-actions">
-        <button v-if="canCancel" class="sw-action-button" title="Cancel"><i class="material-icons">cancel</i></button>
-        <button v-if="canPause" class="sw-action-button" title="Pause"><i class="material-icons">pause</i></button>
-        <button v-if="canStart" class="sw-action-button" title="Start"><i class="material-icons">play_arrow</i></button>
+        <button v-if="canCancel" v-on:click.stop="cancel" class="sw-action-button" title="Cancel">
+          <i class="material-icons">cancel</i>
+        </button>
+        <button v-if="canPause" v-on:click.stop="pause" class="sw-action-button" title="Pause">
+          <i class="material-icons">pause</i>
+        </button>
+        <button v-if="canStart" v-on:click.stop="start" class="sw-action-button" title="Start">
+          <i class="material-icons">play_arrow</i>
+        </button>
       </div>
     </div>
   </li>
@@ -64,6 +70,17 @@ export default {
     },
     canStart () {
       return this.isCurrentStep && ['paused', 'created'].indexOf(this.step.status) >= 0
+    }
+  },
+  methods: {
+    cancel () {
+      console.log('swStep#cancel')
+    },
+    pause () {
+      console.log('swStep#pause')
+    },
+    start () {
+      console.log('swStep#start')
     }
   }
 }
