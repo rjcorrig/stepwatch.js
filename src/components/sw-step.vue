@@ -3,7 +3,7 @@
     <div class="sw-card">
       <h2>
         <div class="sw-card-title">{{ step.name }}</div>
-        <i class="material-icons" :title="step.status">{{ statusIcon }}</i>
+        <i v-if="statusIcon" class="material-icons" :title="step.status">{{ statusIcon }}</i>
       </h2>
       <div class="sw-counters">
         <div class="sw-progress">
@@ -12,13 +12,9 @@
         <div class="sw-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
       </div>
       <div class="sw-actions">
-        <button v-if="canCopy" class="sw-action-button" title="Copy"><i class="material-icons">content_copy</i></button>
-        <button v-if="canEdit" class="sw-action-button" title="Edit"><i class="material-icons">create</i></button>
-        <button v-if="canDelete" class="sw-action-button" title="Delete"><i class="material-icons">delete</i></button>
         <button v-if="canCancel" class="sw-action-button" title="Cancel"><i class="material-icons">cancel</i></button>
         <button v-if="canPause" class="sw-action-button" title="Pause"><i class="material-icons">pause</i></button>
         <button v-if="canStart" class="sw-action-button" title="Start"><i class="material-icons">play_arrow</i></button>
-        <button v-if="canCreate" class="sw-action-button" title="New Run"><i class="material-icons">star</i></button>
       </div>
     </div>
   </li>
@@ -53,22 +49,12 @@ export default {
     },
     statusIcon () {
       var icons = {
-        'created': 'star',
         'running': 'play_arrow',
         'paused': 'pause',
         'canceled': 'cancel',
-        'complete': 'stop'
+        'complete': 'done'
       }
       return icons[this.step.status]
-    },
-    canCopy () {
-      return false
-    },
-    canEdit () {
-      return false
-    },
-    canDelete () {
-      return false
     },
     canCancel () {
       return this.isCurrentStep && ['paused', 'running'].indexOf(this.step.status) >= 0
@@ -78,9 +64,6 @@ export default {
     },
     canStart () {
       return this.isCurrentStep && ['paused', 'created'].indexOf(this.step.status) >= 0
-    },
-    canCreate () {
-      return false
     }
   }
 }

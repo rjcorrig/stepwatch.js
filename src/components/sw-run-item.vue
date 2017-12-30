@@ -3,7 +3,7 @@
     <div class="sw-card" v-on:click="viewDetails()" >
       <h2>
         <div class="sw-card-title">{{ run.name }}</div>
-        <i class="material-icons" :title="run.status">{{ statusIcon }}</i>
+        <i v-if="statusIcon" class="material-icons" :title="run.status">{{ statusIcon }}</i>
       </h2>
       <div class="sw-counters">
         <div class="sw-progress">
@@ -19,7 +19,10 @@
         <button v-if="canCancel" class="sw-action-button" title="Cancel"><i class="material-icons">cancel</i></button>
         <button v-if="canPause" class="sw-action-button" title="Pause"><i class="material-icons">pause</i></button>
         <button v-if="canStart" class="sw-action-button" title="Start"><i class="material-icons">play_arrow</i></button>
-        <button v-if="canCreate" class="sw-action-button" title="New Run"><i class="material-icons">star</i></button>
+        <button v-if="canCreate" class="sw-action-button">
+          <i v-if="run.status === 'program'" title="New Run" class="material-icons">open_in_new</i>
+          <i v-else title="Relaunch" class="material-icons">redo</i>
+        </button>
       </div>
     </div>
   </li>
@@ -54,11 +57,10 @@ export default {
     statusIcon () {
       var icons = {
         'program': 'create',
-        'created': 'star',
         'running': 'play_arrow',
         'paused': 'pause',
         'canceled': 'cancel',
-        'complete': 'stop'
+        'complete': 'done'
       }
       return icons[this.run.status]
     },
