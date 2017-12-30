@@ -29,19 +29,17 @@ ol.sw-card-list {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.sw-button {
-  margin: auto;
-  font-size: xx-large;
-  height: 1.5em;
-  width: 6em;
-}
-
-.sw-card-title {
+.sw-page-title, .sw-card-title {
   display: inline-block;
   vertical-align: middle;
 }
+
 .sw-card-title+i.material-icons {
   margin-left: 5px;
+  vertical-align: middle;
+}
+
+.sw-page-title+.sw-action-button {
   vertical-align: middle;
 }
 
