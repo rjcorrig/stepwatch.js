@@ -11,7 +11,7 @@
         </div>
         <div class="sw-run-steps-counter">{{ stepsCompleted }} / {{ run.steps.length }}</div>
         <div class="sw-timer">
-          <span class="sw-timer-run">{{ runSecondsClock }}</span> / <span class="sw-timer-total">{{ totalSecondsClock }}</span>
+          <sw-digital-clock class="sw-timer-run" :seconds="run.runSeconds" /> / <sw-digital-clock class="sw-timer-total" :seconds="run.totalSeconds" />
         </div>
       </div>
       <div class="sw-actions">
@@ -44,9 +44,11 @@
 
 <script>
 import models from '@/stepwatch/models'
+import swDigitalClock from './sw-digital-clock.vue'
 
 export default {
   name: 'sw-run-item',
+  components: { swDigitalClock },
   props: {
     run: {
       type: models.Run,
@@ -59,14 +61,6 @@ export default {
     },
     percentComplete () {
       return 100 * (this.run.runSeconds / this.run.totalSeconds)
-    },
-    runSecondsClock () {
-      var start = this.run.runSeconds >= 3600 ? 11 : 14
-      return new Date(1000 * this.run.runSeconds).toISOString().slice(start, 19)
-    },
-    totalSecondsClock () {
-      var start = this.run.totalSeconds >= 3600 ? 11 : 14
-      return new Date(1000 * this.run.totalSeconds).toISOString().slice(start, 19)
     },
     statusIcon () {
       var icons = {

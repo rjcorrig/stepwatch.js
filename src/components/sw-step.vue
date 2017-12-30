@@ -9,7 +9,9 @@
         <div class="sw-progress">
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>
         </div>
-        <div class="sw-timer">{{ runSecondsClock }} / {{ totalSecondsClock }}</div>
+        <div class="sw-timer">
+          <sw-digital-clock class="sw-timer-run" :seconds="step.runSeconds" /> / <sw-digital-clock class="sw-timer-total" :seconds="step.totalSeconds" />
+        </div>
       </div>
       <div class="sw-actions">
         <button v-if="canCancel" v-on:click.stop="cancel" class="sw-action-button" title="Cancel">
@@ -28,9 +30,11 @@
 
 <script>
 import models from '@/stepwatch/models'
+import swDigitalClock from './sw-digital-clock.vue'
 
 export default {
   name: 'sw-step',
+  components: { swDigitalClock },
   props: {
     step: {
       type: models.Step,
@@ -44,14 +48,6 @@ export default {
   computed: {
     percentComplete () {
       return 100 * (this.step.runSeconds / this.step.totalSeconds)
-    },
-    runSecondsClock () {
-      var start = (this.step.runSeconds >= 3600 ? 11 : 14)
-      return new Date(1000 * this.step.runSeconds).toISOString().slice(start, 19)
-    },
-    totalSecondsClock () {
-      var start = (this.step.totalSeconds >= 3600 ? 11 : 14)
-      return new Date(1000 * this.step.totalSeconds).toISOString().slice(start, 19)
     },
     statusIcon () {
       var icons = {
