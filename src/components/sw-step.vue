@@ -47,7 +47,11 @@ export default {
   },
   computed: {
     percentComplete () {
-      return 100 * (this.step.runSeconds / this.step.totalSeconds)
+      if (this.step.totalSeconds) {
+        return 100 * (this.step.runSeconds / this.step.totalSeconds)
+      } else {
+        return 0
+      }
     },
     statusIcon () {
       var icons = {

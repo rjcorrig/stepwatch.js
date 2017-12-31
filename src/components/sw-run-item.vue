@@ -60,7 +60,11 @@ export default {
       return this.run.currentStep || 0
     },
     percentComplete () {
-      return 100 * (this.run.runSeconds / this.run.totalSeconds)
+      if (this.run.totalSeconds) {
+        return 100 * (this.run.runSeconds / this.run.totalSeconds)
+      } else {
+        return 0
+      }
     },
     statusIcon () {
       var icons = {
