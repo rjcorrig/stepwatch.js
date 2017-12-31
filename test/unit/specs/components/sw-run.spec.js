@@ -5,7 +5,10 @@ import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
 
 // Rig up and use the mock dataStore
-var dataStore = new DataStore()
+var dataStore = new DataStore(sessionStorage)
+dataStore.seed(seedData)
+dataStore.save()
+
 Vue.use(servicePlugin, {
   dataStore: dataStore
 })
@@ -13,9 +16,9 @@ Vue.use(servicePlugin, {
 describe('sw-run.vue', () => {
   var program
 
-  before(() => {
+  beforeEach(() => {
     // Set up the test data
-    dataStore.seed(seedData)
+    dataStore.load()
     program = dataStore.getRun('foo')
   })
 

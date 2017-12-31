@@ -5,15 +5,18 @@ import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
 
 // Rig up and use the mock dataStore
-var dataStore = new DataStore()
+var dataStore = new DataStore(sessionStorage)
+dataStore.seed(seedData)
+dataStore.save()
+
 Vue.use(servicePlugin, {
   dataStore: dataStore
 })
 
 describe('sw-run-category.vue', () => {
-  before(() => {
-    // Set up the test data
-    dataStore.seed(seedData)
+  beforeEach(() => {
+    // Reload the test data
+    dataStore.load()
   })
 
   it('should summarize all runs if no props passed', () => {
