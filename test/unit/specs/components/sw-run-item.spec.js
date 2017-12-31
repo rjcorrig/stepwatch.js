@@ -51,6 +51,7 @@ describe('sw-run-item.vue', () => {
       expect(vm.stepsCompleted).to.equal(0)
     })
   })
+
   describe('percentComplete', () => {
     it('should return correct percentage of time elapsed in Run', () => {
       const Constructor = Vue.extend(swRunItem)
@@ -67,6 +68,210 @@ describe('sw-run-item.vue', () => {
         propsData: { run: program }
       }).$mount()
       expect(vm.percentComplete).to.equal(0)
+    })
+  })
+
+  describe('statusIcon', () => {
+    it('is present for all statuses except created', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'paused', 'running', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.statusIcon).to.not.be.undefined
+      }
+    })
+
+    it('is not present if status is created', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      run.status = 'created'
+      expect(vm.statusIcon).to.be.undefined
+    })
+  })
+
+  describe('canCopy', () => {
+    it('is true if run is finished or being defined', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'created', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.canCopy).to.equal(true)
+      }
+    })
+
+    it('is false if run is running or paused', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['paused', 'running']) {
+        run.status = status
+        expect(vm.canCopy).to.equal(false)
+      }
+    })
+  })
+
+  describe('canEdit', () => {
+    it('is true if run is being defined', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'created']) {
+        run.status = status
+        expect(vm.canEdit).to.equal(true)
+      }
+    })
+
+    it('is false if run is not being defined', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['paused', 'running', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.canEdit).to.equal(false)
+      }
+    })
+  })
+
+  describe('canRemove', () => {
+    it('is true if run is finished or being defined', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'created', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.canRemove).to.equal(true)
+      }
+    })
+
+    it('is false if run is running or paused', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['paused', 'running']) {
+        run.status = status
+        expect(vm.canRemove).to.equal(false)
+      }
+    })
+  })
+
+  describe('canCancel', () => {
+    it('is true if run is paused or running', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['paused', 'running']) {
+        run.status = status
+        expect(vm.canCancel).to.equal(true)
+      }
+    })
+
+    it('is false if run is not paused or running', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'created', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.canCancel).to.equal(false)
+      }
+    })
+  })
+
+  describe('canPause', () => {
+    it('is true if run is running', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      run.status = 'running'
+      expect(vm.canPause).to.equal(true)
+    })
+
+    it('is false if run is not running', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'created', 'paused', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.canPause).to.equal(false)
+      }
+    })
+  })
+
+  describe('canStart', () => {
+    it('is true if run status is paused or created', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['paused', 'created']) {
+        run.status = status
+        expect(vm.canStart).to.equal(true)
+      }
+    })
+
+    it('is false if run status is not paused or created', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'running', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.canStart).to.equal(false)
+      }
+    })
+  })
+
+  describe('canCreate', () => {
+    it('is true if run is finished or is a program', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['program', 'complete', 'canceled']) {
+        run.status = status
+        expect(vm.canCreate).to.equal(true)
+      }
+    })
+
+    it('is false if run is running or paused', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      for (var status of ['paused', 'running', 'created']) {
+        run.status = status
+        expect(vm.canCreate).to.equal(false)
+      }
     })
   })
 })
