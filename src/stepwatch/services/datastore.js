@@ -64,6 +64,7 @@ DataStore.prototype.deleteRun = function (run) {
 
 DataStore.prototype.load = function () {
   if (this.storage) {
+    this.runs = []
     var runDb = JSON.parse(this.storage.getItem('runDb'))
     for (var runDbEntry of runDb) {
       var run = new Run(runDbEntry)
