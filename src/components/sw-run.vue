@@ -22,11 +22,27 @@ export default {
   watch: {
     '$route' (to, from) {
       this.run = this.$services.dataStore.getRun(to.params.id)
+      clearInterval(this.ticker)
+      this.ticker = setInterval(() => {
+        this.run.tick()
+      }, 1000)
     }
   },
   data () {
+    const ticker = setInterval(() => {
+      this.run.tick()
+    }, 1000)
+
     return {
-      run: this.$services.dataStore.getRun(this.id)
+      run: this.$services.dataStore.getRun(this.id),
+      ticker
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.ticker)
+
+    if (this.run.status === 'running') {
+      this.run.pause()
     }
   },
   components: {
