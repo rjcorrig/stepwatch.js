@@ -117,13 +117,14 @@ export default {
       console.log('swRunItem#remove')
     },
     cancel () {
-      console.log('swRunItem#cancel')
+      this.run.cancel()
     },
     pause () {
-      console.log('swRunItem#pause')
+      this.run.pause()
     },
     start () {
-      console.log('swRunItem#start')
+      this.run.start()
+      this.viewDetails()
     },
     create () {
       console.log('swRunItem#create')

@@ -3,6 +3,8 @@ import swRunItem from '@/components/sw-run-item'
 import seedData from '@/stepwatch/models/seedData'
 import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
+import VueRouter from 'vue-router'
+import sinon from 'sinon'
 
 // Rig up and use the mock dataStore
 var dataStore = new DataStore(sessionStorage)
@@ -12,6 +14,7 @@ dataStore.save()
 Vue.use(servicePlugin, {
   dataStore: dataStore
 })
+Vue.use(VueRouter)
 
 describe('sw-run-item.vue', () => {
   var run, program, pausedRun
@@ -272,6 +275,60 @@ describe('sw-run-item.vue', () => {
         run.status = status
         expect(vm.canCreate).to.equal(false)
       }
+    })
+  })
+
+  describe('cancel', () => {
+    it('cancels the modeled run', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      run.status = 'paused'
+      vm.cancel()
+      expect(run.status).to.equal('canceled')
+    })
+  })
+
+  describe('pause', () => {
+    it('pauses the modeled run', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      run.status = 'running'
+      vm.pause()
+      expect(run.status).to.equal('paused')
+    })
+  })
+
+  describe('start', () => {
+    var router, spy
+
+    beforeEach(() => {
+      router = new VueRouter()
+      spy = sinon.stub(router, 'push')
+    })
+
+    it('starts the modeled run and routes to sw-run', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        router,
+        propsData: { run }
+      }).$mount()
+
+      run.status = 'created'
+      vm.start()
+
+      expect(run.status).to.equal('running')
+      expect(spy.firstCall.args[0].name).to.equal('sw-run')
+      expect(spy.firstCall.args[0].params.id).to.equal(run.id)
+    })
+
+    afterEach(() => {
+      router.push.restore()
     })
   })
 })
