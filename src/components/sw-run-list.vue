@@ -7,7 +7,7 @@
       </button>
     </h1>
     <ol class="sw-card-list" v-if="runs.length">
-      <sw-run-item v-for="run in runs" :run="run" :key="run.id" />
+      <sw-run-item v-for="run in runs" :run="run" :key="run.id" v-on:remove="remove" />
     </ol>
   </div>
 </template>
@@ -38,6 +38,16 @@ export default {
   methods: {
     newProgram () {
       console.log('swRunList#newProgram')
+    },
+    remove (run) {
+      console.log('swRunList#remove ' + run.id)
+      var idx = this.runs.indexOf(run)
+
+      if (idx >= 0) {
+        this.runs.splice(idx, 1)
+      }
+      this.$services.dataStore.deleteRun(run)
+      this.$services.dataStore.save()
     }
   },
   components: {

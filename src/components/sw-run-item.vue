@@ -115,6 +115,7 @@ export default {
     },
     remove () {
       console.log('swRunItem#remove')
+      this.$emit('remove', this.run)
     },
     cancel () {
       this.run.cancel()
