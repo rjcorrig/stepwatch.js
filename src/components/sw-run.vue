@@ -22,15 +22,11 @@ export default {
   watch: {
     '$route' (to, from) {
       this.run = this.$services.dataStore.getRun(to.params.id)
-      clearInterval(this.ticker)
-      this.ticker = setInterval(() => {
-        this.run.tick()
-      }, 1000)
     }
   },
   data () {
     const ticker = setInterval(() => {
-      this.run.tick()
+      this.tick()
     }, 1000)
 
     return {
@@ -43,6 +39,12 @@ export default {
 
     if (this.run.status === 'running') {
       this.run.pause()
+    }
+  },
+  methods: {
+    tick: function () {
+      console.log('swRun#tick')
+      this.run.tick()
     }
   },
   components: {
