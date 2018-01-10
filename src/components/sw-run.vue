@@ -34,16 +34,20 @@ export default {
       ticker
     }
   },
+  mounted () {
+    window.addEventListener('beforeunload', this.suspend)
+  },
   beforeDestroy () {
-    clearInterval(this.ticker)
-
-    if (this.run.status === 'running') {
-      this.run.pause()
-    }
+    this.suspend()
   },
   methods: {
     tick () {
       this.run.tick()
+    },
+    suspend () {
+      clearInterval(this.ticker)
+      this.run.pause()
+      window.removeEventListener('beforeunload', this.suspend)
     }
   },
   components: {
