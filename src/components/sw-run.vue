@@ -2,7 +2,7 @@
   <div v-if="run" class="sw-page sw-run">
     <h1 class="sw-header">{{ run.name }}</h1>
     <ol class="sw-card-list" v-if="run.steps.length">
-      <sw-step v-for="step in run.steps" :step="step" :key="step.id" :isCurrentStep="run.steps.indexOf(step) === run.currentStep" />
+      <sw-step v-for="step in run.steps" :step="step" :key="step.id" :isCurrentStep="run.steps.indexOf(step) === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
     </ol>
     <p v-else>
       No steps defined
@@ -42,8 +42,7 @@ export default {
     }
   },
   methods: {
-    tick: function () {
-      console.log('swRun#tick')
+    tick () {
       this.run.tick()
     }
   },

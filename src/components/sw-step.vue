@@ -74,13 +74,13 @@ export default {
   },
   methods: {
     cancel () {
-      console.log('swStep#cancel')
+      this.$emit('cancel')
     },
     pause () {
-      console.log('swStep#pause')
+      this.$emit('pause')
     },
     start () {
-      console.log('swStep#start')
+      this.$emit('start')
     }
   }
 }
