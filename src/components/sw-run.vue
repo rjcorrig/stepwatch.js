@@ -47,6 +47,7 @@ export default {
     suspend () {
       clearInterval(this.ticker)
       this.run.pause()
+      this.$services.dataStore.save()
       window.removeEventListener('beforeunload', this.suspend)
     }
   },
