@@ -6,9 +6,9 @@
         <i title="New" class="material-icons">add_circle_outline</i>
       </button>
     </h1>
-    <ol class="sw-card-list" v-if="runs.length">
+    <transition-group name="list" class="sw-card-list" tag="ol" v-if="runs.length">
       <sw-run-item v-for="run in runs" :run="run" :key="run.id" v-on:remove="remove" />
-    </ol>
+    </transition-group>
   </div>
 </template>
 
@@ -57,4 +57,11 @@ export default {
 </script>
 
 <style scoped>
+.list-enter-active, .list-leave-active {
+  transition: opacity .4s;
+}
+
+.list-enter, .list-leave-to {
+  opacity: 0;
+}
 </style>
