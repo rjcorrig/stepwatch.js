@@ -7,7 +7,7 @@
       </button>
     </h1>
     <transition-group name="list" class="sw-card-list" tag="ol" v-if="runs.length">
-      <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" @remove="remove" @copy="copy" />
+      <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" @remove="remove" @copy="copy" @create="create"/>
     </transition-group>
   </div>
 </template>
@@ -46,6 +46,7 @@ export default {
       let newRun = this.$services.dataStore.createRun(run)
       this.$services.dataStore.save()
       this.runs.splice(idx + 1, 0, newRun)
+      return newRun
     },
     remove (run) {
       let idx = this.runs.indexOf(run)
@@ -55,6 +56,19 @@ export default {
       }
       this.$services.dataStore.deleteRun(run)
       this.$services.dataStore.save()
+    },
+    create (run) {
+      let newRun = this.copy(run)
+      newRun.start()
+      this.viewDetails(newRun)
+    },
+    viewDetails (run) {
+      this.$router.push({
+        name: 'sw-run',
+        params: {
+          id: run.id
+        }
+      })
     }
   },
   components: {

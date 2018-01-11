@@ -127,7 +127,7 @@ export default {
       this.viewDetails()
     },
     create () {
-      console.log('swRunItem#create')
+      this.$emit('create', this.run)
     }
   }
 }
