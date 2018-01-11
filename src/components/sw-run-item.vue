@@ -1,6 +1,6 @@
 <template>
   <li class="sw-run-item">
-    <div class="sw-card" v-on:click="viewDetails" >
+    <div class="sw-card" @click="viewDetails" >
       <h2>
         <div class="sw-card-title">{{ run.name }}</div>
         <i v-if="statusIcon" class="material-icons" :title="run.status">{{ statusIcon }}</i>
@@ -15,25 +15,25 @@
         </div>
       </div>
       <div class="sw-actions">
-        <button v-if="canCopy" v-on:click.stop="copy" class="sw-action-button" title="Copy">
+        <button v-if="canCopy" @click.stop="copy" class="sw-action-button" title="Copy">
           <i class="material-icons">content_copy</i>
         </button>
-        <button v-if="canEdit" v-on:click.stop="edit" class="sw-action-button" title="Edit">
+        <button v-if="canEdit" @click.stop="edit" class="sw-action-button" title="Edit">
           <i class="material-icons">create</i>
         </button>
-        <button v-if="canRemove" v-on:click.stop="remove" class="sw-action-button" title="Delete">
+        <button v-if="canRemove" @click.stop="remove" class="sw-action-button" title="Delete">
           <i class="material-icons">delete</i>
         </button>
-        <button v-if="canCancel" v-on:click.stop="cancel" class="sw-action-button" title="Cancel">
+        <button v-if="canCancel" @click.stop="cancel" class="sw-action-button" title="Cancel">
           <i class="material-icons">cancel</i>
         </button>
-        <button v-if="canPause" v-on:click.stop="pause" class="sw-action-button" title="Pause">
+        <button v-if="canPause" @click.stop="pause" class="sw-action-button" title="Pause">
           <i class="material-icons">pause</i>
         </button>
-        <button v-if="canStart" v-on:click.stop="start" class="sw-action-button" title="Start">
+        <button v-if="canStart" @click.stop="start" class="sw-action-button" title="Start">
           <i class="material-icons">play_arrow</i>
         </button>
-        <button v-if="canCreate" v-on:click.stop="create" class="sw-action-button">
+        <button v-if="canCreate" @click.stop="create" class="sw-action-button">
           <i v-if="run.status === 'program'" title="New Run" class="material-icons">open_in_new</i>
           <i v-else title="Relaunch" class="material-icons">redo</i>
         </button>

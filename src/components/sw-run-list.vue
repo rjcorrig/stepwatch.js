@@ -2,12 +2,12 @@
   <div class="sw-page sw-run-list">
     <h1 class="sw-header">
       <div class="sw-page-title">{{ title }}</div>
-      <button v-if="type === 'program'" class="sw-action-button" v-on:click="newProgram">
+      <button v-if="type === 'program'" class="sw-action-button" @click="newProgram">
         <i title="New" class="material-icons">add_circle_outline</i>
       </button>
     </h1>
     <transition-group name="list" class="sw-card-list" tag="ol" v-if="runs.length">
-      <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" v-on:remove="remove" v-on:copy="copy" />
+      <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" @remove="remove" @copy="copy" />
     </transition-group>
   </div>
 </template>
@@ -37,7 +37,9 @@ export default {
   },
   methods: {
     newProgram () {
-      console.log('swRunList#newProgram')
+      let program = this.$services.dataStore.createProgram()
+      this.$services.dataStore.save()
+      this.runs.unshift(program)
     },
     copy (run) {
       let idx = this.runs.indexOf(run)
@@ -65,7 +67,6 @@ export default {
 .list-item {
   transition-property: transform;
   transition-duration: 1s;
-  background-color: white;
 }
 
 .list-leave-active {
