@@ -7,7 +7,7 @@
       </button>
     </h1>
     <transition-group name="list" class="sw-card-list" tag="ol" v-if="runs.length">
-      <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" v-on:remove="remove" />
+      <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" v-on:remove="remove" v-on:copy="copy" />
     </transition-group>
   </div>
 </template>
@@ -39,9 +39,14 @@ export default {
     newProgram () {
       console.log('swRunList#newProgram')
     },
+    copy (run) {
+      let idx = this.runs.indexOf(run)
+      let newRun = this.$services.dataStore.createRun(run)
+      this.$services.dataStore.save()
+      this.runs.splice(idx + 1, 0, newRun)
+    },
     remove (run) {
-      console.log('swRunList#remove ' + run.id)
-      var idx = this.runs.indexOf(run)
+      let idx = this.runs.indexOf(run)
 
       if (idx >= 0) {
         this.runs.splice(idx, 1)
@@ -60,10 +65,12 @@ export default {
 .list-item {
   transition-property: transform;
   transition-duration: 1s;
+  background-color: white;
 }
 
-.list-enter-active, .list-leave-active {
+.list-leave-active {
   position: absolute;
+  visibility: hidden;
 }
 
 .list-enter, .list-leave-to {

@@ -108,13 +108,12 @@ export default {
       })
     },
     copy () {
-      console.log('swRunItem#copy')
+      this.$emit('copy', this.run)
     },
     edit () {
       console.log('swRunItem#edit')
     },
     remove () {
-      console.log('swRunItem#remove')
       this.$emit('remove', this.run)
     },
     cancel () {
