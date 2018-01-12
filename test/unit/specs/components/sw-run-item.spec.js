@@ -331,4 +331,52 @@ describe('sw-run-item.vue', () => {
       router.push.restore()
     })
   })
+
+  describe('copy', () => {
+    it('fires a copy event with run as payload', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      const stub = sinon.stub()
+      vm.$on('copy', stub)
+
+      vm.copy()
+      expect(stub.called).to.equal(true)
+      expect(stub.firstCall.args[0]).to.equal(run)
+    })
+  })
+
+  describe('remove', () => {
+    it('fires a remove event with run as payload', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      const stub = sinon.stub()
+      vm.$on('remove', stub)
+
+      vm.remove()
+      expect(stub.called).to.equal(true)
+      expect(stub.firstCall.args[0]).to.equal(run)
+    })
+  })
+
+  describe('create', () => {
+    it('fires a create event with run as payload', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run }
+      }).$mount()
+
+      const stub = sinon.stub()
+      vm.$on('create', stub)
+
+      vm.create()
+      expect(stub.called).to.equal(true)
+      expect(stub.firstCall.args[0]).to.equal(run)
+    })
+  })
 })
