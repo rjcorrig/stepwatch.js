@@ -42,11 +42,15 @@ export default {
   },
   methods: {
     tick () {
-      this.run.tick()
+      if (this.run) {
+        this.run.tick()
+      }
     },
     suspend () {
       clearInterval(this.ticker)
-      this.run.pause()
+      if (this.run) {
+        this.run.pause()
+      }
       this.$services.dataStore.save()
       window.removeEventListener('beforeunload', this.suspend)
     }
