@@ -15,6 +15,8 @@ var dataStore = new DataStore(localStorage)
 
 if (process.env.NODE_ENV !== 'production') {
   dataStore.seed(seedData)
+} else {
+  dataStore.load()
 }
 
 Vue.use(services, {
