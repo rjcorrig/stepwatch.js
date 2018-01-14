@@ -40,6 +40,7 @@ export default {
       let program = this.$services.dataStore.createProgram()
       this.$services.dataStore.save()
       this.runs.unshift(program)
+      return program
     },
     copy (run) {
       let idx = this.runs.indexOf(run)
@@ -61,6 +62,7 @@ export default {
       let newRun = this.copy(run)
       newRun.start()
       this.viewDetails(newRun)
+      return newRun
     },
     viewDetails (run) {
       this.$router.push({

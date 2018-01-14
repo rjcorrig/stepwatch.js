@@ -113,13 +113,15 @@ describe('sw-run.vue', () => {
         propsData: { id: 'garply' }
       }).$mount()
 
-      const saveStub = sinon.spy(vm.$services.dataStore, 'save')
-      vm.suspend()
-      let called = saveStub.called
-      vm.$services.dataStore.save.restore()
+      try {
+        const stub = sinon.spy(vm.$services.dataStore, 'save')
+        vm.suspend()
 
-      expect(vm.run.status).to.equal('paused')
-      expect(called).to.equal(true)
+        expect(vm.run.status).to.equal('paused')
+        expect(stub.called).to.equal(true)
+      } finally {
+        vm.$services.dataStore.save.restore()
+      }
     })
   })
 })
