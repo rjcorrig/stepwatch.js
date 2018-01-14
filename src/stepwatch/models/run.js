@@ -18,6 +18,7 @@
 
 import _ from 'lodash'
 import Step from './step'
+import uuid4 from 'uuid/v4'
 
 export default function Run (options = {}) {
   _.defaults(options, {
@@ -49,7 +50,7 @@ export default function Run (options = {}) {
 }
 
 Run.prototype.initialize = function () {
-  this.id = null
+  this.id = uuid4()
   this.status = 'created'
   this.currentStep = null
   this.runSeconds = 0

@@ -25,7 +25,7 @@ describe('Run', function () {
     it('initializes all properties', function () {
       var run = new Run()
 
-      expect(run.id).to.equal(null)
+      expect(run.id).to.not.equal(null)
       expect(run.name).to.equal('New Program')
       expect(run.steps).to.be.an.instanceof(Array)
       expect(run.steps.length).to.equal(0)
@@ -104,7 +104,7 @@ describe('Run', function () {
 
       run.initialize()
 
-      expect(run.id).to.equal(null)
+      expect(run.id).to.not.equal(null)
       expect(run.status).to.equal('created')
       expect(run.currentStep).to.equal(null)
       expect(run.runSeconds).to.equal(0)
@@ -146,7 +146,8 @@ describe('Run', function () {
 
       var newRun = run.setup()
 
-      expect(newRun.id).to.equal(null)
+      expect(newRun.id).to.not.equal(null)
+      expect(newRun.id).to.not.equal(run.id)
       expect(newRun.name).to.equal(run.name)
 
       expect(newRun.steps).to.be.an.instanceof(Array)

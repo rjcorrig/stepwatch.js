@@ -33,13 +33,13 @@ describe('DataStore', function () {
   })
 
   describe('createProgram', function () {
-    it('returns a newly initialized Run program with no id', function () {
+    it('returns a newly initialized Run program with an id', function () {
       var dataStore = new DataStore(sessionStorage)
       var run = dataStore.createProgram()
 
       expect(run).to.be.an.instanceof(Run)
       expect(run.status).to.equal('program')
-      expect(run.id).to.equal(null)
+      expect(run.id).to.not.equal(null)
     })
 
     it('adds the newly initialized program to runs', function () {
@@ -52,14 +52,14 @@ describe('DataStore', function () {
   })
 
   describe('createRun', function () {
-    it('returns a newly initialized Run with no id', function () {
+    it('returns a newly initialized Run with an id', function () {
       var dataStore = new DataStore(sessionStorage)
       var program = dataStore.createProgram()
       var run = dataStore.createRun(program)
 
       expect(run).to.be.an.instanceof(Run)
       expect(run.status).to.equal('created')
-      expect(run.id).to.equal(null)
+      expect(run.id).to.not.equal(null)
     })
 
     it('adds the newly initialized Run to runs', function () {
@@ -194,7 +194,10 @@ describe('DataStore', function () {
     it('does nothing if no storage defined', function () {
       var dataStore = new DataStore()
       var program = dataStore.createProgram()
-      dataStore.createRun(program)
+      var run = dataStore.createRun(program)
+
+      program.id = null
+      run.id = null
 
       dataStore.save()
 
