@@ -1,6 +1,6 @@
 # stepwatch.js
 
-A simple multistep timer browser app, written entirely in JavaScript using Vue.js
+A simple multistep timer browser and mobile app, written entirely in JavaScript using Vue.js, and packaged for mobile using Apache Cordova.
 
 ## What's it for?
 
@@ -17,7 +17,6 @@ stepwatch.js is good for:
 
 Currently the app is only minimally functional as the code gets built out. Big goals are:
 * Converting to PouchDB as a client-side data store for synchronization to a backend for backup
-* Packaging as a Cordova app for deployment to mobile
 * A social web site where users can share their Programs
 
 ## Build Setup
@@ -25,6 +24,7 @@ Currently the app is only minimally functional as the code gets built out. Big g
 ``` bash
 # install dependencies
 npm install
+cordova prepare
 
 # serve with hot reload at localhost:8080
 npm run dev
@@ -34,6 +34,18 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+
+# build for iOS, Android, and browser
+npm run cordova-build
+
+# run in iOS Simulator
+npm run cordova-ios
+
+# run in browser
+npm run cordova-browser
+
+# run on attached Android Device
+npm run cordova-android-device
 
 # run unit tests
 npm run unit
