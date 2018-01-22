@@ -1,6 +1,11 @@
 <template>
   <div v-if="run" class="sw-page sw-run">
-    <h1 class="sw-header">{{ run.name }}</h1>
+    <h1 class="sw-header">
+      <button class="sw-action-button">
+        <i class="material-icons">keyboard_arrow_left</i>
+      </button>
+      <div class="sw-page-title">{{ run.name }}</div>
+    </h1>
     <ol class="sw-card-list" v-if="run.steps.length">
       <sw-step v-for="step in run.steps" :step="step" :key="step.id" :isCurrentStep="run.steps.indexOf(step) === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
     </ol>
