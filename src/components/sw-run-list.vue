@@ -45,6 +45,9 @@ export default {
     copy (run) {
       let idx = this.runs.indexOf(run)
       let newRun = this.$services.dataStore.createRun(run)
+      if (run.status === 'program') {
+        newRun.status = 'program'
+      }
       this.$services.dataStore.save()
       this.runs.splice(idx + 1, 0, newRun)
       return newRun

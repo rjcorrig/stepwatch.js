@@ -103,6 +103,48 @@ describe('sw-run-list.vue', () => {
         vm.$services.dataStore.save.restore()
       }
     })
+
+    it('sets status of copy of program to "program"', () => {
+      const Constructor = Vue.extend(swRunList)
+      const propsData = {
+        type: 'program',
+        filter: r => r.status === 'program'
+      }
+      const vm = new Constructor({ propsData }).$mount()
+
+      const index = 0
+      const original = vm.runs[index]
+
+      try {
+        sinon.stub(vm.$services.dataStore, 'save')
+        const copy = vm.copy(original)
+
+        expect(copy.status).to.equal('program')
+      } finally {
+        vm.$services.dataStore.save.restore()
+      }
+    })
+
+    it('sets status of copy of run to "created"', () => {
+      const Constructor = Vue.extend(swRunList)
+      const propsData = {
+        type: 'running',
+        filter: r => ['paused', 'running', 'created'].indexOf(r.status) >= 0
+      }
+      const vm = new Constructor({ propsData }).$mount()
+
+      const index = 0
+      const original = vm.runs[index]
+
+      try {
+        sinon.stub(vm.$services.dataStore, 'save')
+        const copy = vm.copy(original)
+
+        expect(copy.status).to.equal('created')
+      } finally {
+        vm.$services.dataStore.save.restore()
+      }
+    })
   })
 
   describe('remove', () => {
