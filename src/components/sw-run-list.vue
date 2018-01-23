@@ -1,7 +1,7 @@
 <template>
   <div class="sw-page sw-run-list">
     <h1 class="sw-header">
-      <button class="sw-action-button">
+      <button class="sw-action-button" @click="$router.go(-1)">
         <i class="material-icons">keyboard_arrow_left</i>
       </button>
       <div class="sw-page-title">{{ title }}</div>
