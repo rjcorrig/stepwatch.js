@@ -49,7 +49,7 @@ describe('sw-run-list.vue', () => {
         type: 'program'
       }
       const vm = new Constructor({ propsData }).$mount()
-      expect(vm.$el.querySelector('.sw-header > .sw-action-button'))
+      expect(vm.$el.querySelector('.sw-header > .sw-action-button i[title="New"]'))
         .to.not.equal(null)
     })
 
@@ -59,7 +59,7 @@ describe('sw-run-list.vue', () => {
         type: 'pies'
       }
       const vm = new Constructor({ propsData }).$mount()
-      expect(vm.$el.querySelector('.sw-header > .sw-action-button'))
+      expect(vm.$el.querySelector('.sw-header > .sw-action-button i[title="New"]'))
         .to.equal(null)
     })
   })
