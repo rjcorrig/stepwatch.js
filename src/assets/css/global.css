@@ -65,6 +65,10 @@ ol.sw-card-list {
   margin: 0;
   border: 0;
   background-color: white;
+  font-size: 0; /* remove forced iOS Safari padding of 1em */
+}
+
+.sw-action-button i {
   font-size: xx-large;
 }
 
