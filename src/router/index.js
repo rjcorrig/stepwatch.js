@@ -18,7 +18,7 @@ export default new Router({
       component: swRunList,
       props: {
         type: 'program',
-        title: 'Programs defined',
+        title: 'Programs',
         filter: r => r.status === 'program'
       }
     },
@@ -27,7 +27,7 @@ export default new Router({
       component: swRunList,
       props: {
         type: 'running',
-        title: 'Runs in progress',
+        title: 'Current Runs',
         filter: r => ['paused', 'running', 'created'].indexOf(r.status) >= 0
       }
     },
@@ -36,7 +36,7 @@ export default new Router({
       component: swRunList,
       props: {
         type: 'history',
-        title: 'Runs history',
+        title: 'History',
         filter: r => ['canceled', 'complete'].indexOf(r.status) >= 0
       }
     },

@@ -1,10 +1,10 @@
 <template>
   <div class="sw-page sw-home">
-    <h1 class="sw-header">Welcome to StepWatch</h1>
+    <h1 class="sw-header">StepWatch</h1>
     <ol class="sw-card-list">
-      <sw-run-category title="Programs defined" type="program" :filter="isProgram" />
-      <sw-run-category title="Runs in progress" type="running" :filter="isActive" />
-      <sw-run-category title="Run history" type="history" :filter="isHistory" />
+      <sw-run-category title="Programs" type="program" :filter="isProgram" />
+      <sw-run-category title="Current Runs" type="running" :filter="isActive" />
+      <sw-run-category title="History" type="history" :filter="isHistory" />
     </ol>
   </div>
 </template>
