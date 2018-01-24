@@ -1,6 +1,8 @@
 <template>
   <div class="sw-page sw-home">
-    <h1 class="sw-header">StepWatch</h1>
+    <h1 class="sw-header">
+      <div class="sw-page-title">StepWatch</div>
+    </h1>
     <ol class="sw-card-list">
       <sw-run-category title="Programs" type="program" :filter="isProgram" />
       <sw-run-category title="Current Runs" type="running" :filter="isActive" />

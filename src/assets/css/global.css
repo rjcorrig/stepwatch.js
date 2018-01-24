@@ -4,10 +4,24 @@
   margin: auto;
 }
 
-.sw-page > h1 {
+.sw-page > h1.sw-header {
   text-align: center;
   margin-top: 0;
   margin-bottom: 10px;
+  display: flex;
+}
+
+.sw-header .sw-page-title {
+  flex: 4;
+}
+
+.sw-header .sw-action-button {
+  vertical-align: middle;
+  flex: 1;
+}
+
+.sw-header .sw-header-right {
+  flex: 1;
 }
 
 .sw-card > h2 {
@@ -36,10 +50,6 @@ ol.sw-card-list {
 
 .sw-card-title+i.material-icons {
   margin-left: 5px;
-  vertical-align: middle;
-}
-
-.sw-header .sw-action-button {
   vertical-align: middle;
 }
 

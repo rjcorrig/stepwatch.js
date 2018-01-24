@@ -5,6 +5,7 @@
         <i class="material-icons">keyboard_arrow_left</i>
       </button>
       <div class="sw-page-title">{{ run.name }}</div>
+      <div class="sw-header-right"></div>
     </h1>
     <ol class="sw-card-list" v-if="run.steps.length">
       <sw-step v-for="step in run.steps" :step="step" :key="step.id" :isCurrentStep="run.steps.indexOf(step) === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
