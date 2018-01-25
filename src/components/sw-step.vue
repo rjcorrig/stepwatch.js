@@ -1,9 +1,12 @@
 <template>
   <li class="sw-step">
     <div class="sw-card">
-      <h2>
+      <h2 class="sw-card-header">
+        <div class="sw-header-left"></div>
         <div class="sw-card-title">{{ step.name }}</div>
-        <i v-if="statusIcon" class="material-icons" :title="step.status">{{ statusIcon }}</i>
+        <div class="sw-header-right">
+          <i class="material-icons" v-if="statusIcon" :title="step.status">{{ statusIcon }}</i>
+        </div>
       </h2>
       <div class="sw-counters">
         <div class="sw-progress">

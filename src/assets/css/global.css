@@ -24,9 +24,23 @@
   flex: 1;
 }
 
-.sw-card > h2 {
+.sw-card > h2.sw-card-header {
   text-align: center;
   margin-top: auto;  
+  display: flex;
+}
+
+.sw-card-header .sw-header-left {
+  flex: 1;
+}
+
+.sw-card-header .sw-card-title {
+  flex: 5;
+}
+
+.sw-card-header .sw-header-right {
+  align-self: center;
+  flex: 1;
 }
 
 ol.sw-card-list {

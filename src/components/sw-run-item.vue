@@ -1,9 +1,12 @@
 <template>
   <li class="sw-run-item">
     <div class="sw-card" @click="viewDetails" >
-      <h2>
+      <h2 class="sw-card-header">
+        <div class="sw-header-left"></div>
         <div class="sw-card-title">{{ run.name }}</div>
-        <i v-if="statusIcon" class="material-icons" :title="run.status">{{ statusIcon }}</i>
+        <div class="sw-header-right">
+          <i class="material-icons" v-if="statusIcon" :title="run.status">{{ statusIcon }}</i>
+        </div>
       </h2>
       <div class="sw-counters">
         <div class="sw-progress">
