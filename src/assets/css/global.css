@@ -5,15 +5,15 @@
 }
 
 .sw-page > h1.sw-header {
-  text-align: center;
-  margin: 0px auto 10px -10px;
   display: flex;
-  width: 330px;
   position: fixed;
-  background-color: white;
   top: 0px;
+  width: 330px;
+  margin: 0px auto 10px -10px;
   padding-top: 10px;
   padding-bottom: 5px;
+  background-color: white;
+  text-align: center;
 }
 
 .sw-header .sw-page-title {
