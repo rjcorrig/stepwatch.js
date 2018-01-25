@@ -6,13 +6,21 @@
 
 .sw-page > h1.sw-header {
   text-align: center;
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin: 0px auto 10px -10px;
   display: flex;
+  width: 330px;
+  position: fixed;
+  background-color: white;
+  top: 0px;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
 .sw-header .sw-page-title {
   flex: 5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sw-header .sw-action-button {
@@ -46,7 +54,7 @@
 ol.sw-card-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin: 50px 0 0 0;
 }
 
 .sw-card {
