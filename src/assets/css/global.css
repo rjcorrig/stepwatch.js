@@ -11,8 +11,6 @@
   width: 330px;
   margin: 0px auto 10px -10px;
   padding-top: 10px;
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
   padding-bottom: 5px;
   background-color: white;
   text-align: center;
@@ -57,8 +55,6 @@ ol.sw-card-list {
   list-style-type: none;
   padding: 0;
   margin: 50px 0 0 0;
-  margin: calc(50px + constant(safe-area-inset-top)) 0 0 0;
-  margin: calc(50px + env(safe-area-inset-top)) 0 0 0;
 }
 
 .sw-card {
