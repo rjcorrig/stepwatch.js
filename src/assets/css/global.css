@@ -9,10 +9,11 @@
   position: fixed;
   top: 0px;
   width: 330px;
+  z-index: 1000;
   margin: 0px auto 10px -10px;
   padding-top: 10px;
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
+  padding-top: calc(10px + constant(safe-area-inset-top));
+  padding-top: calc(10px + env(safe-area-inset-top));
   padding-bottom: 5px;
   background-color: white;
   text-align: center;
