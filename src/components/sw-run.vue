@@ -4,7 +4,9 @@
       <button class="sw-action-button" @click="$router.go(-1)">
         <i class="material-icons">keyboard_arrow_left</i>
       </button>
-      <div class="sw-page-title">{{ run.name }}</div>
+      <div class="sw-page-title marquee-wrap">
+        <vue-marquee :content="run.name" speed="slow" :showtwo="false"></vue-marquee>
+      </div>
       <div class="sw-header-right"></div>
     </h1>
     <ol class="sw-card-list" v-if="run.steps.length">
@@ -21,6 +23,8 @@
 
 <script>
 import swStep from './sw-step.vue'
+import VueMarquee from 'vue-marquee-ho'
+import Css from 'vue-marquee-ho/dist/vue-marquee.min.css' // eslint-disable-line no-unused-vars
 
 export default {
   name: 'sw-run',
@@ -62,10 +66,19 @@ export default {
     }
   },
   components: {
-    swStep
+    swStep,
+    'vue-marquee': VueMarquee
   }
 }
 </script>
 
-<style scoped>
+<style>
+.marquee-content .text1 {
+  padding-right: 0px;
+}
+
+.marquee-content .text2 {
+  padding-left: 40px;
+  padding-right: 40px;
+}
 </style>
