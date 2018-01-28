@@ -74,19 +74,18 @@ export default {
 
 <style>
 /* Override default styling from vue-marquee */
-.marquee-content .text1 {
+.sw-page-title .marquee-content .text1 {
   padding-right: 0px;
-/*  font-size: inherit; */
+  font-size: inherit; 
 }
 
-.marquee-content .text2 {
+.sw-page-title .marquee-content .text2 {
   padding-left: 40px;
   padding-right: 40px;
-/*  font-size: inherit; */
+  font-size: inherit; 
 }
 
-/*
-.marquee-wrap .marquee-box {
+.sw-page-title.marquee-wrap .marquee-box {
   color: inherit;
   font-size: inherit;
   background-size: initial;
@@ -94,8 +93,7 @@ export default {
   line-height: initial;
 }
 
-.marquee-content p {
+.sw-page-title .marquee-content p {
   font-size: inherit;
 }
-*/
 </style>
