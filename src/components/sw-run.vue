@@ -73,12 +73,27 @@ export default {
 </script>
 
 <style>
+/* Override default styling from vue-marquee */
 .marquee-content .text1 {
   padding-right: 0px;
+  font-size: inherit;
 }
 
 .marquee-content .text2 {
   padding-left: 40px;
   padding-right: 40px;
+  font-size: inherit;
+}
+
+.marquee-wrap .marquee-box {
+  color: inherit;
+  font-size: inherit;
+  background-size: initial;
+  height: initial;
+  line-height: initial;
+}
+
+.marquee-content p {
+  font-size: inherit;
 }
 </style>

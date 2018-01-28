@@ -21,9 +21,7 @@
 
 .sw-header .sw-page-title {
   flex: 5;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .sw-header .sw-action-button {
