@@ -29,7 +29,7 @@ describe('sw-run.vue', () => {
       const vm = new Constructor({
         propsData: { id: 'foo' }
       }).$mount()
-      expect(vm.$el.querySelector('.sw-page-title').textContent)
+      expect(vm.$el.querySelector('.sw-page-title .text1').textContent)
         .to.equal(program.name)
     })
 

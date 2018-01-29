@@ -20,7 +20,7 @@ describe('sw-home.vue', () => {
       const vm = new Constructor({}).$mount()
 
       expect(vm.$el.querySelector('.sw-header').textContent)
-        .to.equal('Welcome to StepWatch')
+        .to.equal('StepWatch')
     })
   })
 })
