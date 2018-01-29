@@ -167,6 +167,17 @@ describe('DataStore', function () {
       expect(dataStore.runs.length).to.equal(0)
     })
 
+    it('returns empty array if storage key not found', function () {
+      var dataStore = new DataStore(sessionStorage)
+
+      sessionStorage.clear()
+
+      dataStore.load()
+
+      expect(dataStore.runs).to.be.an.instanceof(Array)
+      expect(dataStore.runs.length).to.equal(0)
+    })
+
     it('retrieves the stored runs', function () {
       var dataStore = new DataStore(sessionStorage)
 
