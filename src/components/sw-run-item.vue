@@ -114,7 +114,12 @@ export default {
       this.$emit('copy', this.run)
     },
     edit () {
-      console.log('swRunItem#edit')
+      this.$router.push({
+        name: 'sw-run-editor',
+        params: {
+          id: this.run.id
+        }
+      })
     },
     remove () {
       this.$emit('remove', this.run)

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import swRun from '@/components/sw-run'
 import swRunList from '@/components/sw-run-list'
 import swHome from '@/components/sw-home'
+import swRunEditor from '@/components/sw-run-editor'
 
 Vue.use(Router)
 
@@ -44,6 +45,12 @@ export default new Router({
       path: '/runs',
       name: 'sw-run-list',
       component: swRunList,
+      props: true
+    },
+    {
+      path: '/run/edit/:id',
+      name: 'sw-run-editor',
+      component: swRunEditor,
       props: true
     },
     {
