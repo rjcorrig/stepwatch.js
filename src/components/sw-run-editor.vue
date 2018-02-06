@@ -67,6 +67,7 @@ export default {
   border-top: 0;
   border-left: 0;
   border-right: 0;
+  border-radius: 0;
 }
 
 .sw-step-list-label {
