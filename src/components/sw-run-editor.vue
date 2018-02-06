@@ -21,7 +21,9 @@
     </button>
   </div>
   <div v-else class="sw-page sw-run-editor">
-    <h1 class="sw-header">Run not found</h1>
+    <div class="sw-content">
+      <h1 class="sw-header">Run not found</h1>
+    </div>
   </div>
 </template>
 
@@ -50,7 +52,4 @@ export default {
 </script>
 
 <style>
-.sw-name-editor {
-  padding: 50px 0 0 0;
-}
 </style>

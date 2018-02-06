@@ -19,7 +19,9 @@
     </div>
   </div>
   <div v-else class="sw-page sw-run">
-    <h1 class="sw-header">Run not found</h1>
+    <div class="sw-content">
+      <h1 class="sw-header">Run not found</h1>
+    </div>
   </div>
 </template>
 
