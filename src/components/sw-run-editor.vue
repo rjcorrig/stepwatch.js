@@ -9,16 +9,18 @@
         <i class="material-icons">done</i>
       </button>
     </h1>
-    <div class="sw-name-editor">
-      <label for="name">Run Name:</label>
-      <input type="text" name="name" v-model="run.name" placeholder="Run Name" />
+    <div class="sw-content">
+      <div class="sw-name-editor">
+        <label for="name">Run Name:</label>
+        <input type="text" name="name" v-model="run.name" placeholder="Run Name" />
+      </div>
+      <ol class="sw-card-list" v-if="run.steps.length">
+        <sw-step-editor v-for="step in run.steps" :step="step" :key="step.id" />
+      </ol>
+      <button class="sw-action-button">
+        <i title="New Step" class="material-icons">add_circle_outline</i>
+      </button>
     </div>
-    <ol class="sw-card-list" v-if="run.steps.length">
-      <sw-step-editor v-for="step in run.steps" :step="step" :key="step.id" />
-    </ol>
-    <button class="sw-action-button">
-      <i title="New Step" class="material-icons">add_circle_outline</i>
-    </button>
   </div>
   <div v-else class="sw-page sw-run-editor">
     <div class="sw-content">
@@ -51,5 +53,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.sw-name-editor {
+  text-align: left;
+}
+
+.sw-name-editor input[type="text"] {
+  font-size: 2em;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
 </style>
