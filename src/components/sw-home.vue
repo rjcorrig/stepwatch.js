@@ -3,11 +3,13 @@
     <h1 class="sw-header">
       <div class="sw-page-title">StepWatch</div>
     </h1>
-    <ol class="sw-card-list">
-      <sw-run-category title="Programs" type="program" :filter="isProgram" />
-      <sw-run-category title="Current Runs" type="running" :filter="isActive" />
-      <sw-run-category title="History" type="history" :filter="isHistory" />
-    </ol>
+    <div class="sw-content">
+      <ol class="sw-card-list">
+        <sw-run-category title="Programs" type="program" :filter="isProgram" />
+        <sw-run-category title="Current Runs" type="running" :filter="isActive" />
+        <sw-run-category title="History" type="history" :filter="isHistory" />
+      </ol>
+    </div>
   </div>
 </template>
 
