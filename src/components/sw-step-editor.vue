@@ -10,13 +10,16 @@
         <input type="number" name="name" v-model="step.totalSeconds" placeholder="Duration in seconds" />
       </div>
       <div class="sw-actions">
-        <button v-if="canMoveUp" v-on:click.stop="moveUp" class="sw-action-button" title="Move Up">
+        <button v-if="canMoveUp" @click.stop="moveUp" class="sw-action-button" title="Move Up">
           <i class="material-icons">arrow_upward</i>
         </button>
-        <button v-if="canMoveDown" v-on:click.stop="moveDown" class="sw-action-button" title="Move Down">
+        <button v-if="canMoveDown" @click.stop="moveDown" class="sw-action-button" title="Move Down">
           <i class="material-icons">arrow_downward</i>
         </button>
-        <button v-on:click.stop="remove" class="sw-action-button" title="Delete">
+        <button @click.stop="copy" class="sw-action-button" title="Copy">
+          <i class="material-icons">content_copy</i>
+        </button>
+        <button @click.stop="remove" class="sw-action-button" title="Delete">
           <i class="material-icons">delete</i>
         </button>
       </div>
@@ -35,22 +38,27 @@ export default {
     step: {
       type: models.Step,
       required: true
+    },
+    canMoveUp: {
+      type: Boolean,
+      default: false
+    },
+    canMoveDown: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
-    canMoveUp () {
-      return true
-    },
-    canMoveDown () {
-      return true
-    }
   },
   methods: {
     moveUp () {
       console.log('swStepEditor#moveUp')
     },
     moveDown () {
-      console.log('swStepEditor#moveUp')
+      console.log('swStepEditor#moveDown')
+    },
+    copy () {
+      console.log('swStepEditor#copy')
     },
     remove () {
       console.log('swStepEditor#remove')
