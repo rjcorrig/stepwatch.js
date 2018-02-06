@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import swStepEditor from './sw-step.vue'
+import swStepEditor from './sw-step-editor.vue'
 
 export default {
   name: 'sw-run',
