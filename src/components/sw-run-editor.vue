@@ -14,6 +14,7 @@
         <label for="name">Run Name:</label>
         <input type="text" name="name" v-model="run.name" placeholder="Run Name" />
       </div>
+      <div class="sw-step-list-label">Steps:</div>
       <ol class="sw-card-list" v-if="run.steps.length">
         <sw-step-editor v-for="step in run.steps" :step="step" :key="step.id" />
       </ol>
@@ -67,4 +68,14 @@ export default {
   border-left: 0;
   border-right: 0;
 }
+
+.sw-step-list-label {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.sw-card-list {
+  margin-top: -5px;
+}
+
 </style>
