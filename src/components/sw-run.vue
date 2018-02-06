@@ -9,12 +9,14 @@
       </div>
       <div class="sw-header-right"></div>
     </h1>
-    <ol class="sw-card-list" v-if="run.steps.length">
-      <sw-step v-for="step in run.steps" :step="step" :key="step.id" :isCurrentStep="run.steps.indexOf(step) === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
-    </ol>
-    <p v-else>
-      No steps defined
-    </p>
+    <div class="sw-content">
+      <ol class="sw-card-list" v-if="run.steps.length">
+        <sw-step v-for="step in run.steps" :step="step" :key="step.id" :isCurrentStep="run.steps.indexOf(step) === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
+      </ol>
+      <p v-else>
+        No steps defined
+      </p>
+    </div>
   </div>
   <div v-else class="sw-page sw-run">
     <h1 class="sw-header">Run not found</h1>

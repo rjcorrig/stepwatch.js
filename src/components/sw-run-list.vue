@@ -10,12 +10,14 @@
       </button>
       <div v-else class="sw-header-right"></div>
     </h1>
-    <transition-group name="list" class="sw-card-list" tag="ol" v-if="runs.length">
-      <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" @remove="remove" @copy="copy" @create="create"/>
-    </transition-group>
-    <p v-else>
-      No {{ title }}
-    </p>
+    <div class="sw-content">
+      <transition-group name="list" class="sw-card-list" tag="ol" v-if="runs.length">
+        <sw-run-item class="list-item" v-for="run in runs" :run="run" :key="run.id" @remove="remove" @copy="copy" @create="create"/>
+      </transition-group>
+      <p v-else>
+        No {{ title }}
+      </p>
+    </div>
   </div>
 </template>
 

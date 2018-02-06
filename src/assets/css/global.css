@@ -52,10 +52,13 @@
   flex: 1;
 }
 
+.sw-content {
+  margin: 50px 0 0 0;
+}
+
 ol.sw-card-list {
   list-style-type: none;
   padding: 0;
-  margin: 50px 0 0 0;
 }
 
 .sw-card {
