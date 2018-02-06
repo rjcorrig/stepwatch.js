@@ -2,7 +2,7 @@
   <div class="sw-page sw-run-list">
     <h1 class="sw-header">
       <button class="sw-action-button" @click="$router.go(-1)">
-        <i class="material-icons">keyboard_arrow_left</i>
+        <i class="material-icons">arrow_back</i>
       </button>
       <div class="sw-page-title">{{ title }}</div>
       <button v-if="type === 'program'" class="sw-action-button" @click="newProgram">

@@ -2,7 +2,7 @@
   <div v-if="run" class="sw-page sw-run">
     <h1 class="sw-header">
       <button class="sw-action-button" @click="$router.go(-1)">
-        <i class="material-icons">keyboard_arrow_left</i>
+        <i class="material-icons">arrow_back</i>
       </button>
       <div class="sw-page-title marquee-wrap">
         <vue-marquee :content="run.name" speed="slow" :showtwo="false"></vue-marquee>
