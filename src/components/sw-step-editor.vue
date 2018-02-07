@@ -48,20 +48,18 @@ export default {
       default: false
     }
   },
-  computed: {
-  },
   methods: {
     moveUp () {
-      console.log('swStepEditor#moveUp')
+      this.$emit('moveUp', this.step)
     },
     moveDown () {
-      console.log('swStepEditor#moveDown')
+      this.$emit('moveDown', this.step)
     },
     copy () {
-      console.log('swStepEditor#copy')
+      this.$emit('copy', this.step)
     },
     remove () {
-      console.log('swStepEditor#remove')
+      this.$emit('remove', this.step)
     }
   }
 }

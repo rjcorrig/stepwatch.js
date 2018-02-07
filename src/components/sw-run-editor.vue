@@ -32,6 +32,7 @@
 
 <script>
 import swStepEditor from './sw-step-editor.vue'
+import Step from '@/stepwatch/models/step'
 
 export default {
   name: 'sw-run',
@@ -48,13 +49,37 @@ export default {
   },
   methods: {
     newStep () {
-      console.log('swRunEditor#newStep')
+      let step = new Step()
+      this.run.steps.push(step)
+      return step
     },
-    copy () {
-      console.log('swRunEditor#copy')
+    copy (step) {
+      let idx = this.run.steps.indexOf(step)
+      let newStep = new Step(step)
+      newStep.initialize()
+      this.run.steps.splice(idx + 1, 0, newStep)
+      return newStep
     },
-    remove () {
-      console.log('swRunEditor#remove')
+    remove (step) {
+      let idx = this.run.steps.indexOf(step)
+
+      if (idx >= 0) {
+        this.run.steps.splice(idx, 1)
+      }
+    },
+    moveUp (step) {
+      let idx = this.run.steps.indexOf(step)
+      if (idx > 0) {
+        this.run.steps.splice(idx, 1)
+        this.run.steps.splice(idx - 1, 0, step)
+      }
+    },
+    moveDown (step) {
+      let idx = this.run.steps.indexOf(step)
+      if (idx > -1 && idx < this.run.steps.length - 1) {
+        this.run.steps.splice(idx, 1)
+        this.run.steps.splice(idx + 1, 0, step)
+      }
     }
   },
   components: {
