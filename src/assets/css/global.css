@@ -111,3 +111,18 @@ ol.sw-card-list {
 .sw-card {
   background-color: white;
 }
+
+/* List animations */
+.list-item {
+  transition-property: transform;
+  transition-duration: 1s;
+}
+
+.list-leave-active {
+  position: absolute;
+  visibility: hidden;
+}
+
+.list-enter, .list-leave-to {
+  opacity: 0;
+}

@@ -92,17 +92,4 @@ export default {
 </script>
 
 <style scoped>
-.list-item {
-  transition-property: transform;
-  transition-duration: 1s;
-}
-
-.list-leave-active {
-  position: absolute;
-  visibility: hidden;
-}
-
-.list-enter, .list-leave-to {
-  opacity: 0;
-}
 </style>

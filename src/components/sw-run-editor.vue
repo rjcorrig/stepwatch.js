@@ -112,18 +112,4 @@ export default {
 .sw-card-list {
   margin-top: -5px;
 }
-
-.list-item {
-  transition-property: transform;
-  transition-duration: 1s;
-}
-
-.list-leave-active {
-  position: absolute;
-  visibility: hidden;
-}
-
-.list-enter, .list-leave-to {
-  opacity: 0;
-}
 </style>
