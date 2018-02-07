@@ -16,7 +16,7 @@
       </div>
       <div class="sw-step-list-label">Steps:</div>
       <ol class="sw-card-list" v-if="run.steps.length">
-        <sw-step-editor v-for="step in run.steps" :step="step" :key="step.id" @remove="remove" @copy="copy" :canMoveUp="run.steps.indexOf(step) !== 0" @moveUp="moveUp" :canMoveDown="run.steps.indexOf(step) !== run.steps.length - 1" @moveDown="moveDown" />
+        <sw-step-editor v-for="(step, index) in run.steps" :step="step" :key="step.id" @remove="remove" @copy="copy" :canMoveUp="index !== 0" @moveUp="moveUp" :canMoveDown="index !== run.steps.length - 1" @moveDown="moveDown" />
       </ol>
       <button class="sw-action-button" @click="newStep">
         <i title="New Step" class="material-icons">add_circle_outline</i>

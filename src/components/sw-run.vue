@@ -11,7 +11,7 @@
     </h1>
     <div class="sw-content">
       <ol class="sw-card-list" v-if="run.steps.length">
-        <sw-step v-for="step in run.steps" :step="step" :key="step.id" :isCurrentStep="run.steps.indexOf(step) === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
+        <sw-step v-for="(step, index) in run.steps" :step="step" :key="step.id" :isCurrentStep="index === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
       </ol>
       <p v-else>
         No steps defined
