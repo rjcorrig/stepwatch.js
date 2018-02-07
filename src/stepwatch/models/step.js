@@ -17,6 +17,7 @@
 */
 
 import _ from 'lodash'
+import uuid4 from 'uuid/v4'
 
 export default function Step (options = {}) {
   _.defaults(options, {
@@ -28,6 +29,7 @@ export default function Step (options = {}) {
     endTime: null
   })
 
+  this.id = uuid4()
   this.name = options.name
   this.status = options.status
   this.totalSeconds = options.totalSeconds

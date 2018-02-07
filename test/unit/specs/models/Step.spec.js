@@ -24,6 +24,7 @@ describe('Step', function () {
     it('defaults all properties', function () {
       var step = new Step()
 
+      expect(step.id).to.not.equal(null)
       expect(step.name).to.equal('New Step')
       expect(step.status).to.equal('created')
       expect(step.totalSeconds).to.equal(0)
@@ -35,6 +36,7 @@ describe('Step', function () {
     it('defines all properties', function () {
       var step = new Step()
 
+      expect(step).to.have.property('id')
       expect(step).to.have.property('name')
       expect(step).to.have.property('status')
       expect(step).to.have.property('totalSeconds')
@@ -55,6 +57,7 @@ describe('Step', function () {
 
       var step = new Step(options)
 
+      expect(step.id).to.not.equal(null)
       expect(step.name).to.equal(options.name)
       expect(step.status).to.equal(options.status)
       expect(step.totalSeconds).to.equal(options.totalSeconds)
