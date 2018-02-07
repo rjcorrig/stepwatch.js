@@ -15,9 +15,9 @@
         <input type="text" name="name" v-model="run.name" placeholder="Run Name" />
       </div>
       <div class="sw-step-list-label">Steps:</div>
-      <ol class="sw-card-list" v-if="run.steps.length">
-        <sw-step-editor v-for="(step, index) in run.steps" :step="step" :key="step.id" @remove="remove" @copy="copy" :canMoveUp="index !== 0" @moveUp="moveUp" :canMoveDown="index !== run.steps.length - 1" @moveDown="moveDown" />
-      </ol>
+      <transition-group name="list" class="sw-card-list" tag="ol" v-if="run.steps.length">
+        <sw-step-editor class="list-item" v-for="(step, index) in run.steps" :step="step" :key="step.id" @remove="remove" @copy="copy" :canMoveUp="index !== 0" @moveUp="moveUp" :canMoveDown="index !== run.steps.length - 1" @moveDown="moveDown" />
+      </transition-group>
       <button class="sw-action-button" @click="newStep">
         <i title="New Step" class="material-icons">add_circle_outline</i>
       </button>
@@ -113,4 +113,17 @@ export default {
   margin-top: -5px;
 }
 
+.list-item {
+  transition-property: transform;
+  transition-duration: 1s;
+}
+
+.list-leave-active {
+  position: absolute;
+  visibility: hidden;
+}
+
+.list-enter, .list-leave-to {
+  opacity: 0;
+}
 </style>
