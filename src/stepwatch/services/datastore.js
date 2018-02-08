@@ -62,6 +62,14 @@ DataStore.prototype.deleteRun = function (run) {
   }
 }
 
+DataStore.prototype.saveRun = function (run) {
+  var idx = this.runs.indexOf(run)
+
+  if (idx === -1) {
+    this.runs.push(run)
+  }
+}
+
 DataStore.prototype.load = function () {
   if (this.storage) {
     this.runs = []

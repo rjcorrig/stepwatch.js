@@ -1,17 +1,17 @@
 <template>
   <div v-if="run" class="sw-page sw-run-editor">
     <h1 class="sw-header">
-      <button class="sw-action-button" @click="$router.go(-1)">
+      <button class="sw-action-button" @click="$router.go(-1)" title="Cancel">
         <i class="material-icons">cancel</i>
       </button>
       <div class="sw-page-title">Edit</div>
-      <button class="sw-action-button">
+      <button class="sw-action-button" @click="save" title="Save">
         <i class="material-icons">done</i>
       </button>
     </h1>
     <div class="sw-content">
       <div class="sw-name-editor">
-        <label for="name">Run Name:</label>
+        <label for="name">Run Name: {{ run.id }}</label>
         <input type="text" name="name" v-model="run.name" placeholder="Run Name" />
       </div>
       <div class="sw-step-list-label">Steps:</div>
@@ -33,21 +33,31 @@
 <script>
 import swStepEditor from './sw-step-editor.vue'
 import Step from '@/stepwatch/models/step'
+import Run from '@/stepwatch/models/run'
 
 export default {
   name: 'sw-run',
   props: [ 'id' ],
   watch: {
     '$route' (to, from) {
-      this.run = this.$services.dataStore.getRun(to.params.id)
+      this.original = this.$services.dataStore.getRun(to.params.id)
+      this.run = new Run(this.original)
     }
   },
   data () {
+    let original = this.$services.dataStore.getRun(this.id)
     return {
-      run: this.$services.dataStore.getRun(this.id)
+      original,
+      run: new Run(original)
     }
   },
   methods: {
+    save () {
+      this.$services.dataStore.deleteRun(this.original)
+      this.$services.dataStore.saveRun(this.run)
+      this.$services.dataStore.save()
+      this.$router.go(-1)
+    },
     newStep () {
       let step = new Step()
       this.run.steps.push(step)
