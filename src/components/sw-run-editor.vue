@@ -11,8 +11,8 @@
     </h1>
     <div class="sw-content">
       <div class="sw-name-editor">
-        <label for="name">Run Name: {{ run.id }}</label>
-        <input type="text" name="name" v-model="run.name" placeholder="Run Name" />
+        <label for="name">Run Name:</label>
+        <input type="text" name="name" v-model="run.name" placeholder="Run Name" required="required" />
       </div>
       <div class="sw-step-list-label">Steps:</div>
       <transition-group name="list" class="sw-card-list" tag="ol" v-if="run.steps.length">
@@ -112,6 +112,11 @@ export default {
   border-left: 0;
   border-right: 0;
   border-radius: 0;
+}
+
+.sw-name-editor input:invalid {
+  border-color: red;
+  color: red;
 }
 
 .sw-step-list-label {

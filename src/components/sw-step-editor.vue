@@ -3,11 +3,11 @@
     <div class="sw-card">
       <div class="sw-editor">
         <label for="name">Step Name:</label>
-        <input type="text" name="name" v-model="step.name" placeholder="Run Name" />
+        <input type="text" name="name" v-model="step.name" placeholder="Run Name" required="required"/>
       </div>
       <div class="sw-editor">
         <label for="name">Duration in seconds:</label>
-        <input type="number" name="name" v-model="step.totalSeconds" placeholder="Duration in seconds" />
+        <input type="number" name="name" v-model="step.totalSeconds" placeholder="Duration in seconds" required="required">
       </div>
       <div class="sw-actions">
         <button v-if="canMoveUp" @click.stop="moveUp" class="sw-action-button" title="Move Up">
@@ -80,4 +80,10 @@ export default {
   border-right: 0;
   border-radius: 0;
 }
+
+.sw-editor input:invalid {
+  border-color: red;
+  color: red;
+}
+
 </style>
