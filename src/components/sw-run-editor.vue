@@ -12,8 +12,8 @@
       </h1>
       <div class="sw-content">
         <div class="sw-name-editor">
+          <input type="text" name="name" v-model="run.name" placeholder="Run Name" required="required" autofocus="autofocus" />
           <label for="name">Run Name:</label>
-          <input type="text" name="name" v-model="run.name" placeholder="Run Name" required="required" />
         </div>
         <div class="sw-step-list-label">Steps:</div>
         <transition-group name="list" class="sw-card-list" tag="ol" v-if="run.steps.length">
@@ -103,6 +103,8 @@ export default {
 <style scoped>
 .sw-name-editor {
   text-align: left;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .sw-name-editor input[type="text"] {
@@ -118,6 +120,10 @@ export default {
 
 .sw-name-editor input:invalid {
   border-color: red;
+  color: red;
+}
+
+.sw-name-editor input:invalid + label {
   color: red;
 }
 

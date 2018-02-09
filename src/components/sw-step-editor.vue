@@ -2,12 +2,12 @@
   <li class="sw-step-editor">
     <div class="sw-card">
       <div class="sw-editor">
-        <label for="name">Step Name:</label>
         <input type="text" name="name" v-model="step.name" placeholder="Run Name" required="required"/>
+        <label for="name">Step Name:</label>
       </div>
       <div class="sw-editor">
-        <label for="name">Duration in seconds:</label>
         <input type="number" name="name" v-model="step.totalSeconds" placeholder="Duration in seconds" required="required">
+        <label for="name">Duration in seconds:</label>
       </div>
       <div class="sw-actions">
         <button v-if="canMoveUp" @click.stop="moveUp" class="sw-action-button" title="Move Up">
@@ -68,6 +68,8 @@ export default {
 <style scoped>
 .sw-editor {
   text-align: left;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .sw-editor input {
@@ -83,6 +85,10 @@ export default {
 
 .sw-editor input:invalid {
   border-color: red;
+  color: red;
+}
+
+.sw-editor input:invalid + label {
   color: red;
 }
 
