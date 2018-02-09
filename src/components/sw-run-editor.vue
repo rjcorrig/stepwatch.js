@@ -54,11 +54,13 @@ export default {
     }
   },
   methods: {
-    save () {
-      this.$services.dataStore.deleteRun(this.original)
-      this.$services.dataStore.saveRun(this.run)
-      this.$services.dataStore.save()
-      this.$router.go(-1)
+    save (e) {
+      if (e.target.checkValidity()) {
+        this.$services.dataStore.deleteRun(this.original)
+        this.$services.dataStore.saveRun(this.run)
+        this.$services.dataStore.save()
+        this.$router.go(-1)
+      }
     },
     newStep () {
       let step = new Step()
