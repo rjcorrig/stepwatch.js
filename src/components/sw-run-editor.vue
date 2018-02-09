@@ -1,27 +1,29 @@
 <template>
   <div v-if="run" class="sw-page sw-run-editor">
-    <h1 class="sw-header">
-      <button class="sw-action-button" @click="$router.go(-1)" title="Cancel">
-        <i class="material-icons">cancel</i>
-      </button>
-      <div class="sw-page-title">Edit</div>
-      <button class="sw-action-button" @click="save" title="Save">
-        <i class="material-icons">done</i>
-      </button>
-    </h1>
-    <div class="sw-content">
-      <div class="sw-name-editor">
-        <label for="name">Run Name:</label>
-        <input type="text" name="name" v-model="run.name" placeholder="Run Name" required="required" />
+    <form @submit.prevent="save">
+      <h1 class="sw-header">
+        <button type="button" class="sw-action-button" @click="$router.go(-1)" title="Cancel">
+          <i class="material-icons">cancel</i>
+        </button>
+        <div class="sw-page-title">Edit</div>
+        <button class="sw-action-button" title="Save">
+          <i class="material-icons">done</i>
+        </button>
+      </h1>
+      <div class="sw-content">
+        <div class="sw-name-editor">
+          <label for="name">Run Name:</label>
+          <input type="text" name="name" v-model="run.name" placeholder="Run Name" required="required" />
+        </div>
+        <div class="sw-step-list-label">Steps:</div>
+        <transition-group name="list" class="sw-card-list" tag="ol" v-if="run.steps.length">
+          <sw-step-editor class="list-item" v-for="(step, index) in run.steps" :step="step" :key="step.id" @remove="remove" @copy="copy" :canMoveUp="index !== 0" @moveUp="moveUp" :canMoveDown="index !== run.steps.length - 1" @moveDown="moveDown" />
+        </transition-group>
+        <button class="sw-action-button" @click="newStep">
+          <i title="New Step" class="material-icons">add_circle_outline</i>
+        </button>
       </div>
-      <div class="sw-step-list-label">Steps:</div>
-      <transition-group name="list" class="sw-card-list" tag="ol" v-if="run.steps.length">
-        <sw-step-editor class="list-item" v-for="(step, index) in run.steps" :step="step" :key="step.id" @remove="remove" @copy="copy" :canMoveUp="index !== 0" @moveUp="moveUp" :canMoveDown="index !== run.steps.length - 1" @moveDown="moveDown" />
-      </transition-group>
-      <button class="sw-action-button" @click="newStep">
-        <i title="New Step" class="material-icons">add_circle_outline</i>
-      </button>
-    </div>
+    </form>
   </div>
   <div v-else class="sw-page sw-run-editor">
     <div class="sw-content">

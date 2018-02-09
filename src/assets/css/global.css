@@ -4,7 +4,7 @@
   margin: auto;
 }
 
-.sw-page > h1.sw-header {
+.sw-page h1.sw-header {
   display: flex;
   position: fixed;
   top: 0px;
