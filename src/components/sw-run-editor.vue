@@ -16,11 +16,16 @@
           <input type="text" name="name" v-model="run.name" placeholder="Run Name" required="required" autofocus="autofocus" />
           <label for="name">Run Name:</label>
         </div>
-        <div class="sw-step-list-label">Steps:</div>
+        <div class="sw-counters">
+          <div class="sw-run-steps-counter">{{ run.steps.length }} step{{ run.steps.length !== 1 ? 's' : '' }}</div>
+          <div class="sw-timer">
+            <sw-digital-clock class="sw-timer-total" :seconds="totalSeconds" />
+          </div>
+        </div>
         <transition-group name="list" class="sw-card-list" tag="ol" v-if="run.steps.length">
           <sw-step-editor class="list-item" v-for="(step, index) in run.steps" :step="step" :key="step.id" @remove="remove" @copy="copy" :canMoveUp="index !== 0" @moveUp="moveUp" :canMoveDown="index !== run.steps.length - 1" @moveDown="moveDown" />
         </transition-group>
-        <button class="sw-action-button" @click="newStep">
+        <button type="button" class="sw-action-button" @click="newStep">
           <i title="New Step" class="material-icons">add_circle_outline</i>
         </button>
       </div>
@@ -34,7 +39,8 @@
 </template>
 
 <script>
-import swStepEditor from './sw-step-editor.vue'
+import SwStepEditor from './sw-step-editor.vue'
+import SwDigitalClock from './sw-digital-clock.vue'
 import Step from '@/stepwatch/models/step'
 import Run from '@/stepwatch/models/run'
 
@@ -59,12 +65,16 @@ export default {
       return this.run.name.length > 0 && this.run.steps.every(function (s) {
         return s.name.length > 0 && s.totalSeconds > 0
       })
+    },
+    totalSeconds () {
+      return this.run.steps.reduce((sum, step) => sum + Number(step.totalSeconds), 0)
     }
   },
   methods: {
     save (e) {
       if (e.target.checkValidity()) {
         this.$services.dataStore.deleteRun(this.original)
+        this.run.totalSeconds = this.totalSeconds
         this.$services.dataStore.saveRun(this.run)
         this.$services.dataStore.save()
         this.$router.go(-1)
@@ -105,7 +115,8 @@ export default {
     }
   },
   components: {
-    swStepEditor
+    SwStepEditor,
+    SwDigitalClock
   }
 }
 </script>
@@ -113,6 +124,15 @@ export default {
 <style scoped>
 button {
   padding: 0;
+}
+
+.sw-run-steps-counter {
+  float: left;
+  padding-bottom: 5px;
+}
+
+.sw-card-list {
+  clear: both;
 }
 
 .sw-name-editor {
