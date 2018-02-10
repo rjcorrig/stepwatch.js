@@ -71,7 +71,8 @@ export default {
       this.$services.dataStore.save()
     },
     create (run) {
-      let newRun = this.copy(run)
+      let newRun = this.$services.dataStore.createRun(run)
+      this.$services.dataStore.save()
       newRun.start()
       this.viewDetails(newRun)
       return newRun
