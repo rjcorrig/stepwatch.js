@@ -204,7 +204,6 @@ describe('sw-run-list.vue', () => {
       const Constructor = Vue.extend(swRunList)
       const vm = new Constructor({ router }).$mount()
 
-      const count = vm.runs.length
       const index = 2
       const original = vm.runs[index]
 
@@ -213,9 +212,6 @@ describe('sw-run-list.vue', () => {
         const copy = vm.create(original)
 
         expect(copy.status).to.equal('running')
-        expect(vm.runs.length).to.equal(count + 1)
-        expect(vm.runs.indexOf(copy)).to.equal(index + 1)
-        expect(vm.runs.indexOf(original)).to.equal(index)
 
         expect(stub.called).to.equal(true)
 
