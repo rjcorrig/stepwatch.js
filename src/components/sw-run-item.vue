@@ -9,12 +9,17 @@
         </div>
       </h2>
       <div class="sw-counters">
-        <div class="sw-progress">
+        <div class="sw-progress" v-if="!isProgram">
           <progress max="100" :value="percentComplete">{{ percentComplete }}%</progress>
         </div>
-        <div class="sw-run-steps-counter">{{ stepsCompleted }} / {{ run.steps.length }}</div>
+        <div class="sw-run-steps-counter">
+          <span v-if="!isProgram">{{ stepsCompleted }} / </span>
+          {{ run.steps.length }} step{{ run.steps.length !== 1 ? 's' : '' }}
+        </div>
         <div class="sw-timer">
-          <sw-digital-clock class="sw-timer-run" :seconds="run.runSeconds" /> / <sw-digital-clock class="sw-timer-total" :seconds="run.totalSeconds" />
+          <span v-if="!isProgram">
+            <sw-digital-clock class="sw-timer-run" :seconds="run.runSeconds" /> / </span>
+          <sw-digital-clock class="sw-timer-total" :seconds="run.totalSeconds" />
         </div>
       </div>
       <div class="sw-actions">
@@ -59,6 +64,9 @@ export default {
     }
   },
   computed: {
+    isProgram () {
+      return this.run.status === 'program'
+    },
     stepsCompleted () {
       return this.run.currentStep || 0
     },
