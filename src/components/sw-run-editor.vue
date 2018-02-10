@@ -6,9 +6,10 @@
           <i class="material-icons">cancel</i>
         </button>
         <div class="sw-page-title">Edit</div>
-        <button class="sw-action-button" title="Save">
+        <button class="sw-action-button" title="Save" v-if="canSave">
           <i class="material-icons">done</i>
         </button>
+        <div v-else class="sw-header-right"></div>
       </h1>
       <div class="sw-content">
         <div class="sw-name-editor">
@@ -51,6 +52,13 @@ export default {
     return {
       original,
       run: new Run(original)
+    }
+  },
+  computed: {
+    canSave () {
+      return this.run.name.length > 0 && this.run.steps.every(function (s) {
+        return s.name.length > 0 && s.totalSeconds > 0
+      })
     }
   },
   methods: {
@@ -103,6 +111,10 @@ export default {
 </script>
 
 <style scoped>
+button {
+  padding: 0;
+}
+
 .sw-name-editor {
   text-align: left;
   display: flex;

@@ -6,7 +6,7 @@
         <label for="name">Step Name:</label>
       </div>
       <div class="sw-editor">
-        <input type="number" name="name" v-model="step.totalSeconds" placeholder="Duration in seconds" required="required">
+        <input type="number" name="name" v-model="step.totalSeconds" placeholder="Duration in seconds" required="required" min="1">
         <label for="name">Duration in seconds:</label>
       </div>
       <div class="sw-actions">
