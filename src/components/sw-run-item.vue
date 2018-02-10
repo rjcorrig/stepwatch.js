@@ -68,7 +68,11 @@ export default {
       return this.run.status === 'program'
     },
     stepsCompleted () {
-      return this.run.currentStep || 0
+      if (this.run.status === 'complete') {
+        return this.run.steps.length
+      } else {
+        return this.run.currentStep || 0
+      }
     },
     percentComplete () {
       if (this.run.totalSeconds) {

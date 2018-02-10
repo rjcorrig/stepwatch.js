@@ -17,13 +17,14 @@ Vue.use(servicePlugin, {
 Vue.use(VueRouter)
 
 describe('sw-run-item.vue', () => {
-  var run, program, pausedRun
+  var run, program, pausedRun, completedRun
   beforeEach(() => {
     // Set up the test data
     dataStore.load()
     run = dataStore.getRun('garply')
     program = dataStore.getRun('foo')
     pausedRun = dataStore.getRun('quux')
+    completedRun = dataStore.getRun('grault')
   })
 
   describe('constructor', () => {
@@ -52,6 +53,14 @@ describe('sw-run-item.vue', () => {
         propsData: { run: program }
       }).$mount()
       expect(vm.stepsCompleted).to.equal(0)
+    })
+
+    it('should show total number of steps if run completed', () => {
+      const Constructor = Vue.extend(swRunItem)
+      const vm = new Constructor({
+        propsData: { run: completedRun }
+      }).$mount()
+      expect(vm.stepsCompleted).to.equal(completedRun.steps.length)
     })
   })
 
