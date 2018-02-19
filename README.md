@@ -9,6 +9,7 @@ With stepwatch.js, you can define a named **Program** as a series of timed **Ste
 Finished Runs are kept in history and can be saved as new Programs for future repetition.
 
 stepwatch.js is good for:
+
 * Timing your workout routine
 * Setting up a multi-week running program (such as a certain trademarked Furniture to Metric Distance Measurement program)
 * Timing a recipe
@@ -16,6 +17,7 @@ stepwatch.js is good for:
 ## Plans for the future
 
 Currently the app is only minimally functional as the code gets built out. Big goals are:
+
 * Converting to PouchDB as a client-side data store for synchronization to a backend for backup
 * A social web site where users can share their Programs
 
@@ -60,3 +62,5 @@ npm test
 ## License
 
 Released under the [GNU Affero GPL License v3.0](https://www.gnu.org/licenses/agpl-3.0.html).
+
+Run complete sound is [Bell Sound Ring](http://soundbible.com/26-Bell-Sound-Ring.html) by Mike Koenig, used under the [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) License

@@ -36,6 +36,16 @@ export default {
   watch: {
     '$route' (to, from) {
       this.run = this.$services.dataStore.getRun(to.params.id)
+    },
+    'run.currentStep' (to, from) {
+      if (to > 0) {
+        this.sounds.stepComplete.play()
+      }
+    },
+    'run.status' (to, from) {
+      if (to === 'complete') {
+        this.sounds.runComplete.play()
+      }
     }
   },
   data () {
@@ -45,7 +55,11 @@ export default {
 
     return {
       run: this.$services.dataStore.getRun(this.id),
-      ticker
+      ticker,
+      sounds: {
+        stepComplete: new Audio(require('@/assets/audio/step-complete.mp3')),
+        runComplete: new Audio(require('@/assets/audio/run-complete.mp3'))
+      }
     }
   },
   mounted () {
