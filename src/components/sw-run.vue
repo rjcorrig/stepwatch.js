@@ -38,12 +38,12 @@ export default {
       this.run = this.$services.dataStore.getRun(to.params.id)
     },
     'run.currentStep' (to, from) {
-      if (to > 0) {
+      if (to > 0 && this.sounds.stepComplete) {
         this.sounds.stepComplete.play()
       }
     },
     'run.status' (to, from) {
-      if (to === 'complete') {
+      if (to === 'complete' && this.sounds.runComplete) {
         this.sounds.runComplete.play()
       }
     }
@@ -53,12 +53,19 @@ export default {
       this.tick()
     }, 1000)
 
+    let stepComplete
+    let runComplete
+    if (window.Audio) {
+      stepComplete = new Audio(require('@/assets/audio/step-complete.mp3'))
+      runComplete = new Audio(require('@/assets/audio/run-complete.mp3'))
+    }
+
     return {
       run: this.$services.dataStore.getRun(this.id),
       ticker,
       sounds: {
-        stepComplete: new Audio(require('@/assets/audio/step-complete.mp3')),
-        runComplete: new Audio(require('@/assets/audio/run-complete.mp3'))
+        stepComplete,
+        runComplete
       }
     }
   },
