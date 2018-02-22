@@ -43,7 +43,7 @@ export default {
       }
     },
     'run.status' (to, from) {
-      if (to === 'complete' && this.sounds.runComplete) {
+      if (to === 'complete') {
         this.notifyComplete()
       }
     }
@@ -90,12 +90,17 @@ export default {
       window.removeEventListener('beforeunload', this.suspend)
     },
     notifyComplete () {
-      this.sounds.runComplete.play()
-      cordova.plugins.notification.local.schedule({
-        id: 1,
-        title: 'StepWatch',
-        text: `Run ${this.run.name} completed`
-      })
+      if (this.sounds.runComplete) {
+        this.sounds.runComplete.play()
+      }
+
+      if (window.cordova) {
+        cordova.plugins.notification.local.schedule({
+          title: 'StepWatch',
+          text: `Run ${this.run.name} completed`,
+          sound: null
+        })
+      }
     }
   },
   components: {
