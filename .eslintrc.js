@@ -6,6 +6,9 @@ module.exports = {
   parserOptions: {
     sourceType: 'module'
   },
+  globals: {
+    "cordova": true
+  },
   env: {
     browser: true,
   },

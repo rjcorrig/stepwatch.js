@@ -44,7 +44,7 @@ export default {
     },
     'run.status' (to, from) {
       if (to === 'complete' && this.sounds.runComplete) {
-        this.sounds.runComplete.play()
+        this.notifyComplete()
       }
     }
   },
@@ -88,6 +88,14 @@ export default {
       }
       this.$services.dataStore.save()
       window.removeEventListener('beforeunload', this.suspend)
+    },
+    notifyComplete () {
+      this.sounds.runComplete.play()
+      cordova.plugins.notification.local.schedule({
+        id: 1,
+        title: 'StepWatch',
+        text: `Run ${this.run.name} completed`
+      })
     }
   },
   components: {
