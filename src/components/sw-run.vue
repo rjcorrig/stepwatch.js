@@ -35,14 +35,17 @@ export default {
   props: [ 'id' ],
   watch: {
     '$route' (to, from) {
+      this.$services.dataStore.save()
       this.run = this.$services.dataStore.getRun(to.params.id)
     },
     'run.currentStep' (to, from) {
+      this.$services.dataStore.save()
       if (to > 0 && this.sounds.stepComplete) {
         this.sounds.stepComplete.play()
       }
     },
     'run.status' (to, from) {
+      this.$services.dataStore.save()
       if (to === 'complete') {
         this.notifyComplete()
       }
