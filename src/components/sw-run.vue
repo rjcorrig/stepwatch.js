@@ -97,10 +97,16 @@ export default {
     },
     notifyComplete () {
       if (window.cordova) {
-        cordova.plugins.notification.local.schedule({
-          title: 'StepWatch',
-          text: `Run ${this.run.name} completed`,
-          sound: 'file://' + path.normalize(runCompleteSound)
+        cordova.plugins.notification.local.getIds((ids) => {
+          let id = ids.reduce((max, id) => id > max ? id : max, 0)
+
+          cordova.plugins.notification.local.schedule({
+            id: id + 1,
+            title: 'StepWatch',
+            text: `Run ${this.run.name} completed`,
+            sound: 'file://' + path.normalize(runCompleteSound),
+            data: { runId: this.run.id }
+          })
         })
       } else if (this.sounds.runComplete) {
         this.sounds.runComplete.play()
