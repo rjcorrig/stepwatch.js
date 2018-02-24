@@ -29,6 +29,9 @@
 import swStep from './sw-step.vue'
 import VueMarquee from 'vue-marquee-ho'
 import Css from 'vue-marquee-ho/dist/vue-marquee.min.css' // eslint-disable-line no-unused-vars
+import runCompleteSound from '@/assets/audio/run-complete.mp3'
+import stepCompleteSound from '@/assets/audio/step-complete.mp3'
+import path from 'path'
 
 export default {
   name: 'sw-run',
@@ -59,8 +62,8 @@ export default {
     let stepComplete
     let runComplete
     if (window.Audio) {
-      stepComplete = new Audio(require('@/assets/audio/step-complete.mp3'))
-      runComplete = new Audio(require('@/assets/audio/run-complete.mp3'))
+      stepComplete = new Audio(stepCompleteSound)
+      runComplete = new Audio(runCompleteSound)
     }
 
     return {
@@ -93,16 +96,14 @@ export default {
       window.removeEventListener('beforeunload', this.suspend)
     },
     notifyComplete () {
-      if (this.sounds.runComplete) {
-        this.sounds.runComplete.play()
-      }
-
       if (window.cordova) {
         cordova.plugins.notification.local.schedule({
           title: 'StepWatch',
           text: `Run ${this.run.name} completed`,
-          sound: null
+          sound: 'file://' + path.normalize(runCompleteSound)
         })
+      } else if (this.sounds.runComplete) {
+        this.sounds.runComplete.play()
       }
     }
   },
