@@ -105,6 +105,8 @@ export default {
             title: 'StepWatch',
             text: `Run ${this.run.name} completed`,
             sound: 'file://' + path.normalize(runCompleteSound),
+            icon: 'res://icon',
+            smallIcon: 'ic_checkmark_holo_light',
             data: { runId: this.run.id }
           })
         })
