@@ -38,6 +38,20 @@ import swDigitalClock from './sw-digital-clock.vue'
 export default {
   name: 'sw-step',
   components: { swDigitalClock },
+  watch: {
+    'step.status' (to, from) {
+      if (to === 'running' || to === 'paused') {
+        this.notifyUpdate()
+      } else {
+        this.notifyClear()
+      }
+    },
+    'step.runSeconds' (to, from) {
+      if (this.step.status === 'running' || this.step.status === 'paused') {
+        this.notifyUpdate()
+      }
+    }
+  },
   props: {
     step: {
       type: models.Step,
@@ -84,6 +98,14 @@ export default {
     },
     start () {
       this.$emit('start')
+    },
+    notifyUpdate () {
+      console.log('notifyUpdate: ' + this.step.name)
+      this.$emit('notifyUpdate', this.step)
+    },
+    notifyClear () {
+      console.log('notifyClear: ' + this.step.name)
+      this.$emit('notifyClear')
     }
   }
 }

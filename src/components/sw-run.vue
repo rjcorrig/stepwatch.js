@@ -11,7 +11,7 @@
     </h1>
     <div class="sw-content">
       <ol class="sw-card-list" v-if="run.steps.length">
-        <sw-step v-for="(step, index) in run.steps" :step="step" :key="step.id" :isCurrentStep="index === run.currentStep" v-on:cancel="run.cancel()" v-on:pause="run.pause()" v-on:start="run.start()" />
+        <sw-step v-for="(step, index) in run.steps" :step="step" :key="step.id" :isCurrentStep="index === run.currentStep" @cancel="run.cancel()" @pause="run.pause()" @start="run.start()" @notifyUpdate="notifyUpdate" @notifyClear="notifyClear"/>
       </ol>
       <p v-else>
         No steps defined
@@ -98,7 +98,7 @@ export default {
     notifyComplete () {
       if (window.cordova) {
         cordova.plugins.notification.local.getIds((ids) => {
-          let id = ids.reduce((max, id) => id > max ? id : max, 0)
+          let id = ids.reduce((max, id) => id > max ? id : max, 1)
 
           cordova.plugins.notification.local.schedule({
             id: id + 1,
@@ -112,6 +112,27 @@ export default {
         })
       } else if (this.sounds.runComplete) {
         this.sounds.runComplete.play()
+      }
+    },
+    notifyUpdate (step) {
+      if (window.cordova) {
+        cordova.plugins.notification.local.schedule({
+          id: 1,
+          title: 'StepWatch',
+          text: step.name,
+          sound: null,
+          progressBar: { value: step.runSeconds, maxValue: step.totalSeconds },
+          smallIcon: step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play',
+          data: {
+            runId: this.run.id,
+            stepId: step.id
+          }
+        })
+      }
+    },
+    notifyClear () {
+      if (window.cordova) {
+        cordova.plugins.notification.local.clear([1])
       }
     }
   },
