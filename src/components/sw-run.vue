@@ -116,11 +116,17 @@ export default {
     },
     notifyUpdate (step) {
       if (window.cordova) {
+        let secondsLeft = step.totalSeconds - step.runSeconds
+        let start = secondsLeft >= 3600 ? 11 : 14
+        let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+
         cordova.plugins.notification.local.schedule({
           id: 1,
-          title: 'StepWatch',
-          text: step.name,
+          title: step.name,
+          text: `${remaining} remaining`,
           sound: null,
+          showWhen: false,
+          ongoing: true,
           progressBar: { value: step.runSeconds, maxValue: step.totalSeconds },
           smallIcon: step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play',
           data: {
@@ -132,7 +138,7 @@ export default {
     },
     notifyClear () {
       if (window.cordova) {
-        cordova.plugins.notification.local.clear([1])
+        cordova.plugins.notification.local.cancel([1])
       }
     }
   },
