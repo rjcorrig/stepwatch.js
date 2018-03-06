@@ -8,7 +8,29 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    console.log('APP CREATED')
+    // Doesn't get called because boilerplate ondeviceready handler bombs
+    document.addEventListener('deviceready', this.init)
+  },
+  methods: {
+    init () {
+      console.log('INIT with cordova = ' + window.cordova)
+      console.log('INIT with this.$router = ' + this.$router)
+      if (window.cordova) {
+        cordova.plugins.notification.local.on('click', (notification, state) => {
+          console.log('CLICK: ' + JSON.stringify(notification))
+          this.$router.push({
+            name: 'sw-run',
+            params: {
+              id: notification.data.runId
+            }
+          })
+        })
+      }
+    }
+  }
 }
 </script>
 
