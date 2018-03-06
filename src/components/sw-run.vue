@@ -94,6 +94,7 @@ export default {
       }
       this.$services.dataStore.save()
       window.removeEventListener('beforeunload', this.suspend)
+      this.notifyClear()
     },
     notifyComplete () {
       if (window.cordova) {
