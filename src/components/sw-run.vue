@@ -120,20 +120,34 @@ export default {
         let start = secondsLeft >= 3600 ? 11 : 14
         let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
 
-        cordova.plugins.notification.local.schedule({
-          id: 1,
-          title: step.name,
-          text: `${remaining} remaining`,
-          sound: null,
-          showWhen: false,
-          ongoing: true,
-          progressBar: { value: step.runSeconds, maxValue: step.totalSeconds },
-          smallIcon: step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play',
-          data: {
-            runId: this.run.id,
-            stepId: step.id
+        cordova.plugins.notification.local.isPresent(1, function (present) {
+          console.log('Present callback')
+          if (present) {
+            console.log('PRESENT')
+            cordova.plugins.notification.local.update({
+              id: 1,
+              text: `${remaining} remaining`,
+              progressBar: { value: step.runSeconds, maxValue: step.totalSeconds },
+              smallIcon: step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play'
+            })
+          } else {
+            console.log('NOT PRESENT')
+            cordova.plugins.notification.local.schedule({
+              id: 1,
+              title: step.name,
+              text: `${remaining} remaining`,
+              sound: null,
+              showWhen: false,
+              ongoing: true,
+              progressBar: { value: step.runSeconds, maxValue: step.totalSeconds },
+              smallIcon: step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play',
+              data: {
+                runId: this.run.id,
+                stepId: step.id
+              }
+            })
           }
-        })
+        }, this)
       }
     },
     notifyClear () {
