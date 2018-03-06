@@ -105,7 +105,6 @@ export default {
             title: 'StepWatch',
             text: `Run ${this.run.name} completed`,
             sound: 'file://' + path.normalize(runCompleteSound),
-            icon: 'res://icon',
             smallIcon: 'ic_checkmark_holo_light',
             data: { runId: this.run.id }
           })
@@ -116,38 +115,38 @@ export default {
     },
     notifyUpdate (step) {
       if (window.cordova) {
-        let secondsLeft = step.totalSeconds - step.runSeconds
-        let start = secondsLeft >= 3600 ? 11 : 14
-        let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+        cordova.plugins.notification.local.isPresent(1, (present) => {
+          let id = 1
 
-        cordova.plugins.notification.local.isPresent(1, function (present) {
-          console.log('Present callback')
+          let secondsLeft = step.totalSeconds - step.runSeconds
+          let start = secondsLeft >= 3600 ? 11 : 14
+          let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+          let text = `${remaining} remaining`
+
+          let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
+          let smallIcon = step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play'
+
           if (present) {
-            console.log('PRESENT')
             cordova.plugins.notification.local.update({
-              id: 1,
-              text: `${remaining} remaining`,
-              progressBar: { value: step.runSeconds, maxValue: step.totalSeconds },
-              smallIcon: step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play'
+              id, text, progressBar, smallIcon
             })
           } else {
-            console.log('NOT PRESENT')
             cordova.plugins.notification.local.schedule({
-              id: 1,
+              id,
+              text,
+              progressBar,
+              smallIcon,
               title: step.name,
-              text: `${remaining} remaining`,
               sound: null,
               showWhen: false,
               ongoing: true,
-              progressBar: { value: step.runSeconds, maxValue: step.totalSeconds },
-              smallIcon: step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play',
               data: {
                 runId: this.run.id,
                 stepId: step.id
               }
             })
           }
-        }, this)
+        })
       }
     },
     notifyClear () {
