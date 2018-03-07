@@ -8,6 +8,7 @@ import DataStore from '@/stepwatch/services/datastore'
 import seedData from '@/stepwatch/models/seedData'
 
 import './assets/css/global.css'
+import './cordovaApp'
 
 Vue.config.productionTip = false
 
