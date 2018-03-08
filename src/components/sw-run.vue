@@ -77,6 +77,12 @@ export default {
   },
   mounted () {
     window.addEventListener('beforeunload', this.suspend)
+
+    if (window.cordova) {
+      cordova.plugins.notification.local.on('notifypause', this.pauseActionHandler, this)
+      cordova.plugins.notification.local.on('notifycancel', this.cancelActionHandler, this)
+      console.log('REGISTERED NOTIFICATION HANDLERS')
+    }
   },
   beforeDestroy () {
     this.suspend()
@@ -95,6 +101,12 @@ export default {
       this.$services.dataStore.save()
       window.removeEventListener('beforeunload', this.suspend)
       this.notifyClear()
+
+      if (window.cordova) {
+        cordova.plugins.notification.local.un('notifypause', this.pauseActionHandler)
+        cordova.plugins.notification.local.un('notifycancel', this.cancelActionHandler)
+        console.log('UNREGISTERED NOTIFICATION HANDLERS')
+      }
     },
     notifyComplete () {
       if (window.cordova) {
@@ -144,7 +156,11 @@ export default {
               data: {
                 runId: this.run.id,
                 stepId: step.id
-              }
+              },
+              actions: [
+                { id: 'notifypause', title: 'Pause' },
+                { id: 'notifycancel', title: 'Cancel' }
+              ]
             })
           }
         })
@@ -154,6 +170,14 @@ export default {
       if (window.cordova) {
         cordova.plugins.notification.local.cancel([1])
       }
+    },
+    pauseActionHandler (notification, eopts) {
+      console.log('NOTIFYPAUSE')
+      this.run.pause()
+    },
+    cancelActionHandler (notification, eopts) {
+      console.log('NOTIFYCANCEL')
+      this.run.cancel()
     }
   },
   components: {
