@@ -79,8 +79,8 @@ export default {
     window.addEventListener('beforeunload', this.suspend)
 
     if (window.cordova) {
-      cordova.plugins.notification.local.on('notifypause', this.pauseActionHandler, this)
-      cordova.plugins.notification.local.on('notifycancel', this.cancelActionHandler, this)
+      cordova.plugins.notification.local.on('toggleclick', this.toggleClickHandler, this)
+      cordova.plugins.notification.local.on('cancelclick', this.cancelClickHandler, this)
       console.log('REGISTERED NOTIFICATION HANDLERS')
     }
   },
@@ -103,8 +103,8 @@ export default {
       this.notifyClear()
 
       if (window.cordova) {
-        cordova.plugins.notification.local.un('notifypause', this.pauseActionHandler)
-        cordova.plugins.notification.local.un('notifycancel', this.cancelActionHandler)
+        cordova.plugins.notification.local.un('toggleclick', this.toggleClickHandler)
+        cordova.plugins.notification.local.un('cancelclick', this.cancelClickHandler)
         console.log('UNREGISTERED NOTIFICATION HANDLERS')
       }
     },
@@ -158,8 +158,14 @@ export default {
                 stepId: step.id
               },
               actions: [
-                { id: 'notifypause', title: 'Pause' },
-                { id: 'notifycancel', title: 'Cancel' }
+                {
+                  id: 'toggleclick',
+                  title: step.status === 'paused' ? 'Resume' : 'Pause'
+                },
+                {
+                  id: 'cancelclick',
+                  title: 'Cancel'
+                }
               ]
             })
           }
@@ -171,12 +177,17 @@ export default {
         cordova.plugins.notification.local.cancel([1])
       }
     },
-    pauseActionHandler (notification, eopts) {
-      console.log('NOTIFYPAUSE')
-      this.run.pause()
+    toggleClickHandler (notification, eopts) {
+      console.log('TOGGLECLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
+      if (this.run.status === 'running') {
+        this.run.pause()
+      } else if (this.run.status === 'paused') {
+        this.run.start()
+      }
+      this.notifyUpdate(this.run.steps[this.run.currentStep])
     },
-    cancelActionHandler (notification, eopts) {
-      console.log('NOTIFYCANCEL')
+    cancelClickHandler (notification, eopts) {
+      console.log('CANCELCLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
       this.run.cancel()
     }
   },
