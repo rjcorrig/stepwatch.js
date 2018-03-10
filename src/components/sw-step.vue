@@ -40,15 +40,19 @@ export default {
   components: { swDigitalClock },
   watch: {
     'step.status' (to, from) {
-      if (to === 'running' || to === 'paused') {
-        this.notifyUpdate()
+      if (to === 'running') {
+        this.notifyRunning()
+      } else if (to === 'paused') {
+        this.notifyPaused()
       } else {
         this.notifyClear()
       }
     },
     'step.runSeconds' (to, from) {
-      if (this.step.status === 'running' || this.step.status === 'paused') {
-        this.notifyUpdate()
+      if (this.step.status === 'running') {
+        this.notifyRunning()
+      } else if (this.step.status === 'paused') {
+        this.notifyPaused()
       }
     }
   },
@@ -99,9 +103,13 @@ export default {
     start () {
       this.$emit('start')
     },
-    notifyUpdate () {
-      console.log('notifyUpdate: ' + this.step.name)
-      this.$emit('notifyUpdate', this.step)
+    notifyRunning () {
+      console.log('notifyRunning: ' + this.step.name)
+      this.$emit('notifyRunning', this.step)
+    },
+    notifyPaused () {
+      console.log('notifyPaused: ' + this.step.name)
+      this.$emit('notifyPaused', this.step)
     },
     notifyClear () {
       console.log('notifyClear: ' + this.step.name)

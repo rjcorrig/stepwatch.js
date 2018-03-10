@@ -11,7 +11,7 @@
     </h1>
     <div class="sw-content">
       <ol class="sw-card-list" v-if="run.steps.length">
-        <sw-step v-for="(step, index) in run.steps" :step="step" :key="step.id" :isCurrentStep="index === run.currentStep" @cancel="run.cancel()" @pause="run.pause()" @start="run.start()" @notifyUpdate="notifyUpdate" @notifyClear="notifyClear"/>
+        <sw-step v-for="(step, index) in run.steps" :step="step" :key="step.id" :isCurrentStep="index === run.currentStep" @cancel="run.cancel()" @pause="run.pause()" @start="run.start()" @notifyRunning="notifyRunning" @notifyPaused="notifyPaused" @notifyClear="notifyClear"/>
       </ol>
       <p v-else>
         No steps defined
@@ -32,6 +32,9 @@ import Css from 'vue-marquee-ho/dist/vue-marquee.min.css' // eslint-disable-line
 import runCompleteSound from '@/assets/audio/run-complete.mp3'
 import stepCompleteSound from '@/assets/audio/step-complete.mp3'
 import path from 'path'
+
+const ID_PAUSED = 1
+const ID_RUNNING = 2
 
 export default {
   name: 'sw-run',
@@ -111,7 +114,7 @@ export default {
     notifyComplete () {
       if (window.cordova) {
         cordova.plugins.notification.local.getIds((ids) => {
-          let id = ids.reduce((max, id) => id > max ? id : max, 1)
+          let id = ids.reduce((max, id) => id > max ? id : max, ID_RUNNING)
 
           cordova.plugins.notification.local.schedule({
             id: id + 1,
@@ -126,29 +129,28 @@ export default {
         this.sounds.runComplete.play()
       }
     },
-    notifyUpdate (step) {
+    notifyRunning (step) {
       if (window.cordova) {
-        cordova.plugins.notification.local.isPresent(1, (present) => {
-          let id = 1
+        cordova.plugins.notification.local.cancel([ID_PAUSED])
 
+        cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
           let secondsLeft = step.totalSeconds - step.runSeconds
           let start = secondsLeft >= 3600 ? 11 : 14
           let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
           let text = `${remaining} remaining`
 
           let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
-          let smallIcon = step.status === 'paused' ? 'ic_media_pause' : 'ic_media_play'
 
           if (present) {
             cordova.plugins.notification.local.update({
-              id, text, progressBar, smallIcon
+              id: ID_RUNNING, text, progressBar
             })
           } else {
             cordova.plugins.notification.local.schedule({
-              id,
+              id: ID_RUNNING,
               text,
               progressBar,
-              smallIcon,
+              smallIcon: 'ic_media_play',
               title: step.name,
               sound: null,
               showWhen: false,
@@ -158,14 +160,47 @@ export default {
                 stepId: step.id
               },
               actions: [
-                {
-                  id: 'toggleclick',
-                  title: step.status === 'paused' ? 'Resume' : 'Pause'
-                },
-                {
-                  id: 'cancelclick',
-                  title: 'Cancel'
-                }
+                { id: 'toggleclick', title: 'Pause' },
+                { id: 'cancelclick', title: 'Cancel' }
+              ]
+            })
+          }
+        })
+      }
+    },
+    notifyPaused (step) {
+      if (window.cordova) {
+        cordova.plugins.notification.local.cancel([ID_RUNNING])
+
+        cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
+          let secondsLeft = step.totalSeconds - step.runSeconds
+          let start = secondsLeft >= 3600 ? 11 : 14
+          let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+          let text = `${remaining} remaining`
+
+          let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
+
+          if (present) {
+            cordova.plugins.notification.local.update({
+              id: ID_PAUSED, text, progressBar
+            })
+          } else {
+            cordova.plugins.notification.local.schedule({
+              id: ID_PAUSED,
+              text,
+              progressBar,
+              smallIcon: 'ic_media_pause',
+              title: step.name,
+              sound: null,
+              showWhen: false,
+              ongoing: true,
+              data: {
+                runId: this.run.id,
+                stepId: step.id
+              },
+              actions: [
+                { id: 'toggleclick', title: 'Resume' },
+                { id: 'cancelclick', title: 'Cancel' }
               ]
             })
           }
@@ -174,7 +209,7 @@ export default {
     },
     notifyClear () {
       if (window.cordova) {
-        cordova.plugins.notification.local.cancel([1])
+        cordova.plugins.notification.local.cancel([ID_PAUSED, ID_RUNNING])
       }
     },
     toggleClickHandler (notification, eopts) {
