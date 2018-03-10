@@ -153,8 +153,8 @@ export default {
               smallIcon: 'ic_media_play',
               title: step.name,
               sound: null,
-              showWhen: false,
-              ongoing: true,
+              clock: false,
+              sticky: true,
               data: {
                 runId: this.run.id,
                 stepId: step.id
@@ -192,8 +192,8 @@ export default {
               smallIcon: 'ic_media_pause',
               title: step.name,
               sound: null,
-              showWhen: false,
-              ongoing: true,
+              clock: false,
+              sticky: true,
               data: {
                 runId: this.run.id,
                 stepId: step.id
