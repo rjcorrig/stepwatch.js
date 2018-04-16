@@ -122,6 +122,7 @@ export default {
             text: `Run ${this.run.name} completed`,
             sound: 'file://' + path.normalize(runCompleteSound),
             smallIcon: 'ic_checkmark_holo_light',
+            wakeup: false,
             data: { runId: this.run.id }
           })
         })
@@ -162,6 +163,7 @@ export default {
               sound: null,
               clock: false,
               sticky: true,
+              wakeup: false,
               data: {
                 runId: this.run.id,
                 stepId: step.id
@@ -201,6 +203,7 @@ export default {
               sound: null,
               clock: false,
               sticky: true,
+              wakeup: false,
               data: {
                 runId: this.run.id,
                 stepId: step.id
