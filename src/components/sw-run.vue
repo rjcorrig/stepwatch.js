@@ -125,12 +125,19 @@ export default {
             data: { runId: this.run.id }
           })
         })
+
+        cordova.plugins.backgroundMode.disable()
+        console.log('BACKGROUND MODE OFF')
       } else if (this.sounds.runComplete) {
         this.sounds.runComplete.play()
       }
     },
     notifyRunning (step) {
       if (window.cordova) {
+        // Allow running in background
+        cordova.plugins.backgroundMode.enable()
+        console.log('BACKGROUND MODE ON')
+
         cordova.plugins.notification.local.cancel([ID_PAUSED])
 
         cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
@@ -205,11 +212,18 @@ export default {
             })
           }
         })
+
+        // Turn off background mode
+        cordova.plugins.backgroundMode.disable()
+        console.log('BACKGROUND MODE OFF')
       }
     },
     notifyClear () {
       if (window.cordova) {
         cordova.plugins.notification.local.cancel([ID_PAUSED, ID_RUNNING])
+        // Turn off background mode
+        cordova.plugins.backgroundMode.disable()
+        console.log('BACKGROUND MODE OFF')
       }
     },
     toggleClickHandler (notification, eopts) {

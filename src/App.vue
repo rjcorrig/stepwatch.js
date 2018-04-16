@@ -19,6 +19,8 @@ export default {
       console.log('INIT with cordova = ' + window.cordova)
       console.log('INIT with this.$router = ' + this.$router)
       if (window.cordova) {
+        cordova.plugins.backgroundMode.setDefaults({ silent: true })
+
         cordova.plugins.notification.local.on('click', (notification, state) => {
           console.log('CLICK: ' + JSON.stringify(notification))
           this.$router.push({
