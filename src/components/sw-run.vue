@@ -141,80 +141,86 @@ export default {
 
         cordova.plugins.notification.local.cancel([ID_PAUSED])
 
-        cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
-          let secondsLeft = step.totalSeconds - step.runSeconds
-          let start = secondsLeft >= 3600 ? 11 : 14
-          let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
-          let text = `${remaining} remaining`
+        // Don't show per-tick notifications on iOS
+        if (cordova.device.platform !== 'iOS') {
+          cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
+            let secondsLeft = step.totalSeconds - step.runSeconds
+            let start = secondsLeft >= 3600 ? 11 : 14
+            let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+            let text = `${remaining} remaining`
 
-          let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
+            let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
 
-          if (present) {
-            cordova.plugins.notification.local.update({
-              id: ID_RUNNING, text, progressBar
-            })
-          } else {
-            cordova.plugins.notification.local.schedule({
-              id: ID_RUNNING,
-              text,
-              progressBar,
-              smallIcon: 'ic_media_play',
-              title: step.name,
-              sound: null,
-              clock: false,
-              sticky: true,
-              wakeup: false,
-              data: {
-                runId: this.run.id,
-                stepId: step.id
-              },
-              actions: [
-                { id: 'toggleclick', title: 'Pause' },
-                { id: 'cancelclick', title: 'Cancel' }
-              ]
-            })
-          }
-        })
+            if (present) {
+              cordova.plugins.notification.local.update({
+                id: ID_RUNNING, text, progressBar
+              })
+            } else {
+              cordova.plugins.notification.local.schedule({
+                id: ID_RUNNING,
+                text,
+                progressBar,
+                smallIcon: 'ic_media_play',
+                title: step.name,
+                sound: null,
+                clock: false,
+                sticky: true,
+                wakeup: false,
+                data: {
+                  runId: this.run.id,
+                  stepId: step.id
+                },
+                actions: [
+                  { id: 'toggleclick', title: 'Pause' },
+                  { id: 'cancelclick', title: 'Cancel' }
+                ]
+              })
+            }
+          })
+        }
       }
     },
     notifyPaused (step) {
       if (window.cordova) {
         cordova.plugins.notification.local.cancel([ID_RUNNING])
 
-        cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
-          let secondsLeft = step.totalSeconds - step.runSeconds
-          let start = secondsLeft >= 3600 ? 11 : 14
-          let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
-          let text = `${remaining} remaining`
+        // Don't show per-tick notifications on iOS
+        if (cordova.device.platform !== 'iOS') {
+          cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
+            let secondsLeft = step.totalSeconds - step.runSeconds
+            let start = secondsLeft >= 3600 ? 11 : 14
+            let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+            let text = `${remaining} remaining`
 
-          let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
+            let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
 
-          if (present) {
-            cordova.plugins.notification.local.update({
-              id: ID_PAUSED, text, progressBar
-            })
-          } else {
-            cordova.plugins.notification.local.schedule({
-              id: ID_PAUSED,
-              text,
-              progressBar,
-              smallIcon: 'ic_media_pause',
-              title: step.name,
-              sound: null,
-              clock: false,
-              sticky: true,
-              wakeup: false,
-              data: {
-                runId: this.run.id,
-                stepId: step.id
-              },
-              actions: [
-                { id: 'toggleclick', title: 'Resume' },
-                { id: 'cancelclick', title: 'Cancel' }
-              ]
-            })
-          }
-        })
+            if (present) {
+              cordova.plugins.notification.local.update({
+                id: ID_PAUSED, text, progressBar
+              })
+            } else {
+              cordova.plugins.notification.local.schedule({
+                id: ID_PAUSED,
+                text,
+                progressBar,
+                smallIcon: 'ic_media_pause',
+                title: step.name,
+                sound: null,
+                clock: false,
+                sticky: true,
+                wakeup: false,
+                data: {
+                  runId: this.run.id,
+                  stepId: step.id
+                },
+                actions: [
+                  { id: 'toggleclick', title: 'Resume' },
+                  { id: 'cancelclick', title: 'Cancel' }
+                ]
+              })
+            }
+          })
+        }
 
         // Turn off background mode
         cordova.plugins.backgroundMode.disable()
