@@ -24,6 +24,7 @@
         <custom-config-file parent="UILaunchStoryboardName" platform="ios" target="*-Info.plist">
             <string>CDVLaunchScreen</string>
         </custom-config-file>
+        <preference name="BackupWebStorage" value="local" />
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
     <plugin name="cordova-custom-config" spec="^5.0.2" />
