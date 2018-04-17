@@ -7,7 +7,8 @@ module.exports = {
     sourceType: 'module'
   },
   globals: {
-    "cordova": true
+    "cordova": true,
+    "device": true
   },
   env: {
     browser: true,

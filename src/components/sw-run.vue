@@ -142,7 +142,7 @@ export default {
         cordova.plugins.notification.local.cancel([ID_PAUSED])
 
         // Don't show per-tick notifications on iOS
-        if (cordova.device.platform !== 'iOS') {
+        if (device.platform !== 'iOS') {
           cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
             let secondsLeft = step.totalSeconds - step.runSeconds
             let start = secondsLeft >= 3600 ? 11 : 14
@@ -185,7 +185,7 @@ export default {
         cordova.plugins.notification.local.cancel([ID_RUNNING])
 
         // Don't show per-tick notifications on iOS
-        if (cordova.device.platform !== 'iOS') {
+        if (device.platform !== 'iOS') {
           cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
             let secondsLeft = step.totalSeconds - step.runSeconds
             let start = secondsLeft >= 3600 ? 11 : 14
