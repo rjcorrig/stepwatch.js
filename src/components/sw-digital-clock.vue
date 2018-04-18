@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import utils from '@/stepwatch/utils'
+
 export default {
   name: 'sw-digital-clock',
   props: {
@@ -13,8 +15,7 @@ export default {
   },
   computed: {
     clock () {
-      var start = this.seconds >= 3600 ? 11 : 14
-      return new Date(1000 * this.seconds).toISOString().slice(start, 19)
+      return utils.formatSeconds(this.seconds)
     }
   }
 }
