@@ -32,6 +32,7 @@ import Css from 'vue-marquee-ho/dist/vue-marquee.min.css' // eslint-disable-line
 import runCompleteSound from '@/assets/audio/run-complete.mp3'
 import stepCompleteSound from '@/assets/audio/step-complete.mp3'
 import path from 'path'
+import utils from '@/stepwatch/utils'
 
 const ID_PAUSED = 1
 const ID_RUNNING = 2
@@ -145,8 +146,7 @@ export default {
         if (device.platform !== 'iOS') {
           cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
             let secondsLeft = step.totalSeconds - step.runSeconds
-            let start = secondsLeft >= 3600 ? 11 : 14
-            let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+            let remaining = utils.formatSeconds(secondsLeft)
             let text = `${remaining} remaining`
 
             let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
@@ -188,8 +188,7 @@ export default {
         if (device.platform !== 'iOS') {
           cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
             let secondsLeft = step.totalSeconds - step.runSeconds
-            let start = secondsLeft >= 3600 ? 11 : 14
-            let remaining = new Date(1000 * secondsLeft).toISOString().slice(start, 19)
+            let remaining = utils.formatSeconds(secondsLeft)
             let text = `${remaining} remaining`
 
             let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
