@@ -21,6 +21,31 @@ describe('sw-run.vue', () => {
     // Set up the test data
     dataStore.load()
     program = dataStore.getRun('foo')
+
+    // Set up mock cordova objects
+    window.cordova = {
+      plugins: {
+        backgroundMode: {
+          enable: () => {},
+          disable: () => {}
+        },
+        notification: {
+          local: {
+            on: (event, callback, scope) => {},
+            un: (event, callback, scope) => {},
+            getIds: (callback) => { callback() },
+            schedule: (data) => {},
+            cancel: (arr) => {},
+            isPresent: (id, callback) => { callback() },
+            update: (data) => {}
+          }
+        }
+      }
+    }
+
+    window.device = {
+      platform: ''
+    }
   })
 
   describe('constructor', () => {
