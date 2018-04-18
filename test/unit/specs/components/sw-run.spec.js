@@ -31,13 +31,13 @@ describe('sw-run.vue', () => {
         },
         notification: {
           local: {
-            on: (event, callback, scope) => {},
-            un: (event, callback, scope) => {},
-            getIds: (callback) => { callback() },
-            schedule: (data) => {},
-            cancel: (arr) => {},
-            isPresent: (id, callback) => { callback() },
-            update: (data) => {}
+            on: function (event, callback, scope) {},
+            un: function (event, callback, scope) {},
+            getIds: function (fn) { fn() },
+            schedule: function (data) {},
+            cancel: function (arr) {},
+            isPresent: function (id, fn) { fn() },
+            update: function (data) {}
           }
         }
       }
@@ -147,6 +147,58 @@ describe('sw-run.vue', () => {
       } finally {
         vm.$services.dataStore.save.restore()
       }
+    })
+  })
+
+  describe('notifyPaused', () => {
+    it('does not post a notification on iOS', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+      const update = sinon.spy(window.cordova.plugins.notification.local, 'update')
+
+      window.device.platform = 'iOS'
+      vm.notifyPaused(vm.run.steps[0])
+
+      expect(schedule.called).to.equal(false)
+      expect(update.called).to.equal(false)
+    })
+
+    it('posts ID_PAUSED notification if not present', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+      const update = sinon.spy(window.cordova.plugins.notification.local, 'update')
+
+      window.device.platform = 'Android'
+      window.cordova.plugins.notification.local.isPresent = function (id, fn) { fn(false) }
+      vm.notifyPaused(vm.run.steps[0])
+
+      expect(schedule.called).to.equal(true)
+      expect(update.called).to.equal(false)
+    })
+
+    it('updates ID_PAUSED notification if present', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+      const update = sinon.spy(window.cordova.plugins.notification.local, 'update')
+
+      window.device.platform = 'Android'
+      window.cordova.plugins.notification.local.isPresent = function (id, fn) { fn(true) }
+      vm.notifyPaused(vm.run.steps[0])
+
+      expect(schedule.called).to.equal(false)
+      expect(update.called).to.equal(true)
     })
   })
 })
