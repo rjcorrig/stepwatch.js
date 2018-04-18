@@ -18,8 +18,10 @@
 
 import models from './models'
 import services from './services'
+import utils from './utils'
 
 export default {
   Models: models,
-  Services: services
+  Services: services,
+  Utils: utils
 }
