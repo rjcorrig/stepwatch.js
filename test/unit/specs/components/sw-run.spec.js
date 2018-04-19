@@ -292,4 +292,30 @@ describe('sw-run.vue', () => {
       expect(update.firstCall.args[0].id).to.equal(ID_PAUSED)
     })
   })
+
+  describe('toggleClickHandler', () => {
+    it('pauses a running run', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      console.log(JSON.stringify(vm.run))
+      expect(vm.run.status).to.equal('running')
+      vm.toggleClickHandler()
+      expect(vm.run.status).to.equal('paused')
+    })
+
+    it('resumes a paused run', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'quux' }
+      }).$mount()
+
+      console.log(JSON.stringify(vm.run))
+      expect(vm.run.status).to.equal('paused')
+      vm.toggleClickHandler()
+      expect(vm.run.status).to.equal('running')
+    })
+  })
 })
