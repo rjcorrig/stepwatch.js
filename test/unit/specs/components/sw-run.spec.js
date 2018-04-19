@@ -5,7 +5,7 @@ import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
 import router from '@/router'
 
-import { ID_PAUSED } from '@/stepwatch/constants'
+import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
 
 // Rig up and use the mock dataStore
 var dataStore = new DataStore(sessionStorage)
@@ -35,7 +35,7 @@ describe('sw-run.vue', () => {
           local: {
             on: function (event, callback, scope) {},
             un: function (event, callback, scope) {},
-            getIds: function (fn) { fn() },
+            getIds: function (fn) { fn([]) },
             schedule: function (data) {},
             cancel: function (arr) {},
             isPresent: function (id, fn) { fn() },
@@ -149,6 +149,93 @@ describe('sw-run.vue', () => {
       } finally {
         vm.$services.dataStore.save.restore()
       }
+    })
+  })
+
+  describe('notifyComplete', () => {
+    it('posts a new notification above ID_RUNNING', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+
+      window.device.platform = 'Android'
+      vm.notifyComplete()
+
+      expect(schedule.called).to.equal(true)
+      expect(schedule.firstCall.args[0].id).to.be.above(ID_RUNNING)
+    })
+
+    it('posts a new notification above highest notification', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+
+      window.device.platform = 'Android'
+      window.cordova.plugins.notification.local.getIds = function (fn) { fn([3, 8, 6]) }
+      vm.notifyComplete()
+
+      expect(schedule.called).to.equal(true)
+      expect(schedule.firstCall.args[0].id).to.equal(9)
+    })
+  })
+
+  describe('notifyRunning', () => {
+    it('does not post a notification on iOS', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+      const update = sinon.spy(window.cordova.plugins.notification.local, 'update')
+
+      window.device.platform = 'iOS'
+      vm.notifyRunning(vm.run.steps[0])
+
+      expect(schedule.called).to.equal(false)
+      expect(update.called).to.equal(false)
+    })
+
+    it('posts ID_RUNNING notification if not present', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+      const update = sinon.spy(window.cordova.plugins.notification.local, 'update')
+
+      window.device.platform = 'Android'
+      window.cordova.plugins.notification.local.isPresent = function (id, fn) { fn(false) }
+      vm.notifyRunning(vm.run.steps[0])
+
+      expect(schedule.called).to.equal(true)
+      expect(schedule.firstCall.args[0].id).to.equal(ID_RUNNING)
+      expect(update.called).to.equal(false)
+    })
+
+    it('updates ID_RUNNING notification if present', () => {
+      const Constructor = Vue.extend(swRun)
+      const vm = new Constructor({
+        propsData: { id: 'garply' }
+      }).$mount()
+
+      const schedule = sinon.spy(window.cordova.plugins.notification.local, 'schedule')
+      const update = sinon.spy(window.cordova.plugins.notification.local, 'update')
+
+      window.device.platform = 'Android'
+      window.cordova.plugins.notification.local.isPresent = function (id, fn) { fn(true) }
+      vm.notifyRunning(vm.run.steps[0])
+
+      expect(schedule.called).to.equal(false)
+      expect(update.called).to.equal(true)
+      expect(update.firstCall.args[0].id).to.equal(ID_RUNNING)
     })
   })
 
