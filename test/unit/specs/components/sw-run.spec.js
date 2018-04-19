@@ -5,6 +5,8 @@ import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
 import router from '@/router'
 
+import { ID_PAUSED } from '@/stepwatch/constants'
+
 // Rig up and use the mock dataStore
 var dataStore = new DataStore(sessionStorage)
 dataStore.seed(seedData)
@@ -181,6 +183,7 @@ describe('sw-run.vue', () => {
       vm.notifyPaused(vm.run.steps[0])
 
       expect(schedule.called).to.equal(true)
+      expect(schedule.firstCall.args[0].id).to.equal(ID_PAUSED)
       expect(update.called).to.equal(false)
     })
 
@@ -199,6 +202,7 @@ describe('sw-run.vue', () => {
 
       expect(schedule.called).to.equal(false)
       expect(update.called).to.equal(true)
+      expect(update.firstCall.args[0].id).to.equal(ID_PAUSED)
     })
   })
 })

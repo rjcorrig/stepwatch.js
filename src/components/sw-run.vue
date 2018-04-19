@@ -34,8 +34,7 @@ import stepCompleteSound from '@/assets/audio/step-complete.mp3'
 import path from 'path'
 import utils from '@/stepwatch/utils'
 
-const ID_PAUSED = 1
-const ID_RUNNING = 2
+import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
 
 export default {
   name: 'sw-run',
