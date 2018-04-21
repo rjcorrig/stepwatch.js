@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var log = require('loglevel')
+
 var app = {
     // Application Constructor
   initialize: function () {
@@ -32,7 +34,7 @@ var app = {
 
   // Update DOM on a Received Event
   receivedEvent: function (id) {
-    console.log('Received Event: ' + id)
+    log.info('Received Event: ' + id)
   }
 }
 

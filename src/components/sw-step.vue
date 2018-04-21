@@ -34,6 +34,7 @@
 <script>
 import models from '@/stepwatch/models'
 import swDigitalClock from './sw-digital-clock.vue'
+import log from 'loglevel'
 
 export default {
   name: 'sw-step',
@@ -104,15 +105,15 @@ export default {
       this.$emit('start')
     },
     notifyRunning () {
-      console.log('notifyRunning: ' + this.step.name)
+      log.info('notifyRunning: ' + this.step.name)
       this.$emit('notifyRunning', this.step)
     },
     notifyPaused () {
-      console.log('notifyPaused: ' + this.step.name)
+      log.info('notifyPaused: ' + this.step.name)
       this.$emit('notifyPaused', this.step)
     },
     notifyClear () {
-      console.log('notifyClear: ' + this.step.name)
+      log.info('notifyClear: ' + this.step.name)
       this.$emit('notifyClear')
     }
   }

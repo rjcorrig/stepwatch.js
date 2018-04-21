@@ -7,22 +7,24 @@
 </template>
 
 <script>
+import log from 'loglevel'
+
 export default {
   name: 'app',
   created () {
-    console.log('APP CREATED')
+    log.info('APP CREATED')
     // Doesn't get called because boilerplate ondeviceready handler bombs
     document.addEventListener('deviceready', this.init)
   },
   methods: {
     init () {
-      console.log('INIT with cordova = ' + window.cordova)
-      console.log('INIT with this.$router = ' + this.$router)
+      log.info('INIT with cordova = ' + window.cordova)
+      log.info('INIT with this.$router = ' + this.$router)
       if (window.cordova) {
         cordova.plugins.backgroundMode.setDefaults({ silent: true })
 
         cordova.plugins.notification.local.on('click', (notification, state) => {
-          console.log('CLICK: ' + JSON.stringify(notification))
+          log.info('CLICK: ' + JSON.stringify(notification))
           this.$router.push({
             name: 'sw-run',
             params: {

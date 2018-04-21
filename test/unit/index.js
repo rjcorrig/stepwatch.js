@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
+import log from 'loglevel'
+
+log.setLevel(log.levels.WARN, false)
 
 Vue.config.productionTip = false
 

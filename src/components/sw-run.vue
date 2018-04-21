@@ -33,6 +33,7 @@ import runCompleteSound from '@/assets/audio/run-complete.mp3'
 import stepCompleteSound from '@/assets/audio/step-complete.mp3'
 import path from 'path'
 import utils from '@/stepwatch/utils'
+import log from 'loglevel'
 
 import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
 
@@ -84,7 +85,7 @@ export default {
     if (window.cordova) {
       cordova.plugins.notification.local.on('toggleclick', this.toggleClickHandler, this)
       cordova.plugins.notification.local.on('cancelclick', this.cancelClickHandler, this)
-      console.log('REGISTERED NOTIFICATION HANDLERS')
+      log.info('REGISTERED NOTIFICATION HANDLERS')
     }
   },
   beforeDestroy () {
@@ -108,7 +109,7 @@ export default {
       if (window.cordova) {
         cordova.plugins.notification.local.un('toggleclick', this.toggleClickHandler)
         cordova.plugins.notification.local.un('cancelclick', this.cancelClickHandler)
-        console.log('UNREGISTERED NOTIFICATION HANDLERS')
+        log.info('UNREGISTERED NOTIFICATION HANDLERS')
       }
     },
     notifyComplete () {
@@ -128,7 +129,7 @@ export default {
         })
 
         cordova.plugins.backgroundMode.disable()
-        console.log('BACKGROUND MODE OFF')
+        log.info('BACKGROUND MODE OFF')
       } else if (this.sounds.runComplete) {
         this.sounds.runComplete.play()
       }
@@ -137,7 +138,7 @@ export default {
       if (window.cordova) {
         // Allow running in background
         cordova.plugins.backgroundMode.enable()
-        console.log('BACKGROUND MODE ON')
+        log.info('BACKGROUND MODE ON')
 
         cordova.plugins.notification.local.cancel([ID_PAUSED])
 
@@ -222,7 +223,7 @@ export default {
 
         // Turn off background mode
         cordova.plugins.backgroundMode.disable()
-        console.log('BACKGROUND MODE OFF')
+        log.info('BACKGROUND MODE OFF')
       }
     },
     notifyClear () {
@@ -230,11 +231,11 @@ export default {
         cordova.plugins.notification.local.cancel([ID_PAUSED, ID_RUNNING])
         // Turn off background mode
         cordova.plugins.backgroundMode.disable()
-        console.log('BACKGROUND MODE OFF')
+        log.info('BACKGROUND MODE OFF')
       }
     },
     toggleClickHandler (notification, eopts) {
-      console.log('TOGGLECLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
+      log.info('TOGGLECLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
       if (this.run.status === 'running') {
         this.run.pause()
         this.notifyPaused(this.run.steps[this.run.currentStep])
@@ -244,7 +245,7 @@ export default {
       }
     },
     cancelClickHandler (notification, eopts) {
-      console.log('CANCELCLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
+      log.info('CANCELCLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
       this.run.cancel()
     }
   },
