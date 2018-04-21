@@ -28,7 +28,7 @@ describe('sw-run-list.vue', () => {
       expect(vm.$el.querySelector('.sw-page-title').textContent)
         .to.equal('All runs and programs')
       expect(vm.$el.querySelectorAll('li.sw-run-item').length)
-      .to.equal(dataStore.getRuns().length)
+      .to.equal(vm.$services.dataStore.getRuns().length)
     })
 
     it('should list only filtered runs if filter was passed', () => {
@@ -41,7 +41,7 @@ describe('sw-run-list.vue', () => {
       expect(vm.$el.querySelector('.sw-page-title').textContent)
         .to.equal(propsData.title)
       expect(vm.$el.querySelectorAll('li.sw-run-item').length)
-        .to.equal(dataStore.getRuns(propsData.filter).length)
+        .to.equal(vm.$services.dataStore.getRuns(propsData.filter).length)
     })
 
     it('shows the Create New button for program list', () => {

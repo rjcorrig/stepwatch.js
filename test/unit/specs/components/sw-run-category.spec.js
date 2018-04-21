@@ -29,7 +29,7 @@ describe('sw-run-category.vue', () => {
       expect(vm.$el.querySelector('.sw-run-category-text').textContent)
         .to.equal('All runs and programs')
       expect(vm.$el.querySelector('.sw-run-category-count').textContent)
-      .to.equal(dataStore.getRuns().length.toString())
+      .to.equal(vm.$services.dataStore.getRuns().length.toString())
     })
 
     it('should count number of filtered runs if filter was passed', () => {
@@ -42,7 +42,7 @@ describe('sw-run-category.vue', () => {
       expect(vm.$el.querySelector('.sw-run-category-text').textContent)
         .to.equal(propsData.title)
       expect(vm.$el.querySelector('.sw-run-category-count').textContent)
-      .to.equal(dataStore.getRuns(propsData.filter).length.toString())
+      .to.equal(vm.$services.dataStore.getRuns(propsData.filter).length.toString())
     })
   })
 

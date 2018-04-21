@@ -22,9 +22,8 @@ describe('sw-run.vue', () => {
     const Constructor = Vue.extend(swRun)
     const vm = new Constructor().$mount()
     vm.$services.dataStore.seed(seedData())
+    program = vm.$services.dataStore.getRun('foo')
     vm.$destroy()
-
-    program = dataStore.getRun('foo')
 
     // Set up mock cordova objects
     window.cordova = {
