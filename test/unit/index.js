@@ -1,6 +1,17 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+import servicePlugin from '@/plugins/services'
+import DataStore from '@/stepwatch/services/datastore'
 
 Vue.config.productionTip = false
+
+// Rig up and use the mock dataStore
+var dataStore = new DataStore()
+Vue.use(servicePlugin, {
+  dataStore: dataStore
+})
+
+Vue.use(VueRouter)
 
 // require all test files (files that ends with .spec.js)
 const testsContext = require.context('./specs', true, /\.spec$/)

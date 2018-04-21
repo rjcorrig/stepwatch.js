@@ -1,16 +1,7 @@
 import Vue from 'vue'
 import swStep from '@/components/sw-step'
 import seedData from '@/stepwatch/models/seedData'
-import servicePlugin from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
 import Step from '@/stepwatch/models/step'
-
-// Rig up and use the mock dataStore
-var dataStore = new DataStore()
-
-Vue.use(servicePlugin, {
-  dataStore: dataStore
-})
 
 describe('sw-step.vue', () => {
   var step

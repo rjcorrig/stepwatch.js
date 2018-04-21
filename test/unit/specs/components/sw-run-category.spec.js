@@ -1,17 +1,8 @@
 import Vue from 'vue'
 import swRunCategory from '@/components/sw-run-category'
 import seedData from '@/stepwatch/models/seedData'
-import servicePlugin from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
 import VueRouter from 'vue-router'
 import sinon from 'sinon'
-
-// Rig up and use the mock dataStore
-var dataStore = new DataStore()
-
-Vue.use(servicePlugin, {
-  dataStore: dataStore
-})
 
 describe('sw-run-category.vue', () => {
   beforeEach(() => {

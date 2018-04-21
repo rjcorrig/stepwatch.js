@@ -1,16 +1,7 @@
 import Vue from 'vue'
 import swRunList from '@/components/sw-run-list'
 import seedData from '@/stepwatch/models/seedData'
-import servicePlugin from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
 import VueRouter from 'vue-router'
-
-// Rig up and use the mock dataStore
-var dataStore = new DataStore()
-
-Vue.use(servicePlugin, {
-  dataStore: dataStore
-})
 
 describe('sw-run-list.vue', () => {
   beforeEach(() => {

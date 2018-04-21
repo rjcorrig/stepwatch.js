@@ -1,19 +1,9 @@
 import Vue from 'vue'
 import swRunItem from '@/components/sw-run-item'
 import seedData from '@/stepwatch/models/seedData'
-import servicePlugin from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
 import VueRouter from 'vue-router'
 import sinon from 'sinon'
 import Run from '@/stepwatch/models/run'
-
-// Rig up and use the mock dataStore
-var dataStore = new DataStore()
-
-Vue.use(servicePlugin, {
-  dataStore: dataStore
-})
-Vue.use(VueRouter)
 
 describe('sw-run-item.vue', () => {
   var run, program, pausedRun, completedRun
