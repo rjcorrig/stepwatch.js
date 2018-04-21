@@ -237,10 +237,11 @@ export default {
       console.log('TOGGLECLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
       if (this.run.status === 'running') {
         this.run.pause()
+        this.notifyPaused(this.run.steps[this.run.currentStep])
       } else if (this.run.status === 'paused') {
         this.run.start()
+        this.notifyRunning(this.run.steps[this.run.currentStep])
       }
-      this.notifyUpdate(this.run.steps[this.run.currentStep])
     },
     cancelClickHandler (notification, eopts) {
       console.log('CANCELCLICK ' + JSON.stringify(notification) + ' opts: ' + eopts)
