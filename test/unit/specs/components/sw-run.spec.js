@@ -8,9 +8,7 @@ import router from '@/router'
 import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
 
 // Rig up and use the mock dataStore
-var dataStore = new DataStore(sessionStorage)
-dataStore.seed(seedData)
-dataStore.save()
+var dataStore = new DataStore()
 
 Vue.use(servicePlugin, {
   dataStore: dataStore
@@ -20,8 +18,12 @@ describe('sw-run.vue', () => {
   var program
 
   beforeEach(() => {
-    // Set up the test data
-    dataStore.load()
+    // Reset the test data
+    const Constructor = Vue.extend(swRun)
+    const vm = new Constructor().$mount()
+    vm.$services.dataStore.seed(seedData())
+    vm.$destroy()
+
     program = dataStore.getRun('foo')
 
     // Set up mock cordova objects
@@ -300,7 +302,6 @@ describe('sw-run.vue', () => {
         propsData: { id: 'garply' }
       }).$mount()
 
-      console.log(JSON.stringify(vm.run))
       expect(vm.run.status).to.equal('running')
       vm.toggleClickHandler()
       expect(vm.run.status).to.equal('paused')
@@ -312,7 +313,6 @@ describe('sw-run.vue', () => {
         propsData: { id: 'quux' }
       }).$mount()
 
-      console.log(JSON.stringify(vm.run))
       expect(vm.run.status).to.equal('paused')
       vm.toggleClickHandler()
       expect(vm.run.status).to.equal('running')

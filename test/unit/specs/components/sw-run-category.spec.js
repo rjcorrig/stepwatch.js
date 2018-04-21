@@ -7,9 +7,7 @@ import VueRouter from 'vue-router'
 import sinon from 'sinon'
 
 // Rig up and use the mock dataStore
-var dataStore = new DataStore(sessionStorage)
-dataStore.seed(seedData)
-dataStore.save()
+var dataStore = new DataStore()
 
 Vue.use(servicePlugin, {
   dataStore: dataStore
@@ -17,8 +15,11 @@ Vue.use(servicePlugin, {
 
 describe('sw-run-category.vue', () => {
   beforeEach(() => {
-    // Reload the test data
-    dataStore.load()
+    // Reset the test data
+    const Constructor = Vue.extend(swRunCategory)
+    const vm = new Constructor().$mount()
+    vm.$services.dataStore.seed(seedData())
+    vm.$destroy()
   })
 
   describe('constructor', () => {

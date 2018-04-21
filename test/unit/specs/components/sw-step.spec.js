@@ -3,11 +3,10 @@ import swStep from '@/components/sw-step'
 import seedData from '@/stepwatch/models/seedData'
 import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
+import Step from '@/stepwatch/models/step'
 
 // Rig up and use the mock dataStore
-var dataStore = new DataStore(sessionStorage)
-dataStore.seed(seedData)
-dataStore.save()
+var dataStore = new DataStore()
 
 Vue.use(servicePlugin, {
   dataStore: dataStore
@@ -16,9 +15,16 @@ Vue.use(servicePlugin, {
 describe('sw-step.vue', () => {
   var step
   beforeEach(() => {
-    // Set up the test data
-    dataStore.load()
-    step = dataStore.getRun('foo').steps[0]
+    // Reset the test data
+    const Constructor = Vue.extend(swStep)
+    const vm = new Constructor({
+      propsData: { step: new Step() }
+    }).$mount()
+    vm.$services.dataStore.seed(seedData())
+
+    step = vm.$services.dataStore.getRun('foo').steps[0]
+
+    vm.$destroy()
   })
 
   describe('constructor', () => {

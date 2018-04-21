@@ -5,11 +5,10 @@ import servicePlugin from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
 import VueRouter from 'vue-router'
 import sinon from 'sinon'
+import Run from '@/stepwatch/models/run'
 
 // Rig up and use the mock dataStore
-var dataStore = new DataStore(sessionStorage)
-dataStore.seed(seedData)
-dataStore.save()
+var dataStore = new DataStore()
 
 Vue.use(servicePlugin, {
   dataStore: dataStore
@@ -19,12 +18,19 @@ Vue.use(VueRouter)
 describe('sw-run-item.vue', () => {
   var run, program, pausedRun, completedRun
   beforeEach(() => {
-    // Set up the test data
-    dataStore.load()
-    run = dataStore.getRun('garply')
-    program = dataStore.getRun('foo')
-    pausedRun = dataStore.getRun('quux')
-    completedRun = dataStore.getRun('grault')
+    // Reset the test data
+    const Constructor = Vue.extend(swRunItem)
+    const vm = new Constructor({
+      propsData: { run: new Run() }
+    }).$mount()
+
+    vm.$services.dataStore.seed(seedData())
+    run = vm.$services.dataStore.getRun('garply')
+    program = vm.$services.dataStore.getRun('foo')
+    pausedRun = vm.$services.dataStore.getRun('quux')
+    completedRun = vm.$services.dataStore.getRun('grault')
+
+    vm.$destroy()
   })
 
   describe('constructor', () => {
