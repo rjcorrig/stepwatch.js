@@ -6,9 +6,12 @@ import router from './router'
 import services from '@/plugins/services'
 import DataStore from '@/stepwatch/services/datastore'
 import seedData from '@/stepwatch/models/seedData'
+import log from 'loglevel'
 
 import './assets/css/global.css'
 import './cordovaApp'
+
+log.setLevel(log.levels.INFO, false)
 
 Vue.config.productionTip = false
 
