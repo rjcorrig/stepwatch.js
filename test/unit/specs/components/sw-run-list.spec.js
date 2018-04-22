@@ -4,18 +4,23 @@ import seedData from '@/stepwatch/models/seedData'
 import VueRouter from 'vue-router'
 
 describe('sw-run-list.vue', () => {
+  const Constructor = Vue.extend(swRunList)
+  let vm
+
   beforeEach(() => {
     // Reset the test data
-    const Constructor = Vue.extend(swRunList)
-    const vm = new Constructor().$mount()
+    vm = new Constructor().$mount()
     vm.$services.dataStore.seed(seedData())
+    vm.$destroy()
+  })
+
+  afterEach(() => {
     vm.$destroy()
   })
 
   describe('constructor', () => {
     it('should list all runs if no props passed', () => {
-      const Constructor = Vue.extend(swRunList)
-      const vm = new Constructor().$mount()
+      vm = new Constructor().$mount()
       expect(vm.$el.querySelector('.sw-page-title').textContent)
         .to.equal('All runs and programs')
       expect(vm.$el.querySelectorAll('li.sw-run-item').length)
@@ -23,12 +28,11 @@ describe('sw-run-list.vue', () => {
     })
 
     it('should list only filtered runs if filter was passed', () => {
-      const Constructor = Vue.extend(swRunList)
       const propsData = {
         title: 'pie',
         filter: r => r.name.indexOf('pie') >= 0
       }
-      const vm = new Constructor({ propsData }).$mount()
+      vm = new Constructor({ propsData }).$mount()
       expect(vm.$el.querySelector('.sw-page-title').textContent)
         .to.equal(propsData.title)
       expect(vm.$el.querySelectorAll('li.sw-run-item').length)
@@ -36,21 +40,19 @@ describe('sw-run-list.vue', () => {
     })
 
     it('shows the Create New button for program list', () => {
-      const Constructor = Vue.extend(swRunList)
       const propsData = {
         type: 'program'
       }
-      const vm = new Constructor({ propsData }).$mount()
+      vm = new Constructor({ propsData }).$mount()
       expect(vm.$el.querySelector('.sw-header > .sw-action-button i[title="New"]'))
         .to.not.equal(null)
     })
 
     it('hides the Create New button for non-program list', () => {
-      const Constructor = Vue.extend(swRunList)
       const propsData = {
         type: 'pies'
       }
-      const vm = new Constructor({ propsData }).$mount()
+      vm = new Constructor({ propsData }).$mount()
       expect(vm.$el.querySelector('.sw-header > .sw-action-button i[title="New"]'))
         .to.equal(null)
     })
@@ -58,8 +60,7 @@ describe('sw-run-list.vue', () => {
 
   describe('newProgram', () => {
     it('creates a new program and saves it to the data store', () => {
-      const Constructor = Vue.extend(swRunList)
-      const vm = new Constructor().$mount()
+      vm = new Constructor().$mount()
 
       const count = vm.runs.length
       try {
@@ -76,8 +77,7 @@ describe('sw-run-list.vue', () => {
 
   describe('copy', () => {
     it('copies the current run and inserts new after current', () => {
-      const Constructor = Vue.extend(swRunList)
-      const vm = new Constructor().$mount()
+      vm = new Constructor().$mount()
 
       const count = vm.runs.length
       const index = 2
@@ -97,12 +97,11 @@ describe('sw-run-list.vue', () => {
     })
 
     it('sets status of copy of program to "program"', () => {
-      const Constructor = Vue.extend(swRunList)
       const propsData = {
         type: 'program',
         filter: r => r.status === 'program'
       }
-      const vm = new Constructor({ propsData }).$mount()
+      vm = new Constructor({ propsData }).$mount()
 
       const index = 0
       const original = vm.runs[index]
@@ -118,12 +117,11 @@ describe('sw-run-list.vue', () => {
     })
 
     it('sets status of copy of run to "created"', () => {
-      const Constructor = Vue.extend(swRunList)
       const propsData = {
         type: 'running',
         filter: r => ['paused', 'running', 'created'].indexOf(r.status) >= 0
       }
-      const vm = new Constructor({ propsData }).$mount()
+      vm = new Constructor({ propsData }).$mount()
 
       const index = 0
       const original = vm.runs[index]
@@ -141,8 +139,7 @@ describe('sw-run-list.vue', () => {
 
   describe('remove', () => {
     it('deletes the selected run and saves the data store', () => {
-      const Constructor = Vue.extend(swRunList)
-      const vm = new Constructor().$mount()
+      vm = new Constructor().$mount()
 
       const count = vm.runs.length
       const index = 2
@@ -170,8 +167,7 @@ describe('sw-run-list.vue', () => {
     })
 
     it('routes to the sw-run/{{ run.id }}', () => {
-      const Constructor = Vue.extend(swRunList)
-      const vm = new Constructor({ router }).$mount()
+      vm = new Constructor({ router }).$mount()
 
       const run = vm.runs[2]
       vm.viewDetails(run)
@@ -193,8 +189,7 @@ describe('sw-run-list.vue', () => {
     })
 
     it('copies the current run, starts the copy, and routes to it', () => {
-      const Constructor = Vue.extend(swRunList)
-      const vm = new Constructor({ router }).$mount()
+      vm = new Constructor({ router }).$mount()
 
       const index = 2
       const original = vm.runs[index]

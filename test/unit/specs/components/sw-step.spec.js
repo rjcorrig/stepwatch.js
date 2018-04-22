@@ -4,11 +4,12 @@ import seedData from '@/stepwatch/models/seedData'
 import Step from '@/stepwatch/models/step'
 
 describe('sw-step.vue', () => {
-  var step
+  const Constructor = Vue.extend(swStep)
+  let vm, step
+
   beforeEach(() => {
     // Reset the test data
-    const Constructor = Vue.extend(swStep)
-    const vm = new Constructor({
+    vm = new Constructor({
       propsData: { step: new Step() }
     }).$mount()
     vm.$services.dataStore.seed(seedData())
@@ -18,10 +19,13 @@ describe('sw-step.vue', () => {
     vm.$destroy()
   })
 
+  afterEach(() => {
+    vm.$destroy()
+  })
+
   describe('constructor', () => {
     it('should bind to the given step', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
       expect(vm.$el.querySelector('.sw-card-title').textContent)
@@ -31,8 +35,7 @@ describe('sw-step.vue', () => {
 
   describe('percentComplete', () => {
     it('should return correct percentage of time elapsed in Step', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
       expect(vm.percentComplete).to.equal(100 * step.runSeconds / step.totalSeconds)
@@ -40,8 +43,7 @@ describe('sw-step.vue', () => {
 
     it('should return 0 if step.totalSeconds == 0', () => {
       step.totalSeconds = 0
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
       expect(vm.percentComplete).to.equal(0)
@@ -50,8 +52,7 @@ describe('sw-step.vue', () => {
 
   describe('statusIcon', () => {
     it('is present for all statuses except created', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 
@@ -62,8 +63,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is not present if status is created', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 
@@ -74,8 +74,7 @@ describe('sw-step.vue', () => {
 
   describe('canCancel', () => {
     it('is true if step is current, and paused or running', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -86,8 +85,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is false if step is not current', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 
@@ -95,8 +93,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is false if step is current, but not paused or running', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -109,8 +106,7 @@ describe('sw-step.vue', () => {
 
   describe('canPause', () => {
     it('is true if step is current and running', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -119,8 +115,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is false if step is not current', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 
@@ -128,8 +123,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is false if step is current but not running', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -142,8 +136,7 @@ describe('sw-step.vue', () => {
 
   describe('canStart', () => {
     it('is true if step status is current, and paused or created', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -154,8 +147,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is false if step is not current', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 
@@ -163,8 +155,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is false if step status is current, and not paused or created', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -178,8 +169,7 @@ describe('sw-step.vue', () => {
   describe('cancel', () => {
     it('should be called in response to cancel button click', () => {
       step.status = 'running'
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -194,8 +184,7 @@ describe('sw-step.vue', () => {
     })
 
     it('fires a cancel event', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 
@@ -210,8 +199,7 @@ describe('sw-step.vue', () => {
   describe('pause', () => {
     it('should be called in response to pause button click', () => {
       step.status = 'running'
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -226,8 +214,7 @@ describe('sw-step.vue', () => {
     })
 
     it('fires a pause event', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 
@@ -242,8 +229,7 @@ describe('sw-step.vue', () => {
   describe('start', () => {
     it('should be called in response to start button click', () => {
       step.status = 'paused'
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step, isCurrentStep: true }
       }).$mount()
 
@@ -258,8 +244,7 @@ describe('sw-step.vue', () => {
     })
 
     it('fires a start event', () => {
-      const Constructor = Vue.extend(swStep)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { step }
       }).$mount()
 

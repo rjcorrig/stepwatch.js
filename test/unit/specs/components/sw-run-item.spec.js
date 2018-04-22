@@ -6,11 +6,13 @@ import sinon from 'sinon'
 import Run from '@/stepwatch/models/run'
 
 describe('sw-run-item.vue', () => {
-  var run, program, pausedRun, completedRun
+  const Constructor = Vue.extend(swRunItem)
+  let run, program, pausedRun, completedRun
+  let vm
+
   beforeEach(() => {
     // Reset the test data
-    const Constructor = Vue.extend(swRunItem)
-    const vm = new Constructor({
+    vm = new Constructor({
       propsData: { run: new Run() }
     }).$mount()
 
@@ -23,10 +25,13 @@ describe('sw-run-item.vue', () => {
     vm.$destroy()
   })
 
+  afterEach(() => {
+    vm.$destroy()
+  })
+
   describe('constructor', () => {
     it('should bind to the given run', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
       expect(vm.$el.querySelector('.sw-card-title').textContent)
@@ -36,24 +41,21 @@ describe('sw-run-item.vue', () => {
 
   describe('stepsCompleted', () => {
     it('should show the number of steps completed', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
       expect(vm.stepsCompleted).to.equal(run.currentStep)
     })
 
     it('should show zero steps completed if no currentStep', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run: program }
       }).$mount()
       expect(vm.stepsCompleted).to.equal(0)
     })
 
     it('should show total number of steps if run completed', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run: completedRun }
       }).$mount()
       expect(vm.stepsCompleted).to.equal(completedRun.steps.length)
@@ -62,8 +64,7 @@ describe('sw-run-item.vue', () => {
 
   describe('percentComplete', () => {
     it('should return correct percentage of time elapsed in Run', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run: pausedRun }
       }).$mount()
       expect(vm.percentComplete).to.equal(100 * pausedRun.runSeconds / pausedRun.totalSeconds)
@@ -71,8 +72,7 @@ describe('sw-run-item.vue', () => {
 
     it('should return 0 if run.totalSeconds == 0', () => {
       program.totalSeconds = 0
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run: program }
       }).$mount()
       expect(vm.percentComplete).to.equal(0)
@@ -81,8 +81,7 @@ describe('sw-run-item.vue', () => {
 
   describe('statusIcon', () => {
     it('is present for all statuses except created', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -93,8 +92,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is not present if status is created', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -105,8 +103,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canCopy', () => {
     it('is true if run is finished or being defined', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -117,8 +114,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is false if run is running or paused', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -131,8 +127,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canEdit', () => {
     it('is true if run is being defined', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -143,8 +138,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is false if run is not being defined', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -157,8 +151,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canRemove', () => {
     it('is true if run is finished or being defined', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -169,8 +162,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is false if run is running or paused', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -183,8 +175,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canCancel', () => {
     it('is true if run is paused or running', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -195,8 +186,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is false if run is not paused or running', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -209,8 +199,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canPause', () => {
     it('is true if run is running', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -220,7 +209,7 @@ describe('sw-run-item.vue', () => {
 
     it('is false if run is not running', () => {
       const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -233,8 +222,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canStart', () => {
     it('is true if run status is paused or created', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -245,8 +233,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is false if run status is not paused or created', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -259,8 +246,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canCreate', () => {
     it('is true if run is finished or is a program', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -271,8 +257,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is false if run is running or paused', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -285,8 +270,7 @@ describe('sw-run-item.vue', () => {
 
   describe('cancel', () => {
     it('cancels the modeled run', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -298,8 +282,7 @@ describe('sw-run-item.vue', () => {
 
   describe('pause', () => {
     it('pauses the modeled run', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -318,8 +301,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('starts the modeled run and routes to sw-run', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         router,
         propsData: { run }
       }).$mount()
@@ -339,8 +321,7 @@ describe('sw-run-item.vue', () => {
 
   describe('copy', () => {
     it('fires a copy event with run as payload', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -355,8 +336,7 @@ describe('sw-run-item.vue', () => {
 
   describe('remove', () => {
     it('fires a remove event with run as payload', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 
@@ -371,8 +351,7 @@ describe('sw-run-item.vue', () => {
 
   describe('create', () => {
     it('fires a create event with run as payload', () => {
-      const Constructor = Vue.extend(swRunItem)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { run }
       }).$mount()
 

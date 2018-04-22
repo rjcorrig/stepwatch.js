@@ -6,12 +6,12 @@ import router from '@/router'
 import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
 
 describe('sw-run.vue', () => {
-  var program
+  const Constructor = Vue.extend(swRun)
+  let vm, program
 
   beforeEach(() => {
     // Reset the test data
-    const Constructor = Vue.extend(swRun)
-    const vm = new Constructor().$mount()
+    vm = new Constructor().$mount()
     vm.$services.dataStore.seed(seedData())
     program = vm.$services.dataStore.getRun('foo')
     vm.$destroy()
@@ -42,10 +42,13 @@ describe('sw-run.vue', () => {
     }
   })
 
+  afterEach(() => {
+    vm.$destroy()
+  })
+
   describe('constructor', () => {
     it('should render run name in header if run found', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'foo' }
       }).$mount()
       expect(vm.$el.querySelector('.sw-page-title .text1').textContent)
@@ -53,8 +56,7 @@ describe('sw-run.vue', () => {
     })
 
     it('should render not found message if no run found', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'bar' }
       }).$mount()
       expect(vm.$el.querySelector('.sw-run h1').textContent)
@@ -62,8 +64,7 @@ describe('sw-run.vue', () => {
     })
 
     it('establishes a ticker', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'foo' }
       }).$mount()
 
@@ -73,8 +74,7 @@ describe('sw-run.vue', () => {
 
   describe('watch', () => {
     it('switches modeled run on $route change', (done) => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'foo' },
         router
       }).$mount()
@@ -93,8 +93,7 @@ describe('sw-run.vue', () => {
 
   describe('tick', () => {
     it('should call run.tick', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'foo' }
       }).$mount()
 
@@ -104,8 +103,7 @@ describe('sw-run.vue', () => {
     })
 
     it('should not blow up if run is undefined', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'bar' }
       }).$mount()
 
@@ -115,8 +113,7 @@ describe('sw-run.vue', () => {
 
   describe('suspend', () => {
     it('is called when component is destroyed', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'foo' }
       }).$mount()
 
@@ -127,8 +124,7 @@ describe('sw-run.vue', () => {
     })
 
     it('pauses the run if running and saves the dataStore', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -146,8 +142,7 @@ describe('sw-run.vue', () => {
 
   describe('notifyComplete', () => {
     it('posts a new notification above ID_RUNNING', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -161,8 +156,7 @@ describe('sw-run.vue', () => {
     })
 
     it('posts a new notification above highest notification', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -179,8 +173,7 @@ describe('sw-run.vue', () => {
 
   describe('notifyRunning', () => {
     it('does not post a notification on iOS', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -195,8 +188,7 @@ describe('sw-run.vue', () => {
     })
 
     it('posts ID_RUNNING notification if not present', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -213,8 +205,7 @@ describe('sw-run.vue', () => {
     })
 
     it('updates ID_RUNNING notification if present', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -233,8 +224,7 @@ describe('sw-run.vue', () => {
 
   describe('notifyPaused', () => {
     it('does not post a notification on iOS', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -249,8 +239,7 @@ describe('sw-run.vue', () => {
     })
 
     it('posts ID_PAUSED notification if not present', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -267,8 +256,7 @@ describe('sw-run.vue', () => {
     })
 
     it('updates ID_PAUSED notification if present', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -287,8 +275,7 @@ describe('sw-run.vue', () => {
 
   describe('toggleClickHandler', () => {
     it('pauses a running run', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'garply' }
       }).$mount()
 
@@ -298,8 +285,7 @@ describe('sw-run.vue', () => {
     })
 
     it('resumes a paused run', () => {
-      const Constructor = Vue.extend(swRun)
-      const vm = new Constructor({
+      vm = new Constructor({
         propsData: { id: 'quux' }
       }).$mount()
 
