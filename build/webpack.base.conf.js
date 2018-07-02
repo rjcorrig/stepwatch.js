@@ -9,6 +9,7 @@ function resolve (dir) {
 }
 
 module.exports = {
+  mode: 'none',
   entry: {
     app: './src/main.js',
     vendor: [ 'webpack-material-design-icons' ]  

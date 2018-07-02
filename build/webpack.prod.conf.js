@@ -16,6 +16,7 @@ const env = process.env.NODE_ENV === 'testing'
   : config.build.env
 
 const webpackConfig = merge(baseWebpackConfig, {
+  mode: 'production',
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
