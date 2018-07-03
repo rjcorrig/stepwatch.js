@@ -24,7 +24,7 @@ describe('sw-run-list.vue', () => {
       expect(vm.$el.querySelector('.sw-page-title').textContent)
         .to.equal('All runs and programs')
       expect(vm.$el.querySelectorAll('li.sw-run-item').length)
-      .to.equal(vm.$services.dataStore.getRuns().length)
+        .to.equal(vm.$services.dataStore.getRuns().length)
     })
 
     it('should list only filtered runs if filter was passed', () => {
