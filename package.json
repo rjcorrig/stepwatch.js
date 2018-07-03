@@ -85,7 +85,7 @@
     "nightwatch": "^1.0.6",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^4.0.3",
-    "ora": "^1.2.0",
+    "ora": "^2.1.0",
     "phantomjs-prebuilt": "^2.1.14",
     "portfinder": "^1.0.13",
     "rimraf": "^2.6.0",
