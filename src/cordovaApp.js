@@ -19,7 +19,7 @@
 var log = require('loglevel')
 
 var app = {
-    // Application Constructor
+  // Application Constructor
   initialize: function () {
     document.addEventListener('deviceready', this.onDeviceReady.bind(this), false)
   },
