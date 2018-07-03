@@ -57,7 +57,7 @@ exports.cssLoaders = function (options) {
     styl: generateLoaders('stylus')
   }
 
-  console.log(JSON.stringify(ret2))
+  //console.log(JSON.stringify(ret2))
 
   return ret2
 }
