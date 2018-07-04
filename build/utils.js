@@ -47,7 +47,7 @@ exports.cssLoaders = function (options) {
   }
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
-  let ret2 = {
+  return {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
@@ -56,10 +56,6 @@ exports.cssLoaders = function (options) {
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }
-
-  //console.log(JSON.stringify(ret2))
-
-  return ret2
 }
 
 // Generate loaders for standalone style files (outside of .vue)
