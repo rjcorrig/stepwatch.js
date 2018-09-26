@@ -1,6 +1,5 @@
-build/*.js
-config/*.js
 plugins
 platforms
 www
 dist
+tests/unit/coverage

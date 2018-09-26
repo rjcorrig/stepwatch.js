@@ -105,7 +105,7 @@ DataStore.prototype.seed = function (runs) {
       }
     }
   } catch (e) {
-    if (e.name === 'AssertionError') {
+    if (/AssertionError/.test(e.name)) {
       throw new Error('Invalid data passed to DataStore.seed')
     } else {
       throw e

@@ -66,8 +66,8 @@ export default {
     let stepComplete
     let runComplete
     if (window.Audio) {
-      stepComplete = new Audio(stepCompleteSound)
-      runComplete = new Audio(runCompleteSound)
+      stepComplete = new window.Audio(stepCompleteSound)
+      runComplete = new window.Audio(runCompleteSound)
     }
 
     return {
@@ -83,8 +83,8 @@ export default {
     window.addEventListener('beforeunload', this.suspend)
 
     if (window.cordova) {
-      cordova.plugins.notification.local.on('toggleclick', this.toggleClickHandler, this)
-      cordova.plugins.notification.local.on('cancelclick', this.cancelClickHandler, this)
+      window.cordova.plugins.notification.local.on('toggleclick', this.toggleClickHandler, this)
+      window.cordova.plugins.notification.local.on('cancelclick', this.cancelClickHandler, this)
       log.info('REGISTERED NOTIFICATION HANDLERS')
     }
   },
@@ -107,17 +107,17 @@ export default {
       this.notifyClear()
 
       if (window.cordova) {
-        cordova.plugins.notification.local.un('toggleclick', this.toggleClickHandler)
-        cordova.plugins.notification.local.un('cancelclick', this.cancelClickHandler)
+        window.cordova.plugins.notification.local.un('toggleclick', this.toggleClickHandler)
+        window.cordova.plugins.notification.local.un('cancelclick', this.cancelClickHandler)
         log.info('UNREGISTERED NOTIFICATION HANDLERS')
       }
     },
     notifyComplete () {
       if (window.cordova) {
-        cordova.plugins.notification.local.getIds((ids) => {
+        window.cordova.plugins.notification.local.getIds((ids) => {
           let id = ids.reduce((max, id) => id > max ? id : max, ID_RUNNING)
 
-          cordova.plugins.notification.local.schedule({
+          window.cordova.plugins.notification.local.schedule({
             id: id + 1,
             title: 'StepWatch',
             text: `Run ${this.run.name} completed`,
@@ -128,7 +128,7 @@ export default {
           })
         })
 
-        cordova.plugins.backgroundMode.disable()
+        window.cordova.plugins.backgroundMode.disable()
         log.info('BACKGROUND MODE OFF')
       } else if (this.sounds.runComplete) {
         this.sounds.runComplete.play()
@@ -137,14 +137,14 @@ export default {
     notifyRunning (step) {
       if (window.cordova) {
         // Allow running in background
-        cordova.plugins.backgroundMode.enable()
+        window.cordova.plugins.backgroundMode.enable()
         log.info('BACKGROUND MODE ON')
 
-        cordova.plugins.notification.local.cancel([ID_PAUSED])
+        window.cordova.plugins.notification.local.cancel([ID_PAUSED])
 
         // Don't show per-tick notifications on iOS
-        if (device.platform !== 'iOS') {
-          cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
+        if (window.device && window.device.platform !== 'iOS') {
+          window.cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
             let secondsLeft = step.totalSeconds - step.runSeconds
             let remaining = utils.formatSeconds(secondsLeft)
             let text = `${remaining} remaining`
@@ -152,11 +152,11 @@ export default {
             let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
 
             if (present) {
-              cordova.plugins.notification.local.update({
+              window.cordova.plugins.notification.local.update({
                 id: ID_RUNNING, text, progressBar
               })
             } else {
-              cordova.plugins.notification.local.schedule({
+              window.cordova.plugins.notification.local.schedule({
                 id: ID_RUNNING,
                 text,
                 progressBar,
@@ -182,11 +182,11 @@ export default {
     },
     notifyPaused (step) {
       if (window.cordova) {
-        cordova.plugins.notification.local.cancel([ID_RUNNING])
+        window.cordova.plugins.notification.local.cancel([ID_RUNNING])
 
         // Don't show per-tick notifications on iOS
-        if (device.platform !== 'iOS') {
-          cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
+        if (window.device && window.device.platform !== 'iOS') {
+          window.cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
             let secondsLeft = step.totalSeconds - step.runSeconds
             let remaining = utils.formatSeconds(secondsLeft)
             let text = `${remaining} remaining`
@@ -194,11 +194,11 @@ export default {
             let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
 
             if (present) {
-              cordova.plugins.notification.local.update({
+              window.cordova.plugins.notification.local.update({
                 id: ID_PAUSED, text, progressBar
               })
             } else {
-              cordova.plugins.notification.local.schedule({
+              window.cordova.plugins.notification.local.schedule({
                 id: ID_PAUSED,
                 text,
                 progressBar,
@@ -222,15 +222,15 @@ export default {
         }
 
         // Turn off background mode
-        cordova.plugins.backgroundMode.disable()
+        window.cordova.plugins.backgroundMode.disable()
         log.info('BACKGROUND MODE OFF')
       }
     },
     notifyClear () {
       if (window.cordova) {
-        cordova.plugins.notification.local.cancel([ID_PAUSED, ID_RUNNING])
+        window.cordova.plugins.notification.local.cancel([ID_PAUSED, ID_RUNNING])
         // Turn off background mode
-        cordova.plugins.backgroundMode.disable()
+        window.cordova.plugins.backgroundMode.disable()
         log.info('BACKGROUND MODE OFF')
       }
     },
@@ -260,13 +260,13 @@ export default {
 /* Override default styling from vue-marquee */
 .sw-page-title .marquee-content .text1 {
   padding-right: 0px;
-  font-size: inherit; 
+  font-size: inherit;
 }
 
 .sw-page-title .marquee-content .text2 {
   padding-left: 40px;
   padding-right: 40px;
-  font-size: inherit; 
+  font-size: inherit;
 }
 
 .sw-page-title.marquee-wrap .marquee-box {

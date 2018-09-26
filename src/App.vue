@@ -21,9 +21,9 @@ export default {
       log.info('INIT with cordova = ' + window.cordova)
       log.info('INIT with this.$router = ' + this.$router)
       if (window.cordova) {
-        cordova.plugins.backgroundMode.setDefaults({ silent: true })
+        window.cordova.plugins.backgroundMode.setDefaults({ silent: true })
 
-        cordova.plugins.notification.local.on('click', (notification, state) => {
+        window.cordova.plugins.notification.local.on('click', (notification, state) => {
           log.info('CLICK: ' + JSON.stringify(notification))
           this.$router.push({
             name: 'sw-run',

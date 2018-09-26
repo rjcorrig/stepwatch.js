@@ -8,6 +8,7 @@ import DataStore from '@/stepwatch/services/datastore'
 import seedData from '@/stepwatch/models/seedData'
 import log from 'loglevel'
 
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import './assets/css/global.css'
 import './cordovaApp'
 
@@ -17,7 +18,7 @@ Vue.config.productionTip = false
 
 var dataStore = new DataStore(localStorage)
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_SEED_DATA) {
   dataStore.seed(seedData())
 } else {
   dataStore.load()
