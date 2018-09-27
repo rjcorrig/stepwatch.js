@@ -3,6 +3,7 @@ module.exports = {
   assetsDir: 'static',
   baseUrl: './',
   runtimeCompiler: true,
+  productionSourceMap: false,
   chainWebpack: config => {
     if (process.env.NODE_ENV !== 'production') {
       config.devtool('eval')
