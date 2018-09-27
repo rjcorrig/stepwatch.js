@@ -29,13 +29,10 @@ npm install
 cordova prepare
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm run serve
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 
 # build for iOS, Android, and browser
 npm run cordova-build
@@ -46,17 +43,14 @@ npm run cordova-ios
 # run in browser
 npm run cordova-browser
 
-# run on attached Android Device
-npm run cordova-android-device
+# run on Android
+npm run cordova-android
 
 # run unit tests
-npm run unit
+npm run test:unit
 
 # run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+npm run test:e2e
 ```
 
 ## License
