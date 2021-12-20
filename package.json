@@ -15,10 +15,7 @@
     "cordova-android": "npm run build && cordova run android"
   },
   "dependencies": {
-    "cordova-android": "^7.0.0",
-    "cordova-browser": "^5.0.4",
-    "cordova-custom-config": "^5.0.2",
-    "cordova-ios": "^4.5.5",
+    "cordova-custom-config": "^5.1.0",
     "cordova-plugin-background-mode": "^0.7.2",
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-device": "^2.0.2",
@@ -39,6 +36,9 @@
     "@vue/test-utils": "^1.0.0-beta.25",
     "babel-plugin-istanbul": "^5.0.1",
     "chai": "^4.1.2",
+    "cordova-android": "^9.1.0",
+    "cordova-browser": "^6.0.0",
+    "cordova-ios": "^6.2.0",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jsdom": "~11.11.0",
     "mock-local-storage": "^1.0.5",
@@ -73,10 +73,6 @@
       "cordova-plugin-background-mode": {},
       "cordova-custom-config": {}
     },
-    "platforms": [
-      "ios",
-      "browser",
-      "android"
-    ]
+    "platforms": []
   }
 }
