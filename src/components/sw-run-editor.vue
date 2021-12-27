@@ -46,7 +46,7 @@ import Run from '@/stepwatch/models/run'
 
 export default {
   name: 'sw-run',
-  props: [ 'id' ],
+  props: ['id'],
   watch: {
     '$route' (to, from) {
       this.original = this.$services.dataStore.getRun(to.params.id)
@@ -54,7 +54,7 @@ export default {
     }
   },
   data () {
-    let original = this.$services.dataStore.getRun(this.id)
+    const original = this.$services.dataStore.getRun(this.id)
     return {
       original,
       run: new Run(original)
@@ -81,33 +81,33 @@ export default {
       }
     },
     newStep () {
-      let step = new Step()
+      const step = new Step()
       this.run.steps.push(step)
       return step
     },
     copy (step) {
-      let idx = this.run.steps.indexOf(step)
-      let newStep = new Step(step)
+      const idx = this.run.steps.indexOf(step)
+      const newStep = new Step(step)
       newStep.initialize()
       this.run.steps.splice(idx + 1, 0, newStep)
       return newStep
     },
     remove (step) {
-      let idx = this.run.steps.indexOf(step)
+      const idx = this.run.steps.indexOf(step)
 
       if (idx >= 0) {
         this.run.steps.splice(idx, 1)
       }
     },
     moveUp (step) {
-      let idx = this.run.steps.indexOf(step)
+      const idx = this.run.steps.indexOf(step)
       if (idx > 0) {
         this.run.steps.splice(idx, 1)
         this.run.steps.splice(idx - 1, 0, step)
       }
     },
     moveDown (step) {
-      let idx = this.run.steps.indexOf(step)
+      const idx = this.run.steps.indexOf(step)
       if (idx > -1 && idx < this.run.steps.length - 1) {
         this.run.steps.splice(idx, 1)
         this.run.steps.splice(idx + 1, 0, step)

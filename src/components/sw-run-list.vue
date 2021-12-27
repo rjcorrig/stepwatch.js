@@ -46,14 +46,14 @@ export default {
   },
   methods: {
     newProgram () {
-      let program = this.$services.dataStore.createProgram()
+      const program = this.$services.dataStore.createProgram()
       this.$services.dataStore.save()
       this.runs.unshift(program)
       return program
     },
     copy (run) {
-      let idx = this.runs.indexOf(run)
-      let newRun = this.$services.dataStore.createRun(run)
+      const idx = this.runs.indexOf(run)
+      const newRun = this.$services.dataStore.createRun(run)
       if (run.status === 'program') {
         newRun.status = 'program'
       }
@@ -62,7 +62,7 @@ export default {
       return newRun
     },
     remove (run) {
-      let idx = this.runs.indexOf(run)
+      const idx = this.runs.indexOf(run)
 
       if (idx >= 0) {
         this.runs.splice(idx, 1)
@@ -71,7 +71,7 @@ export default {
       this.$services.dataStore.save()
     },
     create (run) {
-      let newRun = this.$services.dataStore.createRun(run)
+      const newRun = this.$services.dataStore.createRun(run)
       this.$services.dataStore.save()
       newRun.start()
       this.viewDetails(newRun)

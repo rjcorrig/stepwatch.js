@@ -114,7 +114,7 @@ describe('sw-run-item.vue', () => {
     })
 
     it('is not present if status is created', () => {
-      let aRun = new Run()
+      const aRun = new Run()
       aRun.status = 'created'
 
       wrapper = mount(swRunItem, {
@@ -256,7 +256,7 @@ describe('sw-run-item.vue', () => {
 
   describe('canPause', () => {
     it('is true if run is running', () => {
-      let aRun = new Run()
+      const aRun = new Run()
       aRun.status = 'running'
       wrapper = mount(swRunItem, {
         localVue,

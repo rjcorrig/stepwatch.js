@@ -83,11 +83,11 @@ export default {
     },
     statusIcon () {
       var icons = {
-        'program': 'create',
-        'running': 'play_arrow',
-        'paused': 'pause',
-        'canceled': 'cancel',
-        'complete': 'done'
+        program: 'create',
+        running: 'play_arrow',
+        paused: 'pause',
+        canceled: 'cancel',
+        complete: 'done'
       }
       return icons[this.run.status]
     },

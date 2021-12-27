@@ -39,7 +39,7 @@ import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
 
 export default {
   name: 'sw-run',
-  props: [ 'id' ],
+  props: ['id'],
   watch: {
     '$route' (to, from) {
       this.$services.dataStore.save()
@@ -115,7 +115,7 @@ export default {
     notifyComplete () {
       if (window.cordova) {
         window.cordova.plugins.notification.local.getIds((ids) => {
-          let id = ids.reduce((max, id) => id > max ? id : max, ID_RUNNING)
+          const id = ids.reduce((max, id) => id > max ? id : max, ID_RUNNING)
 
           window.cordova.plugins.notification.local.schedule({
             id: id + 1,
@@ -145,11 +145,11 @@ export default {
         // Don't show per-tick notifications on iOS
         if (window.device && window.device.platform !== 'iOS') {
           window.cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
-            let secondsLeft = step.totalSeconds - step.runSeconds
-            let remaining = utils.formatSeconds(secondsLeft)
-            let text = `${remaining} remaining`
+            const secondsLeft = step.totalSeconds - step.runSeconds
+            const remaining = utils.formatSeconds(secondsLeft)
+            const text = `${remaining} remaining`
 
-            let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
+            const progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
 
             if (present) {
               window.cordova.plugins.notification.local.update({
@@ -187,11 +187,11 @@ export default {
         // Don't show per-tick notifications on iOS
         if (window.device && window.device.platform !== 'iOS') {
           window.cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
-            let secondsLeft = step.totalSeconds - step.runSeconds
-            let remaining = utils.formatSeconds(secondsLeft)
-            let text = `${remaining} remaining`
+            const secondsLeft = step.totalSeconds - step.runSeconds
+            const remaining = utils.formatSeconds(secondsLeft)
+            const text = `${remaining} remaining`
 
-            let progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
+            const progressBar = { value: step.runSeconds, maxValue: step.totalSeconds }
 
             if (present) {
               window.cordova.plugins.notification.local.update({

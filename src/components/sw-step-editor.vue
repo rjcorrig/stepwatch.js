@@ -29,11 +29,9 @@
 
 <script>
 import models from '@/stepwatch/models'
-import swDigitalClock from './sw-digital-clock.vue'
 
 export default {
   name: 'sw-step',
-  components: { swDigitalClock },
   props: {
     step: {
       type: models.Step,

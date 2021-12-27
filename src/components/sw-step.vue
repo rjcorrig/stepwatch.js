@@ -77,10 +77,10 @@ export default {
     },
     statusIcon () {
       var icons = {
-        'running': 'play_arrow',
-        'paused': 'pause',
-        'canceled': 'cancel',
-        'complete': 'done'
+        running: 'play_arrow',
+        paused: 'pause',
+        canceled: 'cancel',
+        complete: 'done'
       }
       return icons[this.step.status]
     },

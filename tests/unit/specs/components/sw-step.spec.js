@@ -84,7 +84,7 @@ describe('sw-step.vue', () => {
     })
 
     it('is not present if status is created', () => {
-      let aStep = new Step()
+      const aStep = new Step()
       aStep.status = 'created'
 
       wrapper = mount(swStep, {
@@ -139,7 +139,7 @@ describe('sw-step.vue', () => {
 
   describe('canPause', () => {
     it('is true if step is current and running', () => {
-      let aStep = new Step()
+      const aStep = new Step()
       aStep.status = 'running'
       wrapper = mount(swStep, {
         localVue,

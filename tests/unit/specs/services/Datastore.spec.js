@@ -147,7 +147,7 @@ describe('DataStore', function () {
 
     beforeEach(function () {
       var program = new Run()
-      program.steps = [ new Step({ name: 'Step 1' }), new Step({ name: 'Step 2' }) ]
+      program.steps = [new Step({ name: 'Step 1' }), new Step({ name: 'Step 2' })]
       program.id = uuid4()
       var run = program.setup()
       run.name = 'New Run'

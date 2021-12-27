@@ -1,7 +1,9 @@
+const path = require('path')
+
 module.exports = {
   outputDir: 'www',
   assetsDir: 'static',
-  baseUrl: './',
+  publicPath: './',
   runtimeCompiler: true,
   productionSourceMap: false,
   chainWebpack: config => {
@@ -11,7 +13,7 @@ module.exports = {
         .rule('istanbul')
         .test(/\.(js|vue)$/)
         .enforce('post')
-        .include.add('src')
+        .include.add(path.resolve(__dirname, '/src'))
         .end()
         .use('istanbul-instrumenter-loader')
         .loader('istanbul-instrumenter-loader')

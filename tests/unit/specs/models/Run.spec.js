@@ -187,7 +187,7 @@ describe('Run', function () {
       for (var status of statuses) {
         var run = new Run()
         run.status = status
-        run.steps = [ new Step() ]
+        run.steps = [new Step()]
         run.start()
         expect(run.status).to.equal('running')
       }
@@ -208,7 +208,7 @@ describe('Run', function () {
       for (var status of statuses) {
         var run = new Run()
         run.status = status
-        run.steps = [ new Step() ]
+        run.steps = [new Step()]
 
         var priorState = JSON.stringify(run)
         run.start()
@@ -219,7 +219,7 @@ describe('Run', function () {
     it('sets startTime to current timestamp if not already set', function () {
       var run = new Run()
       run.status = 'created'
-      run.steps = [ new Step() ]
+      run.steps = [new Step()]
       run.start()
 
       expect(run.startTime).to.equal(new Date('1/1/2017').getTime())
@@ -229,7 +229,7 @@ describe('Run', function () {
       var run = new Run()
       var startTime = new Date('12/31/2016').getTime()
       run.status = 'created'
-      run.steps = [ new Step() ]
+      run.steps = [new Step()]
 
       run.startTime = startTime
       run.start()
@@ -240,7 +240,7 @@ describe('Run', function () {
     it('sets currentStep to 0 if not already set', function () {
       var run = new Run()
       run.status = 'created'
-      run.steps = [ new Step() ]
+      run.steps = [new Step()]
       run.start()
 
       expect(run.currentStep).to.equal(0)
