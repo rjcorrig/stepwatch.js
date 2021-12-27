@@ -68,7 +68,7 @@ describe('sw-step.vue', () => {
   })
 
   describe('statusIcon', () => {
-    it('is present for all statuses except created', () => {
+    it('is present for all statuses except created', async () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
@@ -78,7 +78,7 @@ describe('sw-step.vue', () => {
       for (var status of ['paused', 'running', 'complete', 'canceled']) {
         aStep = new Step()
         aStep.status = status
-        wrapper.setProps({ step: aStep })
+        await wrapper.setProps({ step: aStep })
         expect(wrapper.vm.statusIcon).to.not.be.undefined
       }
     })
@@ -97,7 +97,7 @@ describe('sw-step.vue', () => {
   })
 
   describe('canCancel', () => {
-    it('is true if step is current, and paused or running', () => {
+    it('is true if step is current, and paused or running', async () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
@@ -107,7 +107,7 @@ describe('sw-step.vue', () => {
       for (var status of ['paused', 'running']) {
         aStep = new Step()
         aStep.status = status
-        wrapper.setProps({ step: aStep, isCurrentStep: true })
+        await wrapper.setProps({ step: aStep, isCurrentStep: true })
         expect(wrapper.vm.canCancel).to.equal(true)
       }
     })
@@ -121,7 +121,7 @@ describe('sw-step.vue', () => {
       expect(wrapper.vm.canCancel).to.equal(false)
     })
 
-    it('is false if step is current, but not paused or running', () => {
+    it('is false if step is current, but not paused or running', async () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
@@ -131,7 +131,7 @@ describe('sw-step.vue', () => {
       for (var status of ['created', 'complete', 'canceled']) {
         aStep = new Step()
         aStep.status = status
-        wrapper.setProps({ step: aStep, isCurrentStep: true })
+        await wrapper.setProps({ step: aStep, isCurrentStep: true })
         expect(wrapper.vm.canCancel).to.equal(false)
       }
     })
@@ -158,7 +158,7 @@ describe('sw-step.vue', () => {
       expect(wrapper.vm.canPause).to.equal(false)
     })
 
-    it('is false if step is current but not running', () => {
+    it('is false if step is current but not running', async () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
@@ -168,14 +168,14 @@ describe('sw-step.vue', () => {
       for (var status of ['created', 'paused', 'complete', 'canceled']) {
         aStep = new Step()
         aStep.status = status
-        wrapper.setProps({ step: aStep, isCurrentStep: true })
+        await wrapper.setProps({ step: aStep, isCurrentStep: true })
         expect(wrapper.vm.canPause).to.equal(false)
       }
     })
   })
 
   describe('canStart', () => {
-    it('is true if step status is current, and paused or created', () => {
+    it('is true if step status is current, and paused or created', async () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
@@ -185,7 +185,7 @@ describe('sw-step.vue', () => {
       for (var status of ['paused', 'created']) {
         aStep = new Step()
         aStep.status = status
-        wrapper.setProps({ step: aStep, isCurrentStep: true })
+        await wrapper.setProps({ step: aStep, isCurrentStep: true })
         expect(wrapper.vm.canStart).to.equal(true)
       }
     })
@@ -199,7 +199,7 @@ describe('sw-step.vue', () => {
       expect(wrapper.vm.canStart).to.equal(false)
     })
 
-    it('is false if step status is current, and not paused or created', () => {
+    it('is false if step status is current, and not paused or created', async () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
@@ -209,7 +209,7 @@ describe('sw-step.vue', () => {
       for (var status of ['running', 'complete', 'canceled']) {
         aStep = new Step()
         aStep.status = status
-        wrapper.setProps({ step: aStep, isCurrentStep: true })
+        await wrapper.setProps({ step: aStep, isCurrentStep: true })
         expect(wrapper.vm.canStart).to.equal(false)
       }
     })

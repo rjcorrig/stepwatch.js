@@ -98,7 +98,7 @@ describe('sw-run-item.vue', () => {
   })
 
   describe('statusIcon', () => {
-    it('is present for all statuses except created', () => {
+    it('is present for all statuses except created', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -108,7 +108,7 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'paused', 'running', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.statusIcon).to.not.be.undefined
       }
     })
@@ -127,7 +127,7 @@ describe('sw-run-item.vue', () => {
   })
 
   describe('canCopy', () => {
-    it('is true if run is finished or being defined', () => {
+    it('is true if run is finished or being defined', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -137,12 +137,12 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'created', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canCopy).to.equal(true)
       }
     })
 
-    it('is false if run is running or paused', () => {
+    it('is false if run is running or paused', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -152,14 +152,14 @@ describe('sw-run-item.vue', () => {
       for (var status of ['paused', 'running']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canCopy).to.equal(false)
       }
     })
   })
 
   describe('canEdit', () => {
-    it('is true if run is being defined', () => {
+    it('is true if run is being defined', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -169,12 +169,12 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'created']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canEdit).to.equal(true)
       }
     })
 
-    it('is false if run is not being defined', () => {
+    it('is false if run is not being defined', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -184,14 +184,14 @@ describe('sw-run-item.vue', () => {
       for (var status of ['paused', 'running', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canEdit).to.equal(false)
       }
     })
   })
 
   describe('canRemove', () => {
-    it('is true if run is finished or being defined', () => {
+    it('is true if run is finished or being defined', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -201,12 +201,12 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'created', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canRemove).to.equal(true)
       }
     })
 
-    it('is false if run is running or paused', () => {
+    it('is false if run is running or paused', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -216,14 +216,14 @@ describe('sw-run-item.vue', () => {
       for (var status of ['paused', 'running']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canRemove).to.equal(false)
       }
     })
   })
 
   describe('canCancel', () => {
-    it('is true if run is paused or running', () => {
+    it('is true if run is paused or running', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -233,12 +233,12 @@ describe('sw-run-item.vue', () => {
       for (var status of ['paused', 'running']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canCancel).to.equal(true)
       }
     })
 
-    it('is false if run is not paused or running', () => {
+    it('is false if run is not paused or running', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -248,7 +248,7 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'created', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canCancel).to.equal(false)
       }
     })
@@ -266,7 +266,7 @@ describe('sw-run-item.vue', () => {
       expect(wrapper.vm.canPause).to.equal(true)
     })
 
-    it('is false if run is not running', () => {
+    it('is false if run is not running', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -276,14 +276,14 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'created', 'paused', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canPause).to.equal(false)
       }
     })
   })
 
   describe('canStart', () => {
-    it('is true if run status is paused or created', () => {
+    it('is true if run status is paused or created', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -293,12 +293,12 @@ describe('sw-run-item.vue', () => {
       for (var status of ['paused', 'created']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canStart).to.equal(true)
       }
     })
 
-    it('is false if run status is not paused or created', () => {
+    it('is false if run status is not paused or created', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -308,14 +308,14 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'running', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canStart).to.equal(false)
       }
     })
   })
 
   describe('canCreate', () => {
-    it('is true if run is finished or is a program', () => {
+    it('is true if run is finished or is a program', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -325,12 +325,12 @@ describe('sw-run-item.vue', () => {
       for (var status of ['program', 'complete', 'canceled']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canCreate).to.equal(true)
       }
     })
 
-    it('is false if run is running or paused', () => {
+    it('is false if run is running or paused', async () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
@@ -340,7 +340,7 @@ describe('sw-run-item.vue', () => {
       for (var status of ['paused', 'running', 'created']) {
         aRun = new Run()
         aRun.status = status
-        wrapper.setProps({ run: aRun })
+        await wrapper.setProps({ run: aRun })
         expect(wrapper.vm.canCreate).to.equal(false)
       }
     })
