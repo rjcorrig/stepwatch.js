@@ -80,15 +80,6 @@ describe('sw-run.vue', () => {
       expect(wrapper.element.querySelector('.sw-run h1').textContent)
         .to.equal('Run not found')
     })
-
-    it('establishes a ticker', () => {
-      wrapper = mount(swRun, {
-        localVue,
-        propsData: { id: 'foo' }
-      })
-
-      expect(wrapper.vm.ticker).to.not.be.undefined
-    })
   })
 
   describe('watch', () => {
