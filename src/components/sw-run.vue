@@ -31,11 +31,10 @@ import VueMarquee from 'vue-marquee-ho'
 import Css from 'vue-marquee-ho/dist/vue-marquee.min.css' // eslint-disable-line no-unused-vars
 import runCompleteSound from '@/assets/audio/run-complete.mp3'
 import stepCompleteSound from '@/assets/audio/step-complete.mp3'
-import path from 'path'
 import utils from '@/stepwatch/utils'
 import log from 'loglevel'
 
-import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
+import { ID_PAUSED, ID_RUNNING, CHANNEL_ID, CHANNEL_NAME } from '@/stepwatch/constants'
 
 export default {
   name: 'sw-run',
@@ -113,16 +112,22 @@ export default {
       }
     },
     notifyComplete () {
+      if (this.sounds.runComplete) {
+        this.sounds.runComplete.play()
+      }
       if (window.cordova) {
         window.cordova.plugins.notification.local.getIds((ids) => {
           const id = ids.reduce((max, id) => id > max ? id : max, ID_RUNNING)
 
           window.cordova.plugins.notification.local.schedule({
             id: id + 1,
+            channelId: CHANNEL_ID,
+            channelName: CHANNEL_NAME,
+            silent: true,
+            sound: false,
             title: 'StepWatch',
             text: `Run ${this.run.name} completed`,
-            sound: 'file://' + path.normalize(runCompleteSound),
-            smallIcon: 'ic_checkmark_holo_light',
+            smallIcon: 'res://ic_checkmark_holo_light',
             wakeup: false,
             data: { runId: this.run.id }
           })
@@ -130,8 +135,6 @@ export default {
 
         window.cordova.plugins.backgroundMode.disable()
         log.info('BACKGROUND MODE OFF')
-      } else if (this.sounds.runComplete) {
-        this.sounds.runComplete.play()
       }
     },
     notifyRunning (step) {
@@ -153,16 +156,25 @@ export default {
 
             if (present) {
               window.cordova.plugins.notification.local.update({
-                id: ID_RUNNING, text, progressBar
+                id: ID_RUNNING,
+                channelId: CHANNEL_ID,
+                channelName: CHANNEL_NAME,
+                silent: true,
+                sound: false,
+                text,
+                progressBar
               })
             } else {
               window.cordova.plugins.notification.local.schedule({
                 id: ID_RUNNING,
+                channelId: CHANNEL_ID,
+                channelName: CHANNEL_NAME,
                 text,
                 progressBar,
-                smallIcon: 'ic_media_play',
+                smallIcon: 'res://ic_media_play',
                 title: step.name,
-                sound: null,
+                silent: true,
+                sound: false,
                 clock: false,
                 sticky: true,
                 wakeup: false,
@@ -195,16 +207,25 @@ export default {
 
             if (present) {
               window.cordova.plugins.notification.local.update({
-                id: ID_PAUSED, text, progressBar
+                id: ID_PAUSED,
+                channelId: CHANNEL_ID,
+                channelName: CHANNEL_NAME,
+                silent: true,
+                sound: false,
+                text,
+                progressBar
               })
             } else {
               window.cordova.plugins.notification.local.schedule({
                 id: ID_PAUSED,
+                channelId: CHANNEL_ID,
+                channelName: CHANNEL_NAME,
                 text,
                 progressBar,
-                smallIcon: 'ic_media_pause',
+                smallIcon: 'res://ic_media_pause',
                 title: step.name,
-                sound: null,
+                silent: true,
+                sound: false,
                 clock: false,
                 sticky: true,
                 wakeup: false,
