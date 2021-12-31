@@ -40,5 +40,7 @@
             <string>CDVLaunchScreen</string>
         </custom-config-file>
         <preference name="BackupWebStorage" value="local" />
+        <preference name="scheme" value="app" />
+        <preference name="hostname" value="localhost" />    
     </platform>
 </widget>
