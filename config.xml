@@ -17,6 +17,21 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <resource-file src="res/android/notification/icon_complete/drawable-hdpi/ic_stat_check.png" target="/app/src/main/res/drawable-hdpi/ic_stat_check.png" />
+        <resource-file src="res/android/notification/icon_complete/drawable-mdpi/ic_stat_check.png" target="/app/src/main/res/drawable-mdpi/ic_stat_check.png" />
+        <resource-file src="res/android/notification/icon_complete/drawable-xhdpi/ic_stat_check.png" target="/app/src/main/res/drawable-xhdpi/ic_stat_check.png" />
+        <resource-file src="res/android/notification/icon_complete/drawable-xxhdpi/ic_stat_check.png" target="/app/src/main/res/drawable-xxhdpi/ic_stat_check.png" />
+        <resource-file src="res/android/notification/icon_complete/drawable-xxxhdpi/ic_stat_check.png" target="/app/src/main/res/drawable-xxxhdpi/ic_stat_check.png" />
+        <resource-file src="res/android/notification/icon_running/drawable-hdpi/ic_stat_play_arrow.png" target="/app/src/main/res/drawable-hdpi/ic_stat_play_arrow.png" />
+        <resource-file src="res/android/notification/icon_running/drawable-mdpi/ic_stat_play_arrow.png" target="/app/src/main/res/drawable-mdpi/ic_stat_play_arrow.png" />
+        <resource-file src="res/android/notification/icon_running/drawable-xhdpi/ic_stat_play_arrow.png" target="/app/src/main/res/drawable-xhdpi/ic_stat_play_arrow.png" />
+        <resource-file src="res/android/notification/icon_running/drawable-xxhdpi/ic_stat_play_arrow.png" target="/app/src/main/res/drawable-xxhdpi/ic_stat_play_arrow.png" />
+        <resource-file src="res/android/notification/icon_running/drawable-xxxhdpi/ic_stat_play_arrow.png" target="/app/src/main/res/drawable-xxxhdpi/ic_stat_play_arrow.png" />
+        <resource-file src="res/android/notification/icon_paused/drawable-hdpi/ic_stat_pause.png" target="/app/src/main/res/drawable-hdpi/ic_stat_pause.png" />
+        <resource-file src="res/android/notification/icon_paused/drawable-mdpi/ic_stat_pause.png" target="/app/src/main/res/drawable-mdpi/ic_stat_pause.png" />
+        <resource-file src="res/android/notification/icon_paused/drawable-xhdpi/ic_stat_pause.png" target="/app/src/main/res/drawable-xhdpi/ic_stat_pause.png" />
+        <resource-file src="res/android/notification/icon_paused/drawable-xxhdpi/ic_stat_pause.png" target="/app/src/main/res/drawable-xxhdpi/ic_stat_pause.png" />
+        <resource-file src="res/android/notification/icon_paused/drawable-xxxhdpi/ic_stat_pause.png" target="/app/src/main/res/drawable-xxxhdpi/ic_stat_pause.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

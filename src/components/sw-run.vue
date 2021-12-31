@@ -127,7 +127,7 @@ export default {
             sound: false,
             title: 'StepWatch',
             text: `Run ${this.run.name} completed`,
-            smallIcon: 'res://ic_checkmark_holo_light',
+            smallIcon: 'res://ic_stat_check.png',
             wakeup: false,
             data: { runId: this.run.id }
           })
@@ -171,7 +171,7 @@ export default {
                 channelName: CHANNEL_NAME,
                 text,
                 progressBar,
-                smallIcon: 'res://ic_media_play',
+                smallIcon: 'res://ic_stat_play_arrow.png',
                 title: step.name,
                 silent: true,
                 sound: false,
@@ -222,7 +222,7 @@ export default {
                 channelName: CHANNEL_NAME,
                 text,
                 progressBar,
-                smallIcon: 'res://ic_media_pause',
+                smallIcon: 'res://ic_stat_pause.png',
                 title: step.name,
                 silent: true,
                 sound: false,
