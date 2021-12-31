@@ -156,7 +156,7 @@ export default {
         window.cordova.plugins.notification.local.cancel([ID_PAUSED])
 
         // Don't show per-tick notifications on iOS
-        if (window.device/* && window.device.platform !== 'iOS' */) {
+        if (window.device && window.device.platform !== 'iOS') {
           window.cordova.plugins.notification.local.isPresent(ID_RUNNING, (present) => {
             const secondsLeft = step.totalSeconds - step.runSeconds
             const remaining = utils.formatSeconds(secondsLeft)
@@ -207,7 +207,7 @@ export default {
         window.cordova.plugins.notification.local.cancel([ID_RUNNING])
 
         // Don't show per-tick notifications on iOS
-        if (window.device/* && window.device.platform !== 'iOS' */) {
+        if (window.device && window.device.platform !== 'iOS') {
           window.cordova.plugins.notification.local.isPresent(ID_PAUSED, (present) => {
             const secondsLeft = step.totalSeconds - step.runSeconds
             const remaining = utils.formatSeconds(secondsLeft)

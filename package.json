@@ -37,6 +37,7 @@
     "cordova-custom-config": "^5.1.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
+    "cordova-plugin-background-audio": "^1.1.0",
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-device": "^2.0.3",
@@ -66,7 +67,8 @@
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-local-notification": {
         "ANDROID_SUPPORT_V4_VERSION": "26.+"
-      }
+      },
+      "cordova-plugin-background-audio": {}
     },
     "platforms": [
       "ios",
