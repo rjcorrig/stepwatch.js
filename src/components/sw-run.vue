@@ -33,6 +33,7 @@ import runCompleteSound from '@/assets/audio/run-complete.mp3'
 import stepCompleteSound from '@/assets/audio/step-complete.mp3'
 import utils from '@/stepwatch/utils'
 import log from 'loglevel'
+import RunWorker from 'worker-loader!./sw-run.worker.js' // eslint-disable-line import/no-webpack-loader-syntax
 
 import { ID_PAUSED, ID_RUNNING, CHANNEL_ID, CHANNEL_NAME } from '@/stepwatch/constants'
 
@@ -59,8 +60,8 @@ export default {
   },
   data () {
     let worker
-    if (window.Worker) {
-      worker = new Worker('/worker.js')
+    if (window.Worker && RunWorker) {
+      worker = new RunWorker()
       worker.onmessage = (e) => {
         log.info('worker tick')
         this.tick()
