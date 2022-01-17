@@ -27,7 +27,7 @@ export default {
   },
   data () {
     return {
-      runs: this.$services.dataStore.getRuns(this.filter)
+      runs: this.$store.getters.getRuns(this.filter)
     }
   },
   methods: {

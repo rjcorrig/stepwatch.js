@@ -41,38 +41,38 @@ export default {
   },
   data () {
     return {
-      runs: this.$services.dataStore.getRuns(this.filter)
+      runs: this.$store.getters.getRuns(this.filter)
     }
   },
   methods: {
-    newProgram () {
-      const program = this.$services.dataStore.createProgram()
-      this.$services.dataStore.save()
+    async newProgram () {
+      const program = await this.$store.dispatch('createProgram')
+      await this.$store.dispatch('save')
       this.runs.unshift(program)
       return program
     },
-    copy (run) {
+    async copy (run) {
       const idx = this.runs.indexOf(run)
-      const newRun = this.$services.dataStore.createRun(run)
+      const newRun = await this.$store.dispatch('createRun', run)
       if (run.status === 'program') {
         newRun.status = 'program'
       }
-      this.$services.dataStore.save()
+      await this.$store.dispatch('save')
       this.runs.splice(idx + 1, 0, newRun)
       return newRun
     },
-    remove (run) {
+    async remove (run) {
       const idx = this.runs.indexOf(run)
 
       if (idx >= 0) {
         this.runs.splice(idx, 1)
       }
-      this.$services.dataStore.deleteRun(run)
-      this.$services.dataStore.save()
+      await this.$store.dispatch('deleteRun', run)
+      await this.$store.dispatch('save')
     },
-    create (run) {
-      const newRun = this.$services.dataStore.createRun(run)
-      this.$services.dataStore.save()
+    async create (run) {
+      const newRun = await this.$store.dispatch('createRun', run)
+      await this.$store.dispatch('save')
       newRun.start()
       this.viewDetails(newRun)
       return newRun

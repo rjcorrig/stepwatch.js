@@ -49,12 +49,12 @@ export default {
   props: ['id'],
   watch: {
     '$route' (to, from) {
-      this.original = this.$services.dataStore.getRun(to.params.id)
+      this.original = this.$store.getters.getRun(to.params.id)
       this.run = new Run(this.original)
     }
   },
   data () {
-    const original = this.$services.dataStore.getRun(this.id)
+    const original = this.$store.getters.getRun(this.id)
     return {
       original,
       run: new Run(original)
@@ -71,12 +71,12 @@ export default {
     }
   },
   methods: {
-    save (e) {
+    async save (e) {
       if (e.target.checkValidity()) {
-        this.$services.dataStore.deleteRun(this.original)
+        await this.$store.dispatch('deleteRun', this.original)
         this.run.totalSeconds = this.totalSeconds
-        this.$services.dataStore.saveRun(this.run)
-        this.$services.dataStore.save()
+        await this.$store.dispatch('saveRun', this.run)
+        await this.$store.dispatch('save')
         this.$router.go(-1)
       }
     },

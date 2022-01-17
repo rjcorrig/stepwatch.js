@@ -42,20 +42,23 @@ export default {
   props: ['id'],
   watch: {
     '$route' (to, from) {
-      this.$services.dataStore.save()
-      this.run = this.$services.dataStore.getRun(to.params.id)
+      this.$store.dispatch('save').then(() => {
+        this.run = this.$store.getters.getRun(to.params.id)
+      })
     },
     'run.currentStep' (to, from) {
-      this.$services.dataStore.save()
-      if (to > 0 && this.sounds.stepComplete) {
-        this.sounds.stepComplete.play()
-      }
+      this.$store.dispatch('save').then(() => {
+        if (to > 0 && this.sounds.stepComplete) {
+          this.sounds.stepComplete.play()
+        }
+      })
     },
     'run.status' (to, from) {
-      this.$services.dataStore.save()
-      if (to === 'complete') {
-        this.notifyComplete()
-      }
+      this.$store.dispatch('save').then(() => {
+        if (to === 'complete') {
+          this.notifyComplete()
+        }
+      })
     }
   },
   data () {
@@ -77,7 +80,7 @@ export default {
     }
 
     return {
-      run: this.$services.dataStore.getRun(this.id),
+      run: this.$store.getters.getRun(this.id),
       worker,
       sounds: {
         stepComplete,
@@ -103,7 +106,7 @@ export default {
         this.run.tick()
       }
     },
-    suspend () {
+    async suspend () {
       if (this.worker) {
         this.worker.postMessage('stop')
       }
@@ -112,7 +115,7 @@ export default {
         this.run.pause()
       }
 
-      this.$services.dataStore.save()
+      await this.$store.dispatch('save')
       window.removeEventListener('beforeunload', this.suspend)
       this.notifyClear()
 
