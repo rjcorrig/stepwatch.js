@@ -5,8 +5,6 @@ import App from './App'
 import router from './router'
 import store from './store'
 import { SET_STORAGE } from './store/mutationTypes'
-import services from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
 import seedData from '@/stepwatch/models/seedData'
 import log from 'loglevel'
 
@@ -18,20 +16,13 @@ log.setLevel(log.levels.INFO, false)
 
 Vue.config.productionTip = false
 
-var dataStore = new DataStore(localStorage)
 store.commit(SET_STORAGE, localStorage)
 
 if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_SEED_DATA) {
-  dataStore.seed(seedData())
   store.dispatch('seed', seedData())
 } else {
-  dataStore.load()
   store.dispatch('load')
 }
-
-Vue.use(services, {
-  dataStore: dataStore
-})
 
 /* eslint-disable no-new */
 new Vue({
