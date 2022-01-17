@@ -17,7 +17,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     runs: [],
-    storage: {}
+    storage: null
   },
   getters: {
     getRuns: (state) => (filter) => {
