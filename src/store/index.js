@@ -53,7 +53,7 @@ export default new Vuex.Store({
     load ({ commit, state }) {
       if (state.storage) {
         commit(SET_RUNS, [])
-        var runDb = JSON.parse(this.storage.getItem('runDb'))
+        var runDb = JSON.parse(state.storage.getItem('runDb'))
         if (runDb) {
           for (var runDbEntry of runDb) {
             var run = new Run(runDbEntry)
@@ -70,7 +70,7 @@ export default new Vuex.Store({
             run.id = uuid4()
           }
         }
-        state.storage.setItem('runDb', JSON.stringify(this.runs))
+        state.storage.setItem('runDb', JSON.stringify(state.runs))
       }
       return Promise.resolve()
     },
