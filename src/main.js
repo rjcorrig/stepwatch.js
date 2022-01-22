@@ -1,10 +1,10 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App'
 import router from './router'
-import store from './store'
-import { SET_STORAGE } from './store/mutationTypes'
+import createStore from './store'
 import seedData from '@/stepwatch/models/seedData'
 import log from 'loglevel'
 
@@ -16,7 +16,9 @@ log.setLevel(log.levels.INFO, false)
 
 Vue.config.productionTip = false
 
-store.commit(SET_STORAGE, localStorage)
+Vue.use(Vuex)
+
+const store = createStore({ storage: localStorage })
 
 if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_SEED_DATA) {
   store.dispatch('seed', seedData())
