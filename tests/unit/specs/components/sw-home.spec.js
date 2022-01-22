@@ -1,25 +1,20 @@
+import Vuex from 'vuex'
 import { expect } from 'chai'
 import { createLocalVue, mount } from '@vue/test-utils'
 import swHome from '@/components/sw-home'
 import seedData from '@/stepwatch/models/seedData'
-import services from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
+import createStore from '@/store'
 
 const localVue = createLocalVue()
-var dataStore = new DataStore()
-
-localVue.use(services, {
-  dataStore: dataStore
-})
+localVue.use(Vuex)
 
 describe('sw-home.vue', () => {
   let wrapper
+  let store
 
   beforeEach(() => {
     // Reset the test data
-    wrapper = mount(swHome, { localVue })
-    wrapper.vm.$services.dataStore.seed(seedData())
-    wrapper.destroy()
+    store = createStore({ runs: seedData() })
   })
 
   afterEach(() => {
@@ -28,7 +23,7 @@ describe('sw-home.vue', () => {
 
   describe('constructor', () => {
     it('should render the welcome page', () => {
-      wrapper = mount(swHome, { localVue })
+      wrapper = mount(swHome, { localVue, store })
 
       expect(wrapper.element.querySelector('.sw-header').textContent)
         .to.equal('StepWatch')
