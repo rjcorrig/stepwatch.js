@@ -1,3 +1,4 @@
+import Vuex from 'vuex'
 import { expect } from 'chai'
 import { createLocalVue, mount } from '@vue/test-utils'
 import swRunItem from '@/components/sw-run-item'
@@ -5,34 +6,33 @@ import seedData from '@/stepwatch/models/seedData'
 import VueRouter from 'vue-router'
 import sinon from 'sinon'
 import Run from '@/stepwatch/models/run'
-import services from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
+import createStore from '@/store'
 
 const localVue = createLocalVue()
 
-const dataStore = new DataStore()
-localVue.use(services, {
-  dataStore: dataStore
-})
 localVue.use(VueRouter)
+localVue.use(Vuex)
 
 describe('sw-run-item.vue', () => {
   let run, program, pausedRun, completedRun
   let router
   let wrapper
+  let store
 
   beforeEach(() => {
     // Reset the test data
+    store = createStore({ runs: seedData() })
+
     wrapper = mount(swRunItem, {
       localVue,
+      store,
       propsData: { run: new Run() }
     })
 
-    wrapper.vm.$services.dataStore.seed(seedData())
-    run = wrapper.vm.$services.dataStore.getRun('garply')
-    program = wrapper.vm.$services.dataStore.getRun('foo')
-    pausedRun = wrapper.vm.$services.dataStore.getRun('quux')
-    completedRun = wrapper.vm.$services.dataStore.getRun('grault')
+    run = wrapper.vm.$store.getters.getRun('garply')
+    program = wrapper.vm.$store.getters.getRun('foo')
+    pausedRun = wrapper.vm.$store.getters.getRun('quux')
+    completedRun = wrapper.vm.$store.getters.getRun('grault')
 
     wrapper.destroy()
   })
@@ -45,6 +45,7 @@ describe('sw-run-item.vue', () => {
     it('should bind to the given run', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run }
       })
       expect(wrapper.element.querySelector('.sw-card-title').textContent)
@@ -56,6 +57,7 @@ describe('sw-run-item.vue', () => {
     it('should show the number of steps completed', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run }
       })
       expect(wrapper.vm.stepsCompleted).to.equal(run.currentStep)
@@ -64,6 +66,7 @@ describe('sw-run-item.vue', () => {
     it('should show zero steps completed if no currentStep', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: program }
       })
       expect(wrapper.vm.stepsCompleted).to.equal(0)
@@ -72,6 +75,7 @@ describe('sw-run-item.vue', () => {
     it('should show total number of steps if run completed', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: completedRun }
       })
       expect(wrapper.vm.stepsCompleted).to.equal(completedRun.steps.length)
@@ -82,6 +86,7 @@ describe('sw-run-item.vue', () => {
     it('should return correct percentage of time elapsed in Run', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: pausedRun }
       })
       expect(wrapper.vm.percentComplete).to.equal(100 * pausedRun.runSeconds / pausedRun.totalSeconds)
@@ -91,6 +96,7 @@ describe('sw-run-item.vue', () => {
       program.totalSeconds = 0
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: program }
       })
       expect(wrapper.vm.percentComplete).to.equal(0)
@@ -102,6 +108,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -119,6 +126,7 @@ describe('sw-run-item.vue', () => {
 
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -131,6 +139,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -146,6 +155,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -163,6 +173,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -178,6 +189,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -195,6 +207,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -210,6 +223,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -227,6 +241,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -242,6 +257,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -260,6 +276,7 @@ describe('sw-run-item.vue', () => {
       aRun.status = 'running'
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -270,6 +287,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -287,6 +305,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -302,6 +321,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -319,6 +339,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -334,6 +355,7 @@ describe('sw-run-item.vue', () => {
       let aRun = new Run()
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run: aRun }
       })
 
@@ -350,6 +372,7 @@ describe('sw-run-item.vue', () => {
     it('cancels the modeled run', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run }
       })
 
@@ -363,6 +386,7 @@ describe('sw-run-item.vue', () => {
     it('pauses the modeled run', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run }
       })
 
@@ -383,6 +407,7 @@ describe('sw-run-item.vue', () => {
     it('starts the modeled run and routes to sw-run', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         router,
         propsData: { run }
       })
@@ -404,6 +429,7 @@ describe('sw-run-item.vue', () => {
     it('fires a copy event with run as payload', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run }
       })
 
@@ -420,6 +446,7 @@ describe('sw-run-item.vue', () => {
     it('fires a remove event with run as payload', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run }
       })
 
@@ -436,6 +463,7 @@ describe('sw-run-item.vue', () => {
     it('fires a create event with run as payload', () => {
       wrapper = mount(swRunItem, {
         localVue,
+        store,
         propsData: { run }
       })
 
