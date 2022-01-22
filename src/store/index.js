@@ -11,10 +11,10 @@ import {
   SET_RUNS
 } from './mutationTypes'
 
-export default function (options) {
+export default function (options = {}) {
   return new Vuex.Store({
     state: {
-      runs: [],
+      runs: options.runs || [],
       storage: options.storage || null
     },
     getters: {
