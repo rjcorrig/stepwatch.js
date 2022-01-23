@@ -32,7 +32,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-istanbul": "^6.1.1",
     "chai": "^4.1.2",
-    "chromedriver": "96",
+    "chromedriver": "97",
     "cordova-android": "^10.1.1",
     "cordova-browser": "^6.0.0",
     "cordova-custom-config": "^5.1.0",
