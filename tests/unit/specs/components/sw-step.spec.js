@@ -17,7 +17,7 @@ describe('sw-step.vue', () => {
 
   beforeEach(() => {
     store = createStore({ runs: seedData() })
-    step = store.getRun('foo').steps[0]
+    step = store.getters.getRun('foo').steps[0]
   })
 
   afterEach(() => {
