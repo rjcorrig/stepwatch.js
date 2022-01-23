@@ -1,34 +1,25 @@
+import Vuex from 'vuex'
 import { expect } from 'chai'
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import sinon from 'sinon'
 import swRun from '@/components/sw-run'
 import seedData from '@/stepwatch/models/seedData'
 import router from '@/router'
-import services from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
+import createStore from '@/store'
 
 import { ID_PAUSED, ID_RUNNING } from '@/stepwatch/constants'
 
 const localVue = createLocalVue()
-
-const dataStore = new DataStore()
-localVue.use(services, {
-  dataStore: dataStore
-})
+localVue.use(Vuex)
 localVue.use(router)
 
 describe('sw-run.vue', () => {
-  let wrapper, program
+  let wrapper, program, store
 
   beforeEach(() => {
     // Reset the test data
-    wrapper = mount(swRun, {
-      localVue
-    })
-
-    wrapper.vm.$services.dataStore.seed(seedData())
-    program = wrapper.vm.$services.dataStore.getRun('foo')
-    wrapper.destroy()
+    store = createStore({ runs: seedData() })
+    program = store.getters.getRun('foo')
 
     // Set up mock cordova objects
     window.cordova = {
@@ -64,6 +55,7 @@ describe('sw-run.vue', () => {
     it('should render run name in header if run found', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'foo' }
       })
 
@@ -74,6 +66,7 @@ describe('sw-run.vue', () => {
     it('should render not found message if no run found', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'bar' }
       })
 
@@ -82,30 +75,11 @@ describe('sw-run.vue', () => {
     })
   })
 
-  describe('watch', () => {
-    it('switches modeled run on $route change', (done) => {
-      wrapper = mount(swRun, {
-        localVue,
-        router,
-        propsData: { id: 'foo' }
-      })
-
-      wrapper.vm.$router.push({
-        name: 'sw-run',
-        params: { id: 'garply' }
-      })
-
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.run.id).to.equal('garply')
-        return done()
-      })
-    })
-  })
-
   describe('tick', () => {
     it('should call run.tick', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'foo' }
       })
 
@@ -117,6 +91,7 @@ describe('sw-run.vue', () => {
     it('should not blow up if run is undefined', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'bar' }
       })
 
@@ -129,6 +104,7 @@ describe('sw-run.vue', () => {
       // shallowMount to avoid vue-marquee error on nextTick
       wrapper = shallowMount(swRun, {
         localVue,
+        store,
         propsData: { id: 'foo' }
       })
 
@@ -138,21 +114,16 @@ describe('sw-run.vue', () => {
       expect(stub.called).to.equal(true)
     })
 
-    it('pauses the run if running and saves the dataStore', () => {
+    it('pauses the run if running', async () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
-      try {
-        const stub = sinon.spy(wrapper.vm.$services.dataStore, 'save')
-        wrapper.vm.suspend()
+      await wrapper.vm.suspend()
 
-        expect(wrapper.vm.run.status).to.equal('paused')
-        expect(stub.called).to.equal(true)
-      } finally {
-        wrapper.vm.$services.dataStore.save.restore()
-      }
+      expect(wrapper.vm.run.status).to.equal('paused')
     })
   })
 
@@ -160,6 +131,7 @@ describe('sw-run.vue', () => {
     it('posts a new notification above ID_RUNNING', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -175,6 +147,7 @@ describe('sw-run.vue', () => {
     it('posts a new notification above highest notification', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -193,6 +166,7 @@ describe('sw-run.vue', () => {
     it('does not post a notification on iOS', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -209,6 +183,7 @@ describe('sw-run.vue', () => {
     it('posts ID_RUNNING notification if not present', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -227,6 +202,7 @@ describe('sw-run.vue', () => {
     it('updates ID_RUNNING notification if present', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -247,6 +223,7 @@ describe('sw-run.vue', () => {
     it('does not post a notification on iOS', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -263,6 +240,7 @@ describe('sw-run.vue', () => {
     it('posts ID_PAUSED notification if not present', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -281,6 +259,7 @@ describe('sw-run.vue', () => {
     it('updates ID_PAUSED notification if present', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -301,6 +280,7 @@ describe('sw-run.vue', () => {
     it('pauses a running run', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'garply' }
       })
 
@@ -312,6 +292,7 @@ describe('sw-run.vue', () => {
     it('resumes a paused run', () => {
       wrapper = mount(swRun, {
         localVue,
+        store,
         propsData: { id: 'quux' }
       })
 

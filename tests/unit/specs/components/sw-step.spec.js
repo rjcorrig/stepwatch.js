@@ -1,36 +1,23 @@
+import Vuex from 'vuex'
 import { expect } from 'chai'
 import { createLocalVue, mount } from '@vue/test-utils'
 import swStep from '@/components/sw-step'
 import seedData from '@/stepwatch/models/seedData'
 import Step from '@/stepwatch/models/step'
-import services from '@/plugins/services'
-import DataStore from '@/stepwatch/services/datastore'
 import VueRouter from 'vue-router'
 import sinon from 'sinon'
+import createStore from '@/store'
 
 const localVue = createLocalVue()
-
-const dataStore = new DataStore()
-localVue.use(services, {
-  dataStore: dataStore
-})
+localVue.use(Vuex)
 localVue.use(VueRouter)
 
 describe('sw-step.vue', () => {
-  let wrapper, step
+  let wrapper, step, store
 
   beforeEach(() => {
-    // Reset the test data
-    wrapper = mount(swStep, {
-      localVue,
-      propsData: {
-        step: new Step()
-      }
-    })
-
-    wrapper.vm.$services.dataStore.seed(seedData())
-    step = wrapper.vm.$services.dataStore.getRun('foo').steps[0]
-    wrapper.destroy()
+    store = createStore({ runs: seedData() })
+    step = store.getRun('foo').steps[0]
   })
 
   afterEach(() => {
@@ -41,6 +28,7 @@ describe('sw-step.vue', () => {
     it('should bind to the given step', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
       expect(wrapper.element.querySelector('.sw-card-title').textContent)
@@ -52,6 +40,7 @@ describe('sw-step.vue', () => {
     it('should return correct percentage of time elapsed in Step', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
       expect(wrapper.vm.percentComplete).to.equal(100 * step.runSeconds / step.totalSeconds)
@@ -61,6 +50,7 @@ describe('sw-step.vue', () => {
       step.totalSeconds = 0
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
       expect(wrapper.vm.percentComplete).to.equal(0)
@@ -72,6 +62,7 @@ describe('sw-step.vue', () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep }
       })
 
@@ -89,6 +80,7 @@ describe('sw-step.vue', () => {
 
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep }
       })
 
@@ -101,6 +93,7 @@ describe('sw-step.vue', () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep, isCurrentStep: true }
       })
 
@@ -115,6 +108,7 @@ describe('sw-step.vue', () => {
     it('is false if step is not current', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
 
@@ -125,6 +119,7 @@ describe('sw-step.vue', () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep, isCurrentStep: true }
       })
 
@@ -143,6 +138,7 @@ describe('sw-step.vue', () => {
       aStep.status = 'running'
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep, isCurrentStep: true }
       })
 
@@ -152,6 +148,7 @@ describe('sw-step.vue', () => {
     it('is false if step is not current', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
 
@@ -162,6 +159,7 @@ describe('sw-step.vue', () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep, isCurrentStep: true }
       })
 
@@ -179,6 +177,7 @@ describe('sw-step.vue', () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep, isCurrentStep: true }
       })
 
@@ -193,6 +192,7 @@ describe('sw-step.vue', () => {
     it('is false if step is not current', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
 
@@ -203,6 +203,7 @@ describe('sw-step.vue', () => {
       let aStep = new Step()
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step: aStep, isCurrentStep: true }
       })
 
@@ -220,6 +221,7 @@ describe('sw-step.vue', () => {
       step.status = 'running'
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step, isCurrentStep: true }
       })
 
@@ -236,6 +238,7 @@ describe('sw-step.vue', () => {
     it('fires a cancel event', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
 
@@ -252,6 +255,7 @@ describe('sw-step.vue', () => {
       step.status = 'running'
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step, isCurrentStep: true }
       })
 
@@ -268,6 +272,7 @@ describe('sw-step.vue', () => {
     it('fires a pause event', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
 
@@ -284,6 +289,7 @@ describe('sw-step.vue', () => {
       step.status = 'paused'
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step, isCurrentStep: true }
       })
 
@@ -300,6 +306,7 @@ describe('sw-step.vue', () => {
     it('fires a start event', () => {
       wrapper = mount(swStep, {
         localVue,
+        store,
         propsData: { step }
       })
 
