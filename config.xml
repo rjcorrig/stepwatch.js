@@ -36,9 +36,9 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-        <custom-config-file parent="UILaunchStoryboardName" platform="ios" target="*-Info.plist">
+        <config-file parent="UILaunchStoryboardName" platform="ios" target="*-Info.plist">
             <string>CDVLaunchScreen</string>
-        </custom-config-file>
+        </config-file>
         <preference name="BackupWebStorage" value="local" />
         <preference name="scheme" value="app" />
         <preference name="hostname" value="localhost" />    
